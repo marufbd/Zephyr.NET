@@ -36,7 +36,7 @@
 *.log
 *.lib
 *.sbr
-*.sdf
+#*.sdf	#include sql ce data file
 ipch/
 obj/
 [Bb]in
