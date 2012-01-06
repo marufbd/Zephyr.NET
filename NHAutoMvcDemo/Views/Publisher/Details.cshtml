@@ -1,0 +1,55 @@
+﻿@model NHAutoMvcDemo.DomainModels.Publisher
+
+@{
+    ViewBag.Title = "Publisher / Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Publisher</legend>       
+
+    <div class="display-label">PublisherName</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.PublisherName)
+    </div>
+    
+    <div class="display-label">Books from this Publisher:</div>
+    @if (Model.Books.Count==0)
+    {
+        <div class="display-field">No books</div>
+    }
+    else
+    {
+        foreach(var book in Model.Books){
+        <div class="display-field">
+            @Html.ActionLink(book.BookName, "BookDetails", "Store", new { id = book.Id }, null)
+        </div>
+        }
+    }
+    
+
+    <div class="display-label">CreatedBy</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.CreatedBy)
+    </div>
+
+    <div class="display-label">CreatedAt</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.CreatedAt)
+    </div>
+
+    <div class="display-label">LastUpdatedBy</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.LastUpdatedBy)
+    </div>
+
+    <div class="display-label">LastUpdatedAt</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.LastUpdatedAt)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")    
+</p>

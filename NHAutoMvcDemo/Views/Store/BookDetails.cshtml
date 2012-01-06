@@ -1,0 +1,52 @@
+﻿@model NHAutoMvcDemo.DomainModels.Book
+
+@{
+    ViewBag.Title = "Details";
+}
+
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Book</legend>
+
+    <div class="display-label">BookName</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.BookName) <br/>
+        Description: @Html.DisplayFor(model => model.BookDescription)
+    </div>    
+    
+    <div class="display-label">Publisher</div>
+    <div class="display-field">
+        @Html.ActionLink(Model.Publisher.ToString(), "Details", "Publisher", new { id=Model.Publisher.Id }, null)
+    </div>
+    
+    <div class="display-label">PublishedDate</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.PublishedDate)
+    </div>
+
+    <div class="display-label">CreatedBy</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.CreatedBy)
+    </div>
+
+    <div class="display-label">CreatedAt</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.CreatedAt)
+    </div>
+
+    <div class="display-label">LastUpdatedBy</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.LastUpdatedBy)
+    </div>
+
+    <div class="display-label">LastUpdatedAt</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.LastUpdatedAt)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "SaveBook", new { id=Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,51 @@
+﻿@model IEnumerable<NHAutoMvcDemo.DomainModels.Book>
+
+@{
+    ViewBag.Title = "Store / Home";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Add new Book", "AddBook")
+</p>
+<table>
+    <tr>
+        <th>
+            Name
+        </th>
+        <th>
+            PublishedDate
+        </th>
+        <th>
+            Publisher
+        </th>
+        <th>
+            Created At:
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.BookName)
+        </td>
+        <td>
+            @Html.ActionLink(item.Publisher.ToString(), "Details", "Publisher", new {id=item.Publisher.Id}, null)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PublishedDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreatedAt)
+        </td>      
+        <td>
+            @Html.ActionLink("Edit", "SaveBook", new { id=item.Id }) |
+            @Html.ActionLink("Details", "BookDetails", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "DeleteBook", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>
