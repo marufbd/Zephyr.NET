@@ -14,9 +14,9 @@ namespace NHAutoMvcDemo.Controllers
         // GET: /Publisher/
 
         public ActionResult Index()
-        {            
-            IList<Publisher> model = _repository.GetAll();
-                        
+        {
+            var model = _repository.GetAll();
+            
             return View(model);
         }
 
@@ -25,7 +25,7 @@ namespace NHAutoMvcDemo.Controllers
         {
             var model = new Publisher();
 
-            return View("Edit",model);
+            return View("Edit", model);
         }
 
         [HttpGet]

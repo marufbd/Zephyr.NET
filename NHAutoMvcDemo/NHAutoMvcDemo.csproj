@@ -90,6 +90,7 @@
     <Compile Include="DomainModels\Author.cs" />
     <Compile Include="DomainModels\Book.cs" />
     <Compile Include="DomainModels\MapOverrides\BookMappingOverride.cs" />
+    <Compile Include="DomainModels\MapOverrides\PublisherMappingOverride.cs" />
     <Compile Include="DomainModels\Publisher.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -202,6 +203,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\_MINIPROFILER UPDATED Layout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\DisplayTemplates\DateTime.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
