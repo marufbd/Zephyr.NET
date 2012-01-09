@@ -1,4 +1,6 @@
-﻿@model IEnumerable<NHAutoMvcDemo.DomainModels.Book>
+﻿@using NHAutoMvcDemo.Controllers
+@using NHAutoMvcDemo.DomainModels
+@model IEnumerable<NHAutoMvcDemo.DomainModels.Book>
 
 @{
     ViewBag.Title = "Store / Home";
@@ -25,6 +27,7 @@
             Created At:
         </th>
         <th></th>
+        <th></th>
     </tr>
 
 @foreach (var item in Model) {
@@ -42,9 +45,15 @@
             @Html.DisplayFor(modelItem => item.CreatedAt)
         </td>      
         <td>
-            @Html.ActionLink("Edit", "SaveBook", new { id=item.Id }) |
-            @Html.ActionLink("Details", "BookDetails", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "DeleteBook", new { id=item.Id })
+            @(Html.ActionLink<StoreController>(c=>c.SaveBook(item.Id), "Edit")) |            
+            @(Html.ActionLink<StoreController>(c=>c.BookDetails(item.Id), "Details"))
+        </td>
+        <td>
+            @using(Html.BeginForm<StoreController>(c=>c.DeleteBook(item.Id)))
+            {
+                @Html.AntiForgeryToken()
+                <input type="submit" value="delete" onclick="return confirm('Are you sure?')"/>
+            }
         </td>
     </tr>
 }

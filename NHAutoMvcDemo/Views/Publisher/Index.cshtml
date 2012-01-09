@@ -1,4 +1,4 @@
-﻿@using System.Globalization
+﻿@using NHAutoMvcDemo.Controllers
 @model IEnumerable<NHAutoMvcDemo.DomainModels.Publisher>
 
 @{
@@ -8,7 +8,7 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @(Html.ActionLink<PublisherController>(c=>c.Create(), "Create new publisher"))
 </p>
 <table>
     <tr>
@@ -54,9 +54,15 @@
             @Html.DisplayFor(modelItem => item.LastUpdatedAt)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @(Html.ActionLink<PublisherController>(c=>c.Edit(item.Id), "Edit")) |
+            @(Html.ActionLink<PublisherController>(c=>c.Details(item.Id), "Details"))
+        </td>
+        <td>
+            @using(Html.BeginForm<PublisherController>(c=>c.Delete(item.Id)))
+            {
+                @Html.AntiForgeryToken()
+                <input type="submit" value="delete" onclick="return confirm('Are you sure?')"/>
+            }
         </td>
     </tr>
 }

@@ -32,6 +32,7 @@ namespace NHAutoMvcDemo.DomainModels
         public Publisher() : base()
         {
             this.PublisherName = "New publisher";
+            this.Books=new List<Book>();
         }
         
 

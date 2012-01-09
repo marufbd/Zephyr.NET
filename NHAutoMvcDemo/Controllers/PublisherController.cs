@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using MyFrameWork.Repository;
 using MyFrameWork.Repository.Contract;
 using NHAutoMvcDemo.DomainModels;
@@ -47,7 +46,7 @@ namespace NHAutoMvcDemo.Controllers
             return View("Edit", publisher);
         }
 
-        
+        [HttpPost]
         public ActionResult Delete(long id)
         {
             _repository.Delete(id);

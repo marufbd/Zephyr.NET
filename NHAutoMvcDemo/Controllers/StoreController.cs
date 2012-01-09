@@ -67,6 +67,7 @@ namespace NHAutoMvcDemo.Controllers
             return View(_repository.Get(id));
         }
 
+        [HttpPost]
         public ActionResult DeleteBook(long id)
         {
             _repository.Delete(id);

@@ -17,7 +17,7 @@ namespace MyFrameWork.NHib.Conventions
             //Note: the global class level adonet.batch_size can be set in nhibernate.config file
             instance.BatchSize(5);
 
-            instance.Cascade.SaveUpdate();
+            instance.Cascade.All();
         }
     }
 }

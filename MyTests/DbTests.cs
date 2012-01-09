@@ -68,7 +68,7 @@ namespace MyTests
             var config = NHibernateSession.Configuration;
 
             var schemaExport = new SchemaExport(config);
-            schemaExport.Execute(true, false, false);
+            schemaExport.Execute(true, true, false);
         }
 
         [TestMethod]
