@@ -1,10 +1,5 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MyFrameWork.NHib;
-using NHAutoMvcDemo.DomainModels;
 using NHibernate.Tool.hbm2ddl;
 
 namespace MyTests
@@ -88,6 +83,6 @@ namespace MyTests
 
             var schemaUpdate = new SchemaUpdate(config);
             schemaUpdate.Execute(true, true);
-        }
+        }        
     }
 }

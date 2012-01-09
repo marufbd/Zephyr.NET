@@ -17,6 +17,8 @@ namespace NHAutoMvcDemo.Controllers
 
         public ActionResult About()
         {
+            System.Threading.Thread.Sleep(5000);
+
             return View();
         }
     }

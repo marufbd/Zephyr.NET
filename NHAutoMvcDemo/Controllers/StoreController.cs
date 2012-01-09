@@ -52,8 +52,14 @@ namespace NHAutoMvcDemo.Controllers
                 _repository.SaveOrUpdate(vmbook.Book);
                 return RedirectToAction("Index");
             }
+            else
+            {
+                IRepository<Publisher> pubRepo = new NhRepository<Publisher>();                
 
-            return View(vmbook);
+                vmbook.PublisherList = new SelectList(pubRepo.GetAll(), "Id", "PublisherName");
+
+                return View(vmbook);
+            }            
         }
 
         public ActionResult BookDetails(long id)

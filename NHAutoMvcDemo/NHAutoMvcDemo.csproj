@@ -48,6 +48,9 @@
     <Reference Include="MvcMiniProfiler">
       <HintPath>..\packages\MiniProfiler.1.9\lib\net40\MvcMiniProfiler.dll</HintPath>
     </Reference>
+    <Reference Include="MvcSiteMapProvider">
+      <HintPath>..\packages\MvcSiteMapProvider.3.2.1.0\lib\net40\MvcSiteMapProvider.dll</HintPath>
+    </Reference>
     <Reference Include="NHibernate">
       <HintPath>..\packages\NHibernate.3.2.0.4000\lib\Net35\NHibernate.dll</HintPath>
     </Reference>
@@ -139,6 +142,12 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\modernizr-1.7.js" />
     <Content Include="Scripts\modernizr-1.7.min.js" />
+    <Content Include="Views\Shared\DisplayTemplates\MenuHelperModel.ascx" />
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapHelperModel.ascx" />
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapNodeModel.ascx" />
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapNodeModelList.ascx" />
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapPathHelperModel.ascx" />
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapTitleHelperModel.ascx" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -206,6 +215,30 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\DisplayTemplates\DateTime.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapTitleHelperModel.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapPathHelperModel.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapNodeModelList.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapNodeModel.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapHelperModel.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\DisplayTemplates\MenuHelperModel.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Mvc.sitemap" />
+    <None Include="MvcSiteMapSchema.xsd">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

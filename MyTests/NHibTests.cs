@@ -9,6 +9,16 @@ namespace MyTests
     public class NHibTests
     {
         [TestMethod]
+        public void LoadData()
+        {
+            ISession session = NHibernateSession.Initialize(null);
+
+            var pub = session.Get<Publisher>(3L);
+
+            Assert.IsFalse(NHibernateUtil.IsInitialized(pub.Books));
+        }
+
+        [TestMethod]
         public void LazyLoad()
         {
             ISession session = NHibernateSession.Initialize(null);

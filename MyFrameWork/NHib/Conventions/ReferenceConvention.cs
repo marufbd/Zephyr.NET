@@ -27,7 +27,7 @@ namespace MyFrameWork.NHib.Conventions
     {
         public void Apply(IManyToOneInstance instance)
         {
-            instance.Column(instance.Property.PropertyType.Name+"Fk");
+            instance.Column(instance.Property.PropertyType.Name+"Fk");            
         }
     }
 }

@@ -19,8 +19,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 using MyFrameWork.Domain;
 
 #endregion REFERENCES
@@ -40,7 +38,7 @@ namespace NHAutoMvcDemo.DomainModels
         public virtual string BookName { get; set; }
 
         public virtual string BookDescription { get; set; }
-
+        
         public virtual DateTime PublishedDate { get; set; }
         
         public virtual Publisher Publisher { get; set; }
