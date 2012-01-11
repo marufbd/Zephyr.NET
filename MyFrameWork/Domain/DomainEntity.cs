@@ -29,11 +29,12 @@ namespace MyFrameWork.Domain
         public virtual DateTime CreatedAt { get; set; }
         public virtual  string LastUpdatedBy { get; set; }
         public virtual DateTime LastUpdatedAt { get; set; }
+        
 
         protected DomainEntity()
         {
             this.CreatedAt = DateTime.Now;
-            this.LastUpdatedAt = DateTime.Now;
+            this.LastUpdatedAt = DateTime.Now;            
         }
     }
 }

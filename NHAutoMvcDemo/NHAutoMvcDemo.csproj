@@ -98,6 +98,7 @@
     <Compile Include="DomainModels\MapOverrides\BookMappingOverride.cs" />
     <Compile Include="DomainModels\MapOverrides\PublisherMappingOverride.cs" />
     <Compile Include="DomainModels\Publisher.cs" />
+    <Compile Include="DomainModels\User.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

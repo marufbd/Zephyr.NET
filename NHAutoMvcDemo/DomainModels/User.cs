@@ -3,14 +3,14 @@
  * Client Name: 
  * Project Name: NHAutoMvcDemo.DomainModels
  * Module: Web
- * Name: Publisher
+ * Name: User
  * Purpose: 
  *                   
  * Author: latifur.rahman
  * Language: C# SDK version 3.5
  * --------------------------------------------------------------------------------
  * Change History:
- *  version: 1.0    latifur.rahman  1/2/2012 10:34:33 AM
+ *  version: 1.0    latifur.rahman  1/11/2012 9:15:36 AM
  *  Description:    Development Starts
  * -------------------------------------------------------------------------------- */
 #endregion CODE HISTORY
@@ -27,22 +27,23 @@ using MyFrameWork.Domain;
 
 namespace NHAutoMvcDemo.DomainModels
 {
-    public class Publisher : DomainEntity
+    public class User : DomainEntity
     {
-        public Publisher()
+        [RegularExpression(@"[^A-Za-z0-9_@\.]|@{2,}|\.{5,}")]
+        public virtual string Username { get; set; }
+        public virtual string Password { get; set; }
+        public virtual string Email { get; set; }
+
+        protected User()
         {
-            this.PublisherName = "New publisher";
-            this.Books=new List<Book>();
+            this.Username = "newuser";
+            this.Password = "";
         }
-        
 
-        public virtual string PublisherName { get; set; }
-
-        public virtual IList<Book> Books { get; set; } 
-     
-        public override string ToString()
+        public User(string uname, string pwd)
         {
-            return this.PublisherName;
+            this.Username = uname;
+            this.Password = pwd;
         }
     }
 }

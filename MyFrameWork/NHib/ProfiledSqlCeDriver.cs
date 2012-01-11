@@ -15,14 +15,11 @@
 #endregion CODE HISTORY
 
 #region REFERENCES
-using System;
-using System.Collections.Generic;
+
 using System.Data;
 using System.Data.Common;
-using System.Linq;
 using System.Runtime.Remoting.Messaging;
 using System.Runtime.Remoting.Proxies;
-using System.Web;
 using MvcMiniProfiler;
 using MvcMiniProfiler.Data;
 

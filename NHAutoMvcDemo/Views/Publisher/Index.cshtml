@@ -39,7 +39,7 @@
             @Html.DisplayFor(modelItem => item.PublisherName)
         </td>
         <td>
-            @Html.Display(item.Books.Count.ToString("n"))
+            @item.Books.Count
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.CreatedBy)
