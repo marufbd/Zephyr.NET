@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Collections.Generic;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MyFrameWork.NHib;
 using NHAutoMvcDemo.DomainModels;
 using NHibernate;
@@ -53,6 +54,9 @@ namespace MyTests
             pubManning.Books.Add(bookManning1);
             pubManning.Books.Add(bookManning2);
             pubManning.Books.Add(bookManning3);
+
+            //change tenantid for manning
+            pubManning.TenantId = 1;
 
             session.SaveOrUpdate(pubOrelly);
             session.SaveOrUpdate(pubWrox);

@@ -13,12 +13,11 @@ namespace NHAutoMvcDemo.Controllers
         private readonly IRepository<Book> _repository = new NhRepository<Book>();
         //
         // GET: /Book/
-
+                
         public ActionResult Index()
         {
             var model = _repository.GetAll() as IEnumerable<Book>;
-            
-            
+                        
             return View(model.OrderByDescending(b=>b.PublishedDate));
         }
 

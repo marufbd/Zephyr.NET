@@ -29,7 +29,10 @@ namespace MyFrameWork.Repository
     {
         public ISession Session { 
             get {
-                return NHibernateSession.Initialize(null);
+                ISession session= NHibernateSession.Initialize(null);
+                // set tenant global filter
+                //session.EnableFilter("TenantFilter").SetParameter("TenantId", "1");
+                return session;
             } 
         }
 

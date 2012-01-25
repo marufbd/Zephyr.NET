@@ -56,12 +56,14 @@
   <ItemGroup>
     <Compile Include="Domain\DomainEntity.cs" />
     <Compile Include="NHib\AutoPersistenceModelGenerator.cs" />
-    <Compile Include="NHib\Conventions\HasManyConvention.cs">
+    <Compile Include="NHib\Mapping\Conventions\EntityConvention.cs" />
+    <Compile Include="NHib\Mapping\Conventions\HasManyConvention.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="NHib\Conventions\PrimaryKeyConvention.cs" />
-    <Compile Include="NHib\Conventions\ReferenceConvention.cs" />
-    <Compile Include="NHib\Conventions\TableNameConvention.cs" />
+    <Compile Include="NHib\Mapping\Conventions\PrimaryKeyConvention.cs" />
+    <Compile Include="NHib\Mapping\Conventions\ReferenceConvention.cs" />
+    <Compile Include="NHib\Mapping\Conventions\TableNameConvention.cs" />
+    <Compile Include="NHib\Mapping\Filter\TenantFilter.cs" />
     <Compile Include="NHib\IAutoPersistenceModelGenerator.cs" />
     <Compile Include="NHib\NHibernateSession.cs" />
     <Compile Include="NHib\FrameworkMappingConfiguration.cs" />

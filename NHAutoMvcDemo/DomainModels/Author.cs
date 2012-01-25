@@ -32,6 +32,6 @@ namespace NHAutoMvcDemo.DomainModels
 
         public virtual DateTime AuthorBirthDate { get; set; }
 
-        public virtual IList<Book> WrittenBooks { get; set; } 
+        public virtual IList<Book> WrittenBooks { get; protected set; } 
     }
 }

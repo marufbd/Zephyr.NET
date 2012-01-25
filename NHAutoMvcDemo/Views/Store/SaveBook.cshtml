@@ -14,59 +14,59 @@
     <fieldset>
         <legend>Book</legend>
 
-        <div class="editor-label">
+        <div class="clearfix"/>
             @Html.LabelFor(model => model.Book.BookName)
-        </div>
-        <div class="editor-field">
+        
+        <div class="input">
             @Html.EditorFor(model => model.Book.BookName)
             @Html.ValidationMessageFor(model => model.Book.BookName)
         </div>
 
-        <div class="editor-label">
+        <div class="clearfix"/>
             @Html.LabelFor(model => model.Book.BookDescription)
-        </div>
-        <div class="editor-field">
+        
+        <div class="input">
             @Html.TextAreaFor(model => model.Book.BookDescription)
             @Html.ValidationMessageFor(model => model.Book.BookDescription)
         </div>
         
-        <div class="editor-label">
+        <div class="clearfix"/>
             Publisher
-        </div>
-        <div class="editor-field">
+        
+        <div class="input">
             @*@Html.DropDownList("SelectPublisherId", Model.PublisherList, "select..")*@
             @Html.DropDownListFor(model=>model.SelectPublisherId, Model.PublisherList, "select..")
             @Html.ValidationMessageFor(model => model.SelectPublisherId)
         </div>
 
-        <div class="editor-label">
+        <div class="clearfix"/>
             @Html.LabelFor(model => model.Book.PublishedDate)
-        </div>
-        <div class="editor-field">
+        
+        <div class="input">
             @Html.EditorFor(model => model.Book.PublishedDate)
             @Html.ValidationMessageFor(model => model.Book.PublishedDate)
         </div>
 
         @Html.HiddenFor(model => model.Book.Id)
 
-        <div class="editor-label">
+        <div class="clearfix"/>
             @Html.LabelFor(model => model.Book.CreatedBy)
-        </div>
-        <div class="editor-field">
+        
+        <div class="input">
             @Html.EditorFor(model => model.Book.CreatedBy)
             @Html.ValidationMessageFor(model => model.Book.CreatedBy)
         </div>
 
-        <div class="editor-label">
+        <div class="clearfix"/>
             @Html.LabelFor(model => model.Book.CreatedAt)
-        </div>
-        <div class="editor-field">
+        
+        <div class="input">
             @Html.EditorFor(model => model.Book.CreatedAt)
             @Html.ValidationMessageFor(model => model.Book.CreatedAt)
         </div>        
 
-        <p>
-            <input type="submit" value="Save" />
+        <p class="actions">
+            <input class="btn primary" type="submit" value="Save" />
         </p>
     </fieldset>
 }

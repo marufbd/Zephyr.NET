@@ -5,6 +5,7 @@ using FluentNHibernate.Automapping;
 using FluentNHibernate.Conventions;
 using MyFrameWork.Domain;
 using MyFrameWork.NHib.Conventions;
+using MyFrameWork.NHib.Mapping.Conventions;
 
 namespace MyFrameWork.NHib
 {
@@ -34,6 +35,7 @@ namespace MyFrameWork.NHib
                 {
                     c.Add<PrimaryKeyConvention>();                    
                     c.Add<TableNameConvention>();
+                    c.Add<EntityConvention>();
                     //should be used both or none - HasMany and Reference
                     c.Add<HasManyConvention>();
                     c.Add<ReferenceConvention>();

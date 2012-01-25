@@ -22,6 +22,7 @@ using System.Globalization;
 using System.Reflection;
 using System.Web.Hosting;
 using FluentNHibernate.Cfg;
+using MyFrameWork.NHib.Filter;
 using NHibernate;
 using NHibernate.Linq;
 
@@ -50,7 +51,7 @@ namespace MyFrameWork.NHib
         {            
             string[] mappingAssemblyNames = ConfigurationManager.AppSettings["MappingAssemblies"].ToString(CultureInfo.InvariantCulture).Split(';');
             string overrideAssemblyName  = ConfigurationManager.AppSettings["OverrideAssembly"];
-            string hbmExportPath = ConfigurationManager.AppSettings["HbmExportPath"];
+            string hbmExportPath = ConfigurationManager.AppSettings["HbmExportPath"];            
 
             var overrideAssembly = Assembly.LoadFrom(MakeLoadReadyAssemblyName(overrideAssemblyName));
 
@@ -76,6 +77,7 @@ namespace MyFrameWork.NHib
                                                                   model.OverrideAssembly = overrideAssembly;
 
                                                                   m.AutoMappings.Add(model.Generate).ExportTo(hbmExportPath);
+                                                                  m.FluentMappings.Add<TenantFilter>().ExportTo(hbmExportPath);
                                                               }
                                                               else
                                                               {
@@ -83,8 +85,7 @@ namespace MyFrameWork.NHib
                                                               }                                                              
                                                           });
 
-            Configuration = fConfig.BuildConfiguration();
-
+            Configuration = fConfig.BuildConfiguration();            
             Factory = Configuration.BuildSessionFactory();
             return Factory.OpenSession();
         }

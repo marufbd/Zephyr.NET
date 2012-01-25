@@ -5,11 +5,19 @@
     ViewBag.Title = "Publisher / Home";
 }
 
+@section Scripts
+{
+    <script src="@Url.Content("~/Scripts/bootstrap_1_4_0/bootstrap-modal.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+}
+
 <h2>Index</h2>
 
 <p>
     @(Html.ActionLink<PublisherController>(c=>c.Create(), "Create new publisher"))
 </p>
+
 <table>
     <tr>
         <th>
@@ -17,54 +25,51 @@
         </th>
         <th>
             No of Books
-        </th>
-        <th>
-            CreatedBy
-        </th>
+        </th>        
         <th>
             CreatedAt
-        </th>
-        <th>
-            LastUpdatedBy
-        </th>
+        </th>        
         <th>
             LastUpdatedAt
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.PublisherName)
-        </td>
-        <td>
-            @item.Books.Count
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreatedBy)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreatedAt)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LastUpdatedBy)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LastUpdatedAt)
-        </td>
-        <td>
-            @(Html.ActionLink<PublisherController>(c=>c.Edit(item.Id), "Edit")) |
-            @(Html.ActionLink<PublisherController>(c=>c.Details(item.Id), "Details"))
-        </td>
-        <td>
-            @using(Html.BeginForm<PublisherController>(c=>c.Delete(item.Id)))
-            {
-                @Html.AntiForgeryToken()
-                <input type="submit" value="delete" onclick="return confirm('Are you sure?')"/>
-            }
-        </td>
-    </tr>
-}
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.PublisherName)
+            </td>
+            <td>
+                @item.Books.Count
+            </td>        
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedAt)
+            </td>        
+            <td>
+                @Html.DisplayFor(modelItem => item.LastUpdatedAt)
+            </td>
+            <td>
+                @(Html.ActionLink<PublisherController>(c=>c.Edit(item.Id), "Edit")) |
+                @(Html.ActionLink<PublisherController>(c=>c.Details(item.Id), "Details"))
+            </td>
+            <td>
+                @using(Html.BeginForm<PublisherController>(c=>c.Delete(item.Id)))
+                {
+                    @Html.AntiForgeryToken()
+                    <input class="btn" type="submit" value="delete" onclick="return confirm('Are you sure?')"/>
+                }
+            </td>
+        </tr>
+    }
 
 </table>
+
+
+<p>
+    <!-- sample modal content -->
+    <div id="modal-edit-publisher" class="modal hide fade">
+        
+    
+    </div>
+</p>

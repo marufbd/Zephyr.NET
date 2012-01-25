@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Collections.Generic;
+using System.Web.Mvc;
 using MyFrameWork.Repository;
 using MyFrameWork.Repository.Contract;
 using NHAutoMvcDemo.DomainModels;
@@ -11,9 +12,9 @@ namespace NHAutoMvcDemo.Controllers
 
         //
         // GET: /Publisher/
-
+        
         public ActionResult Index()
-        {
+        {            
             var model = _repository.GetAll();
             
             return View(model);
@@ -53,7 +54,7 @@ namespace NHAutoMvcDemo.Controllers
 
             return RedirectToAction("Index");
         }
-
+        
         public ActionResult Details(long id)
         {
             var publisher = _repository.Get(id);  

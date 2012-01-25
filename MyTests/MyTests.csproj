@@ -76,6 +76,14 @@
     </None>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="HbmExport\filter-def.TenantFilter.hbm.xml" />
+    <Content Include="HbmExport\NHAutoMvcDemo.DomainModels.Author.hbm.xml" />
+    <Content Include="HbmExport\NHAutoMvcDemo.DomainModels.Book.hbm.xml" />
+    <Content Include="HbmExport\NHAutoMvcDemo.DomainModels.Publisher.hbm.xml" />
+    <Content Include="HbmExport\NHAutoMvcDemo.DomainModels.User.hbm.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

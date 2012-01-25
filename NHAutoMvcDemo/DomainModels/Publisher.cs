@@ -36,9 +36,10 @@ namespace NHAutoMvcDemo.DomainModels
         }
         
 
+        [Required]
         public virtual string PublisherName { get; set; }
 
-        public virtual IList<Book> Books { get; set; } 
+        public virtual IList<Book> Books { get; protected set; }
      
         public override string ToString()
         {

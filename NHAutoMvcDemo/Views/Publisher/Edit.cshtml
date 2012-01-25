@@ -14,50 +14,50 @@
     <fieldset>
         <legend>Publisher</legend>
 
-        <div class="editor-label">
+        <div class="clearfix"/>
             @Html.LabelFor(model => model.PublisherName)
-        </div>
-        <div class="editor-field">
+        
+        <div class="input">
             @Html.EditorFor(model => model.PublisherName)
             @Html.ValidationMessageFor(model => model.PublisherName)
         </div>
 
-        <div class="editor-label">
+        <div class="clearfix"/>
             @Html.LabelFor(model => model.CreatedBy)
-        </div>
-        <div class="editor-field">
+        
+        <div class="input">
             @Html.EditorFor(model => model.CreatedBy)
             @Html.ValidationMessageFor(model => model.CreatedBy)
         </div>
 
-        <div class="editor-label">
+        <div class="clearfix"/>
             @Html.LabelFor(model => model.CreatedAt)
-        </div>
-        <div class="editor-field">
+        
+        <div class="input">
             @Html.EditorFor(model => model.CreatedAt)
             @Html.ValidationMessageFor(model => model.CreatedAt)
         </div>
 
-        <div class="editor-label">
+        <div class="clearfix"/>
             @Html.LabelFor(model => model.LastUpdatedBy)
-        </div>
-        <div class="editor-field">
+        
+        <div class="input">
             @Html.EditorFor(model => model.LastUpdatedBy)
             @Html.ValidationMessageFor(model => model.LastUpdatedBy)
         </div>
 
-        <div class="editor-label">
+        <div class="clearfix"/>
             @Html.LabelFor(model => model.LastUpdatedAt)
-        </div>
-        <div class="editor-field">
+        
+        <div class="input">
             @Html.EditorFor(model => model.LastUpdatedAt)
             @Html.ValidationMessageFor(model => model.LastUpdatedAt)
         </div>
         
         @Html.HiddenFor(model=>model.Id)
 
-        <p>
-            <input type="submit" value="Save" />
+        <p class="actions">
+            <input class="btn primary" type="submit" value="Save" />
         </p>
     </fieldset>
 }

@@ -6,8 +6,11 @@
 
   <mvcSiteMapNode title="Home" controller="Home" action="Index">
     <mvcSiteMapNode title="About" controller="Home" action="About"/>
-    <mvcSiteMapNode title="Publisher" controller="Publisher" targetFrame="_blank">
+    <mvcSiteMapNode title="Publishers" controller="Publisher">
         <mvcSiteMapNode title="Details" controller="Publisher" action="Details"/>
+        <mvcSiteMapNode title="Books" controller="Store" action="Index">
+            <mvcSiteMapNode title="Details" controller="Store" action="BookDetails"/>
+        </mvcSiteMapNode>
     </mvcSiteMapNode>
   </mvcSiteMapNode>
 
