@@ -18,16 +18,16 @@
 #region REFERENCES
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using MyFrameWork.Domain;
+using System.ComponentModel.DataAnnotations;
+using Zephyr.Domain;
 
 #endregion REFERENCES
 
 namespace NHAutoMvcDemo.DomainModels
 {
-    public class Author : DomainEntity
+    public class Author : Entity
     {
+        [Required]
         public virtual string AuthorName { get; set; }
 
         public virtual DateTime AuthorBirthDate { get; set; }

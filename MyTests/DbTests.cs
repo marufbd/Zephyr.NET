@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using MyFrameWork.NHib;
 using NHibernate.Tool.hbm2ddl;
+using Zephyr.Data.NHib;
 
 namespace MyTests
 {
@@ -63,7 +63,7 @@ namespace MyTests
             //
             // TODO: Add test logic here
             //
-            MyFrameWork.NHib.NHibernateSession.Initialize(null);
+            NHibernateSession.Initialize(null);
 
             var config = NHibernateSession.Configuration;
 
@@ -77,7 +77,7 @@ namespace MyTests
             //
             // TODO: Add test logic here
             //
-            MyFrameWork.NHib.NHibernateSession.Initialize(null);            
+            NHibernateSession.Initialize(null);
 
             var config = NHibernateSession.Configuration;
 

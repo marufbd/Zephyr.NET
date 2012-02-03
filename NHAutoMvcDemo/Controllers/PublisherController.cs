@@ -1,13 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Web.Mvc;
-using MyFrameWork.Repository;
-using MyFrameWork.Repository.Contract;
+﻿using System.Web.Mvc;
 using NHAutoMvcDemo.DomainModels;
+using Zephyr.Data.Repository;
+using Zephyr.Data.Repository.Contract;
 
 namespace NHAutoMvcDemo.Controllers
 {
     public class PublisherController : Controller
-    {
+    {        
         private readonly IRepository<Publisher> _repository=new NhRepository<Publisher>();
 
         //

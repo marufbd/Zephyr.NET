@@ -16,18 +16,15 @@
 #endregion CODE HISTORY
 
 #region REFERENCES
-using System;
-using System.Collections.Generic;
+
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
-using MyFrameWork.Domain;
+using Zephyr.Domain;
 
 #endregion REFERENCES
 
 namespace NHAutoMvcDemo.DomainModels
 {
-    public class User : DomainEntity
+    public class User : Entity
     {
         [RegularExpression(@"[^A-Za-z0-9_@\.]|@{2,}|\.{5,}")]
         public virtual string Username { get; set; }

@@ -60,9 +60,9 @@
     <Compile Include="DbTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MyFrameWork\MyFrameWork.csproj">
+    <ProjectReference Include="..\MyFrameWork\Zephyr.csproj">
       <Project>{4D6444C0-273D-4B49-85C8-6CBA7E57CE02}</Project>
-      <Name>MyFrameWork</Name>
+      <Name>Zephyr</Name>
     </ProjectReference>
     <ProjectReference Include="..\NHAutoMvcDemo\NHAutoMvcDemo.csproj">
       <Project>{60B2CF98-AE23-49EE-911D-789A04709AFF}</Project>
@@ -78,10 +78,12 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="HbmExport\filter-def.DeletedFilter.hbm.xml" />
     <Content Include="HbmExport\filter-def.TenantFilter.hbm.xml" />
     <Content Include="HbmExport\NHAutoMvcDemo.DomainModels.Author.hbm.xml" />
     <Content Include="HbmExport\NHAutoMvcDemo.DomainModels.Book.hbm.xml" />
     <Content Include="HbmExport\NHAutoMvcDemo.DomainModels.Publisher.hbm.xml" />
+    <Content Include="HbmExport\NHAutoMvcDemo.DomainModels.Tag.hbm.xml" />
     <Content Include="HbmExport\NHAutoMvcDemo.DomainModels.User.hbm.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

@@ -10,8 +10,7 @@ using NHAutoMvcDemo.Models;
 namespace NHAutoMvcDemo.Controllers
 {
     public class AccountController : Controller
-    {
-
+    {        
         //
         // GET: /Account/LogOn
 

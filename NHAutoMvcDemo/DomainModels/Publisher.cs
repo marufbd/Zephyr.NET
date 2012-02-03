@@ -16,18 +16,16 @@
 #endregion CODE HISTORY
 
 #region REFERENCES
-using System;
+
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
-using MyFrameWork.Domain;
+using Zephyr.Domain;
 
 #endregion REFERENCES
 
 namespace NHAutoMvcDemo.DomainModels
 {
-    public class Publisher : DomainEntity
+    public class Publisher : Entity
     {
         public Publisher()
         {
@@ -44,6 +42,6 @@ namespace NHAutoMvcDemo.DomainModels
         public override string ToString()
         {
             return this.PublisherName;
-        }
+        }        
     }
 }

@@ -9,6 +9,7 @@
     <script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.min.js")" type="text/javascript"></script>
 
     <script src="@Url.Content("~/Scripts/bootstrap_1_4_0/bootstrap-dropdown.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/bootstrap_1_4_0/bootstrap-tabs.js")" type="text/javascript"></script>
     @RenderSection("Scripts", required:false)
 
     <link href="@Url.Content("~/Content/Styles/bootstrap_1_4_0/bootstrap.min.css")" rel="stylesheet"
@@ -48,12 +49,7 @@
         padding: 20px 20px 10px;
         margin: -20px -20px 20px;
       }
-
-      /* Styles you shouldn't keep as they are for displaying this base example only */
-      .content .span10,
-      .content .span4 {
-        min-height: 500px;
-      }
+      
       /* Give a quick and non-cross-browser friendly divider */
       .content .span4 {
         margin-left: 0;
@@ -93,22 +89,20 @@
       </div>
     </div>
 
-    <div class="container">
-
-      <div class="content">
-        <div class="page-header">
-          Breadcrumb: @Html.MvcSiteMap().SiteMapPath()
-        </div>
-        <div class="row">
-          <div class="span10">
-              @RenderBody()
-          </div>
-            <div class="span4">
-                Menu: @Html.MvcSiteMap().Menu()
-                MvcSiteMap: @Html.MvcSiteMap().SiteMap()
+    <div class="container">      
+        <div class="content">
+            @Html.MvcSiteMap().SiteMapPath()
+            
+            <div class="row">
+                <div class="span10">
+                    @RenderBody()
+                </div>
+                <div class="span4">
+                    Menu: @Html.MvcSiteMap().Menu()
+                    MvcSiteMap: @Html.MvcSiteMap().SiteMap()
+                </div>
             </div>
         </div>
-      </div>
 
       <footer>
         <p>&copy; Company 2011</p>

@@ -8,9 +8,9 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Add new Book", "AddBook")
+    @(Html.ActionLink<StoreController>(c=>c.AddBook(), "Add new Book"))
 </p>
-<table>
+<table class="condensed-table zebra-striped">
     <tr>
         <th>
             Name
@@ -28,7 +28,7 @@
         <th></th>
         <th></th>
     </tr>
-
+<tbody>
 @foreach (var item in Model) {
     <tr>
         <td>
@@ -56,5 +56,5 @@
         </td>
     </tr>
 }
-
+</tbody>
 </table>

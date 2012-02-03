@@ -1,4 +1,5 @@
-﻿@{
+﻿@using Zephyr.Web.Mvc.Html.Models
+@{
     ViewBag.Title = "Home Page";
 }
 
@@ -6,3 +7,9 @@
 <p>
     To learn more about ASP.NET MVC visit <a href="http://asp.net/mvc" title="ASP.NET MVC Website">http://asp.net/mvc</a>.
 </p>
+
+@Html.Titan().Tabs(new[]{
+                            new TabItemModel(){ Title = "About", HtmlContent = Html.Partial("_LogOnPartial"), Active = true },
+                            new TabItemModel() { Title = "StoreFront", ControllerName = "Store" },
+                            new TabItemModel() { Title = "Publisher", ControllerName = "Publisher" }
+                        })

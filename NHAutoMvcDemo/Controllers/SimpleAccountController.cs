@@ -4,10 +4,10 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
-using MyFrameWork.Repository;
-using MyFrameWork.Repository.Contract;
 using NHAutoMvcDemo.DomainModels;
 using NHAutoMvcDemo.Models;
+using Zephyr.Data.Repository;
+using Zephyr.Data.Repository.Contract;
 
 namespace NHAutoMvcDemo.Controllers
 {

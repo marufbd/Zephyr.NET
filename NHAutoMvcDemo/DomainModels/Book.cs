@@ -19,20 +19,18 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using MyFrameWork.Domain;
+using Zephyr.Domain;
 
 #endregion REFERENCES
 
 namespace NHAutoMvcDemo.DomainModels
 {
-    public class Book : DomainEntity
+    public class Book : Entity
     {
         public  Book()
         {
             this.PublishedDate = DateTime.Now;
         }
-
-
         
         [Required]
         public virtual string BookName { get; set; }
@@ -41,6 +39,7 @@ namespace NHAutoMvcDemo.DomainModels
         
         public virtual DateTime PublishedDate { get; set; }
         
+        [Required]
         public virtual Publisher Publisher { get; set; }
 
         public virtual IList<Author> Authors { get; set; }

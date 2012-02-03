@@ -8,7 +8,6 @@ using MvcMiniProfiler.Data;
 using MvcMiniProfiler.MVCHelpers;
 using Microsoft.Web.Infrastructure;
 using Microsoft.Web.Infrastructure.DynamicModuleHelper;
-using MyFrameWork.NHib;
 using NHAutoMvcDemo.DomainModels;
 using NHibernate;
 

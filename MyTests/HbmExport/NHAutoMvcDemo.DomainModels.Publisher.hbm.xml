@@ -1,6 +1,6 @@
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
   <class xmlns="urn:nhibernate-mapping-2.2" name="NHAutoMvcDemo.DomainModels.Publisher, NHAutoMvcDemo, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" table="Publishers">
-    <id name="Id" type="System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" unsaved-value="0">
+    <id name="Id" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" unsaved-value="0">
       <column name="Id" />
       <generator class="identity" />
     </id>
@@ -9,6 +9,7 @@
         <column name="PublisherFk" />
       </key>
       <one-to-many class="NHAutoMvcDemo.DomainModels.Book, NHAutoMvcDemo, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
+      <filter name="DeletedFilter" />
     </bag>
     <property name="PublisherName" type="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
       <column name="PublisherName" />
@@ -25,9 +26,10 @@
     <property name="LastUpdatedAt" type="System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
       <column name="LastUpdatedAt" />
     </property>
-    <property name="TenantId" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-      <column name="TenantId" />
+    <property name="IsDeleted" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <column name="IsDeleted" />
     </property>
     <filter name="TenantFilter" />
+    <filter name="DeletedFilter" />
   </class>
 </hibernate-mapping>

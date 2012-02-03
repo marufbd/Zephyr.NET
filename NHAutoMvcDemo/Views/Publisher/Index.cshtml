@@ -18,7 +18,7 @@
     @(Html.ActionLink<PublisherController>(c=>c.Create(), "Create new publisher"))
 </p>
 
-<table>
+<table class="zebra-striped">
     <tr>
         <th>
             PublisherName
@@ -32,9 +32,10 @@
         <th>
             LastUpdatedAt
         </th>
+        <th colspan="2"></th>
         <th></th>
     </tr>
-
+    <tbody>
     @foreach (var item in Model) {
         <tr>
             <td>
@@ -49,9 +50,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.LastUpdatedAt)
             </td>
-            <td>
+            <td colspan="2">
                 @(Html.ActionLink<PublisherController>(c=>c.Edit(item.Id), "Edit")) |
-                @(Html.ActionLink<PublisherController>(c=>c.Details(item.Id), "Details"))
+                @(Html.ActionLink<PublisherController>(c=>c.Details(item.Id), "Details"))                                
             </td>
             <td>
                 @using(Html.BeginForm<PublisherController>(c=>c.Delete(item.Id)))
@@ -62,7 +63,7 @@
             </td>
         </tr>
     }
-
+    </tbody>
 </table>
 
 

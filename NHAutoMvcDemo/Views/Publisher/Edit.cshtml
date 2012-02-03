@@ -15,7 +15,7 @@
         <legend>Publisher</legend>
 
         <div class="clearfix"/>
-            @Html.LabelFor(model => model.PublisherName)
+        @Html.LabelFor(model => model.PublisherName)
         
         <div class="input">
             @Html.EditorFor(model => model.PublisherName)
@@ -23,7 +23,7 @@
         </div>
 
         <div class="clearfix"/>
-            @Html.LabelFor(model => model.CreatedBy)
+        @Html.LabelFor(model => model.CreatedBy)
         
         <div class="input">
             @Html.EditorFor(model => model.CreatedBy)
@@ -31,7 +31,7 @@
         </div>
 
         <div class="clearfix"/>
-            @Html.LabelFor(model => model.CreatedAt)
+        @Html.LabelFor(model => model.CreatedAt)
         
         <div class="input">
             @Html.EditorFor(model => model.CreatedAt)
@@ -39,7 +39,7 @@
         </div>
 
         <div class="clearfix"/>
-            @Html.LabelFor(model => model.LastUpdatedBy)
+        @Html.LabelFor(model => model.LastUpdatedBy)
         
         <div class="input">
             @Html.EditorFor(model => model.LastUpdatedBy)
@@ -47,19 +47,18 @@
         </div>
 
         <div class="clearfix"/>
-            @Html.LabelFor(model => model.LastUpdatedAt)
+        @Html.LabelFor(model => model.LastUpdatedAt)
         
         <div class="input">
             @Html.EditorFor(model => model.LastUpdatedAt)
             @Html.ValidationMessageFor(model => model.LastUpdatedAt)
-        </div>
+        </div>                
         
         @Html.HiddenFor(model=>model.Id)
-
-        <p class="actions">
-            <input class="btn primary" type="submit" value="Save" />
-        </p>
     </fieldset>
+    <p class="actions">
+           <input class="btn primary" type="submit" value="Save" />
+    </p>
 }
 
 <div>
