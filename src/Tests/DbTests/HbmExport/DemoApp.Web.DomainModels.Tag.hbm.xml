@@ -1,0 +1,28 @@
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class xmlns="urn:nhibernate-mapping-2.2" name="DemoApp.Web.DomainModels.Tag, DemoApp.Web, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" table="Tags">
+    <id name="Id" type="System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" unsaved-value="0">
+      <column name="Id" />
+      <generator class="identity" />
+    </id>
+    <property name="Name" type="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <column name="Name" />
+    </property>
+    <property name="CreatedBy" type="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <column name="CreatedBy" />
+    </property>
+    <property name="CreatedAt" type="System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <column name="CreatedAt" />
+    </property>
+    <property name="LastUpdatedBy" type="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <column name="LastUpdatedBy" />
+    </property>
+    <property name="LastUpdatedAt" type="System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <column name="LastUpdatedAt" />
+    </property>
+    <property name="IsDeleted" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <column name="IsDeleted" />
+    </property>
+    <filter name="TenantFilter" />
+    <filter name="DeletedFilter" />
+  </class>
+</hibernate-mapping>

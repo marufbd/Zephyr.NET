@@ -8,3 +8,4 @@ A bare minimum code class library project named MyFramework and a sample ASP.NET
 
 
 #Used asp.net mvc mini profiler for profiling mvc and nhibernate sql.
+#I am using a profiled driver class for sql ce. If u r using another database, u can omit the nhibernate config for profiled driver class or implement your own
