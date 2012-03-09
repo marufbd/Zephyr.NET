@@ -1,0 +1,5 @@
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <filter-def name="TenantFilter" condition="TenantId = :TenantId">
+    <filter-param name="TenantId" type="String" />
+  </filter-def>
+</hibernate-mapping>

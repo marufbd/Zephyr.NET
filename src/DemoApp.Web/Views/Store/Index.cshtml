@@ -1,0 +1,61 @@
+﻿@using DemoApp.Web.Controllers
+@model IEnumerable<DemoApp.Web.DomainModels.Book>
+
+@{
+    ViewBag.Title = "Store / Home";
+}
+
+<h2>Index</h2>
+
+<p>    
+    @(Html.ActionLink<StoreController>(c=>c.AddBook(), "Add new Book", new {@class="btn"}))    
+</p>
+<table class="table table-condensed">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Publisher 
+            </th>
+            <th>
+                PublishedDate
+            </th>
+            <th>
+                Created At:
+            </th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+<tbody>
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.BookName)
+        </td>
+        <td>
+            @Html.ActionLink(item.Publisher.ToString(), "Details", "Publisher", new {id=item.Publisher.Id}, null)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PublishedDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreatedAt)
+        </td>      
+        <td>
+            @(Html.ActionLink<StoreController>(c=>c.SaveBook(item.Id), "Edit")) |
+            @(Html.ActionLink<StoreController>(c=>c.BookDetails(item.Id), "Details"))
+        </td>
+        <td>
+            @using(Html.BeginForm<StoreController>(c=>c.DeleteBook(item.Id)))
+            {
+                @Html.AntiForgeryToken()
+                <input class="btn" type="submit" value="delete" onclick="return confirm('Are you sure?')"/>
+            }
+        </td>
+    </tr>
+}
+</tbody>
+</table>

@@ -1,0 +1,73 @@
+﻿@model DomainModels.Publisher
+
+@{
+    ViewBag.Title = "Publisher / Create";
+}
+
+<div class="modal-header">
+    <a href="#" class="close">&times;</a>
+    <h3>Save/Create Publisher</h3>
+</div>
+
+@using (Html.BeginForm("Edit", "Publisher"))
+{
+
+    <div class="modal-body">
+        <p>        
+            @Html.ValidationSummary(true)
+            <fieldset>
+                <legend>Publisher</legend>
+
+                <div class="clearfix"/>
+                @Html.LabelFor(model => model.PublisherName)
+        
+                <div class="input">
+                    @Html.EditorFor(model => model.PublisherName)
+                    @Html.ValidationMessageFor(model => model.PublisherName)
+                </div>
+
+                <div class="clearfix"/>
+                @Html.LabelFor(model => model.CreatedBy)
+        
+                <div class="input">
+                    @Html.EditorFor(model => model.CreatedBy)
+                    @Html.ValidationMessageFor(model => model.CreatedBy)
+                </div>
+
+                <div class="clearfix"/>
+                @Html.LabelFor(model => model.CreatedAt)
+        
+                <div class="input">
+                    @Html.EditorFor(model => model.CreatedAt)
+                    @Html.ValidationMessageFor(model => model.CreatedAt)
+                </div>
+
+                <div class="clearfix"/>
+                @Html.LabelFor(model => model.LastUpdatedBy)
+        
+                <div class="input">
+                    @Html.EditorFor(model => model.LastUpdatedBy)
+                    @Html.ValidationMessageFor(model => model.LastUpdatedBy)
+                </div>
+
+                <div class="clearfix"/>
+                @Html.LabelFor(model => model.LastUpdatedAt)
+        
+                <div class="input">
+                    @Html.EditorFor(model => model.LastUpdatedAt)
+                    @Html.ValidationMessageFor(model => model.LastUpdatedAt)
+                </div>
+        
+                @Html.HiddenFor(model => model.Id)                
+            </fieldset>
+        
+        </p>
+    </div>
+
+    <div class="modal-footer">
+        <input class="btn primary" type="submit" value="Save" />
+        <a href="#" class="btn primary">Primary</a>
+        <a href="#" class="btn secondary">Secondary</a>
+    </div>
+
+}

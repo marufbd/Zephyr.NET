@@ -1,0 +1,36 @@
+﻿@model DemoApp.Web.DomainModels.Book
+
+
+    <div class="clearfix"/>
+    @Html.LabelFor(model => model.BookName)
+        
+    <div class="input">
+        @Html.EditorFor(model => model.BookName)
+        @Html.ValidationMessageFor(model => model.BookName)
+    </div>
+
+    <div class="clearfix"/>
+    @Html.LabelFor(model => model.BookDescription)
+        
+    <div class="input">
+        @Html.TextAreaFor(model => model.BookDescription)
+        @Html.ValidationMessageFor(model => model.BookDescription)
+    </div>                
+
+    <div class="clearfix"/>
+    @Html.LabelFor(model => model.PublishedDate)
+    
+    <div class="input">
+        @Html.EditorFor(model => model.PublishedDate)
+        @Html.ValidationMessageFor(model => model.PublishedDate)
+    </div>
+
+    @Html.HiddenFor(model => model.Id)
+
+    <div class="clearfix"/>
+    @Html.LabelFor(model => model.CreatedBy)
+        
+    <div class="input">
+        @Html.EditorFor(model => model.CreatedBy)
+        @Html.ValidationMessageFor(model => model.CreatedBy)
+    </div>    

@@ -1,0 +1,8 @@
+﻿@using DemoApp.Web.Controllers
+@if(Request.IsAuthenticated) {
+    <text>Welcome <strong>@User.Identity.Name</strong>!
+    [ @(Html.ActionLink<SimpleAccountController>(c=>c.LogOff(), "Log off")) ]</text>
+}
+else {
+    @:[ @(Html.ActionLink<SimpleAccountController>(c => c.LogOn(), "Log on")) ]
+}

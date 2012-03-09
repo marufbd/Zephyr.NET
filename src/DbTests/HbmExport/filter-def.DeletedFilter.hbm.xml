@@ -1,0 +1,5 @@
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <filter-def name="DeletedFilter" condition="IsDeleted = :IsDeleted">
+    <filter-param name="IsDeleted" type="Boolean" />
+  </filter-def>
+</hibernate-mapping>

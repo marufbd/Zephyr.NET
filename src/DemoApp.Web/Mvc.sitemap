@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<mvcSiteMap xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-3.0"
+            xsi:schemaLocation="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-3.0 MvcSiteMapSchema.xsd"
+            enableLocalization="true">
+
+  <mvcSiteMapNode title="Home" controller="Home" action="Index">
+    <mvcSiteMapNode title="About" controller="Home" action="About"/>
+    <mvcSiteMapNode title="Publishers" controller="Publisher">
+        <mvcSiteMapNode title="Details" controller="Publisher" action="Details" visibility="!MenuHelper"/>
+        <mvcSiteMapNode title="Edit" controller="Publisher" action="Edit" visibility="!MenuHelper"/>
+        <mvcSiteMapNode title="Books" controller="Store" action="Index">
+            <mvcSiteMapNode title="Add new book" controller="Store" action="AddBook"/>
+            <mvcSiteMapNode title="Save book" controller="Store" action="SaveBook" visibility="SiteMapPathHelper,!*"/>
+            <mvcSiteMapNode title="Details" controller="Store" action="BookDetails"/>
+        </mvcSiteMapNode>
+    </mvcSiteMapNode>
+  </mvcSiteMapNode>
+
+</mvcSiteMap>

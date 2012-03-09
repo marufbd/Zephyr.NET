@@ -1,0 +1,19 @@
+﻿namespace Zephyr.Specification
+{
+    public class AndSpecification<TEntity> : ISpecification<TEntity>
+    {
+        private readonly ISpecification<TEntity> _spec1;
+        private readonly ISpecification<TEntity> _spec2;
+
+        public AndSpecification(ISpecification<TEntity> s1, ISpecification<TEntity> s2)
+        {
+            this._spec1 = s1;
+            this._spec2 = s2;
+        }
+
+        public bool IsSatisfiedBy(TEntity canditate)
+        {
+            return _spec1.IsSatisfiedBy(canditate) && _spec2.IsSatisfiedBy(canditate);
+        }
+    }
+}

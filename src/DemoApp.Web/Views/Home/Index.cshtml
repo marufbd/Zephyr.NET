@@ -1,0 +1,28 @@
+﻿@using Zephyr.Web.Mvc.Html.Models
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<h2>@ViewBag.Message</h2>
+<p>
+    To learn more about ASP.NET MVC visit <a href="http://asp.net/mvc" title="ASP.NET MVC Website">http://asp.net/mvc</a>.
+</p>
+
+@Html.Zephyr().Tabs(new[]{
+                            new TabItemModel(){ Title = "About", HtmlContent = Html.Partial("_LogOnPartial"), Active = true },
+                            new TabItemModel() { Title = "StoreFront", ControllerName = "Store" },
+                            new TabItemModel() { Title = "Publisher", ControllerName = "Publisher" }
+                        })
+                        
+                        
+<button class="btn" onclick="test()">Test</button>
+                        
+<script type="text/javascript">
+    function test() {
+            $.get("/Home/About",
+                function (data) {
+                    alert("Data loaded: " + data);
+                }
+            );
+        }    
+</Script>
