@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\ZephyrController.cs" />
+    <Compile Include="Controllers\ZephyrCRUDController.cs" />
     <Compile Include="Html\CommonHtmlHelper.cs" />
     <Compile Include="Initialization\MvcAppBootstrapper.cs" />
     <Compile Include="Windsor\Installers\ControllersInstaller.cs" />
@@ -87,6 +88,11 @@
       <Project>{4D6444C0-273D-4B49-85C8-6CBA7E57CE02}</Project>
       <Name>Zephyr</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Html\DisplayTemplates\EnumCheckBox.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

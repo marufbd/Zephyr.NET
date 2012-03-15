@@ -12,6 +12,6 @@ namespace Zephyr.Web.Mvc.Html
         {
             var appName = Zephyr.Configuration.ZephyrConfiguration.ZephyrSettings.AppName;
             return new MvcHtmlString(appName + " - " + titanHelper.HtmlHelper.ViewData["Title"]);
-        }
+        }        
     }
 }

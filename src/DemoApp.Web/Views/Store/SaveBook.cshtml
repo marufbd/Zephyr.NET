@@ -36,7 +36,8 @@
         <div class="input">
             @*@Html.DropDownList("SelectPublisherId", Model.PublisherList, "select..")*@
             @Html.DropDownListFor(model=>model.SelectPublisherId, Model.PublisherList, "select..")
-            @Html.ValidationMessageFor(model => model.SelectPublisherId)
+            @Html.ValidationMessageFor(model => model.SelectPublisherId)                     
+                        
         </div>
 
         <div class="clearfix"/>
@@ -64,6 +65,7 @@
         </div>        
         
         @Html.HiddenFor(model => model.Book.Id)
+
 
         <div class="form-actions">
             <button class="btn btn-primary" type="submit"><i class="icon-ok icon-white"></i> 

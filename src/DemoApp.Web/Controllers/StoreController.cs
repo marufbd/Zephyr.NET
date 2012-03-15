@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using DemoApp.Web.DomainModels;
@@ -23,7 +24,6 @@ namespace DemoApp.Web.Controllers
 
         //
         // GET: /Book/
-                
         public ActionResult Index()
         {
             //var model = _repositoryBook.GetAllPaged(2, 2);
@@ -53,7 +53,7 @@ namespace DemoApp.Web.Controllers
         public ActionResult SaveBook(VmBook vmbook)
         {
             if (ModelState.IsValid)
-            {                
+            {
                 vmbook.Book.Publisher = _repositoryPublisher.Get(vmbook.SelectPublisherId);
                 _repositoryBook.SaveOrUpdate(vmbook.Book);
                 return RedirectToAction("Index");
