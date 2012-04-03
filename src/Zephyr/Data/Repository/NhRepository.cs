@@ -77,11 +77,13 @@ namespace Zephyr.Data.Repository
         public void Delete(T entity)
         {
             Session.Delete(entity);
+            Session.Flush();            
         }
 
         public void Delete(long id)
         {
             Session.Delete(Session.Get<T>(id));
+            Session.Flush();
         } 
     }
 }

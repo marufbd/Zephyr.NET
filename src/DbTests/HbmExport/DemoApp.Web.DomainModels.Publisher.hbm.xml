@@ -4,7 +4,7 @@
       <column name="Id" />
       <generator class="identity" />
     </id>
-    <bag batch-size="5" cascade="all" name="Books">
+    <bag batch-size="5" cascade="all" inverse="true" name="Books">
       <key>
         <column name="PublisherFk" />
       </key>

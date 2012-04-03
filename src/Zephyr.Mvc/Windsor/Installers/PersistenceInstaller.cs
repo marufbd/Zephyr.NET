@@ -20,7 +20,7 @@ namespace Zephyr.Web.Mvc.Windsor.Installers
         protected override void Init()
         {
             var nhibConfig = NHibernateSession.Configuration;
-            Kernel.Register(Component.For<ISessionFactory>().UsingFactoryMethod(_ => nhibConfig.BuildSessionFactory()),
+            Kernel.Register(Component.For<ISessionFactory>().UsingFactoryMethod(_ => nhibConfig.BuildSessionFactory()).LifestyleSingleton(),
                             Component.For<ISession>().UsingFactoryMethod(k => k.Resolve<ISessionFactory>().OpenSession())
                                 .LifestylePerWebRequest());
         }

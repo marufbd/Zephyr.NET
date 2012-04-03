@@ -111,8 +111,8 @@ namespace Zephyr.Data.NHib
 
 
             //Enable audit on save or update
-            fConfig.ExposeConfiguration(
-                c => c.EventListeners.PreUpdateEventListeners = new[] {new EventListeners.AuditUpdateListener()});
+            //fConfig.ExposeConfiguration(c => c.EventListeners.PreUpdateEventListeners = new[] {new EventListeners.AuditUpdateListener()});
+            
             //Set delete listener for soft delete
             if (zephyrConfig.SoftDeleteEnabled)
                 fConfig.ExposeConfiguration(

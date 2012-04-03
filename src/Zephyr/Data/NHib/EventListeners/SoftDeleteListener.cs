@@ -24,7 +24,7 @@ namespace Zephyr.Data.NHib.EventListeners
             }
             else
             {
-                base.DeleteEntity(session, entity, entityEntry, isCascadeDeleteEnabled, persister, transientEntities);    
+                base.DeleteEntity(session, entity, entityEntry, isCascadeDeleteEnabled, persister, transientEntities);
             }
         }
     }
