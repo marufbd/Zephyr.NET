@@ -50,7 +50,7 @@ namespace Zephyr.Configuration
             var mapConfigLogPath = ConfigurationManager.AppSettings["MappingConfigLogPath"] as string;
             if (mapConfigLogPath!=null)
             {                
-                settings.Add("MappingConfigLogPath", ConfigurationManager.AppSettings["MappingConfigLogPath"]);
+                settings.Add("MappingConfigLogPath", mapConfigLogPath);
             }            
 
             settings.Add("NHibConfigPath", GetNHibConfigPath());
