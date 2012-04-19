@@ -56,7 +56,8 @@ namespace Zephyr.Data.NHib
         /// </summary>
         /// <returns></returns>
         public static ISession Initialize(IAutoPersistenceModelGenerator modelGenerator)
-        {
+        {            
+
             var zephyrConfig = new ZephyrConfig();
             var dataConfig = zephyrConfig.DataConfig;
             var mappingAssemblyNames = dataConfig.MappingAssemblies;
@@ -111,7 +112,7 @@ namespace Zephyr.Data.NHib
 
 
             //Enable audit on save or update
-            //fConfig.ExposeConfiguration(c => c.EventListeners.PreUpdateEventListeners = new[] {new EventListeners.AuditUpdateListener()});
+            fConfig.ExposeConfiguration(c => c.EventListeners.PreUpdateEventListeners = new[] {new EventListeners.AuditUpdateListener()});
             
             //Set delete listener for soft delete
             if (zephyrConfig.SoftDeleteEnabled)

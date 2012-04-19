@@ -76,6 +76,8 @@
     <Compile Include="DesignByContract\InvariantException.cs" />
     <Compile Include="DesignByContract\PostconditionException.cs" />
     <Compile Include="DesignByContract\PreconditionException.cs" />
+    <Compile Include="Domain\Audit\AuditType.cs" />
+    <Compile Include="Domain\Audit\AuditChangeLog.cs" />
     <Compile Include="Domain\BaseObject.cs" />
     <Compile Include="Domain\BaseObjectEqualityComparer.cs" />
     <Compile Include="Data\NHib\AutoPersistenceModelGenerator.cs" />
@@ -93,7 +95,7 @@
     <Compile Include="Domain\DomainSignatureAttribute.cs" />
     <Compile Include="Domain\Entity.cs" />
     <Compile Include="Domain\EntityWithTypedId.cs" />
-    <Compile Include="Domain\IAuditable.cs" />
+    <Compile Include="Domain\Audit\IAuditable.cs" />
     <Compile Include="Domain\IEntityWithTypedId.cs" />
     <Compile Include="Domain\IHasAssignedId.cs" />
     <Compile Include="Domain\ValidatableObject.cs" />

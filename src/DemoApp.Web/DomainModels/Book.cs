@@ -22,12 +22,13 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Zephyr.Domain;
 using System.Linq;
+using Zephyr.Domain.Audit;
 
 #endregion REFERENCES
 
 namespace DemoApp.Web.DomainModels
 {
-    public class Book : Entity
+    public class Book : Entity, IAuditable
     {        
         public  Book()
         {
