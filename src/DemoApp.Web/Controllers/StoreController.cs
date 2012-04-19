@@ -51,11 +51,15 @@ namespace DemoApp.Web.Controllers
 
         [HttpPost]
         public ActionResult SaveBook(VmBook vmbook)
-        {
-            if (ModelState.IsValid)
+        {            
+            vmbook.Book = _repositoryBook.Get(vmbook.Book.Id);
+
+            if (TryUpdateModel(vmbook) &&  ModelState.IsValid)
             {
                 vmbook.Book.Publisher = _repositoryPublisher.Get(vmbook.SelectPublisherId);
+                
                 _repositoryBook.SaveOrUpdate(vmbook.Book);
+                
                 return RedirectToAction("Index");
             }
             else

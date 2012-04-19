@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Globalization;
 using System.Web.Hosting;
 using NHibernate.Linq;
+using System.Linq;
 
 namespace Zephyr.Configuration
 {
@@ -35,9 +36,12 @@ namespace Zephyr.Configuration
             IDictionary<string, object> settings=new Dictionary<string, object>();
 
             IList<string> mappingAssemblies=new List<string>();
-            
-            ConfigurationManager.AppSettings["MappingAssemblies"].ToString(CultureInfo.InvariantCulture).Split(';')
-                .ForEach(s=>mappingAssemblies.Add(MakeLoadReadyAssemblyName(s)));
+
+            var asmNames =
+                ConfigurationManager.AppSettings["MappingAssemblies"].ToString(CultureInfo.InvariantCulture).Split(';').
+                    Where(n => !String.IsNullOrEmpty(n)).ToList();
+            asmNames.Add(typeof(ZephyrConfiguration).Assembly.GetName().Name);
+            asmNames.Distinct().ForEach(s=>mappingAssemblies.Add(MakeLoadReadyAssemblyName(s)));
             
             settings.Add("MappingAssemblies", mappingAssemblies);
             settings.Add("OverrideAssembly", MakeLoadReadyAssemblyName(ConfigurationManager.AppSettings["OverrideAssembly"]));            
@@ -74,7 +78,7 @@ namespace Zephyr.Configuration
         }
 
         private string MakeLoadReadyAssemblyName(string assemblyName)
-        {
+        {            
             if (assemblyName.EndsWith(".exe"))
                 return GetAppPath() + assemblyName.Trim();
 
