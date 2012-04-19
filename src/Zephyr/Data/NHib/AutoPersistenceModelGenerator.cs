@@ -3,6 +3,7 @@ using System.Reflection;
 using System;
 using FluentNHibernate.Automapping;
 using FluentNHibernate.Conventions;
+using Zephyr.Configuration;
 using Zephyr.Data.NHib.Mapping.Conventions;
 using Zephyr.Domain;
 
@@ -12,6 +13,7 @@ namespace Zephyr.Data.NHib
     {
         public List<Assembly> AutoMappingAssemblies { get; set; }
         public Assembly OverrideAssembly { get; set; }
+        public Assembly CoreFrameworkAssembly { get; set; }
 
         public AutoPersistenceModelGenerator(Assembly overrideAssembly)
         {
@@ -26,7 +28,8 @@ namespace Zephyr.Data.NHib
                     .Conventions
                     .Setup(this.GetConventions())
                     .IgnoreBase<Entity>()
-                    .UseOverridesFromAssembly(this.OverrideAssembly);
+                    .UseOverridesFromAssembly(this.OverrideAssembly)
+                    .UseOverridesFromAssembly(this.CoreFrameworkAssembly);
         }
 
         private Action<IConventionFinder> GetConventions()
@@ -39,6 +42,8 @@ namespace Zephyr.Data.NHib
                     //should be used both or none - HasMany and Reference
                     c.Add<HasManyConvention>();
                     c.Add<ReferenceConvention>();
+                    
+                    c.AddAssembly(this.CoreFrameworkAssembly);
                     c.AddAssembly(this.OverrideAssembly);
                 };
         }

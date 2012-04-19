@@ -98,8 +98,10 @@
     <Compile Include="Domain\Audit\IAuditable.cs" />
     <Compile Include="Domain\IEntityWithTypedId.cs" />
     <Compile Include="Domain\IHasAssignedId.cs" />
+    <Compile Include="Domain\MappingOverrides\AuditChangeLogMappingOverride.cs" />
     <Compile Include="Domain\ValidatableObject.cs" />
     <Compile Include="Domain\ValueObject.cs" />
+    <Compile Include="Exceptions\AuditException.cs" />
     <Compile Include="Extensions\LinqExtensions.cs" />
     <Compile Include="Initialization\IAppBootstrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

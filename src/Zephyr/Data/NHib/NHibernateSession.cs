@@ -74,7 +74,7 @@ namespace Zephyr.Data.NHib
             FluentConfiguration fConfig = Fluently.Configure(cfg)
                                             .Mappings(m =>
                                                           {
-                                                              //add hbm files from mapping assembliems of any
+                                                              //add hbm files from mapping assemblies
                                                               mappingAssemblies.ForEach(asm=>m.HbmMappings.AddFromAssembly(asm));
 
                                                               if (modelGenerator == null)
@@ -82,7 +82,11 @@ namespace Zephyr.Data.NHib
                                                                   //get default persistent model generator
                                                                   var model =
                                                                       new AutoPersistenceModelGenerator(overrideAssembly)
-                                                                          {AutoMappingAssemblies = mappingAssemblies};
+                                                                          {
+                                                                              AutoMappingAssemblies = mappingAssemblies,
+                                                                              CoreFrameworkAssembly =
+                                                                                  typeof (ZephyrConfiguration).Assembly
+                                                                          };
 
 
                                                                   if(zephyrConfig.ExportHbm)

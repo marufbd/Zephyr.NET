@@ -4,6 +4,12 @@
       <column name="Id" />
       <generator class="identity" />
     </id>
+    <property name="OldPropertyValue" type="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <column name="OldPropertyValue" length="5000" />
+    </property>
+    <property name="NewPropertyValue" type="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <column name="NewPropertyValue" length="5000" />
+    </property>
     <property name="EntityIdentifier" type="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
       <column name="EntityIdentifier" />
     </property>
@@ -18,12 +24,6 @@
     </property>
     <property name="PropertyName" type="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
       <column name="PropertyName" />
-    </property>
-    <property name="OldPropertyValue" type="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-      <column name="OldPropertyValue" />
-    </property>
-    <property name="NewPropertyValue" type="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-      <column name="NewPropertyValue" />
     </property>
     <property name="CreatedBy" type="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
       <column name="CreatedBy" />

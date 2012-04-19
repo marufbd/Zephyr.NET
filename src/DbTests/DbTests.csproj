@@ -75,9 +75,9 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="nHibernate.config">
+    <Content Include="nHibernate.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    </Content>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

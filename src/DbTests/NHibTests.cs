@@ -12,7 +12,7 @@ namespace MyTests
         [TestMethod]
         public void LoadData()
         {
-            ISession session = NHibernateSession.Initialize(null);            
+            ISession session = NHibernateSession.Initialize(null); 
 
             var pubOrelly = new Publisher();
             var pubWrox = new Publisher();

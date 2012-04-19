@@ -69,21 +69,21 @@ namespace Zephyr.Data.Repository
         public T SaveOrUpdate(T entity)
         {                        
             Session.SaveOrUpdate(entity);
-            Session.Flush();
+            
+            //line below triggers a NHibernate.AssertionFailure
+            //Session.Flush();
 
             return entity;
         }
 
         public void Delete(T entity)
         {
-            Session.Delete(entity);
-            Session.Flush(); 
+            Session.Delete(entity);            
         }
 
         public void Delete(long id)
         {
-            Session.Delete(Session.Get<T>(id));
-            Session.Flush();
+            Session.Delete(Session.Get<T>(id));            
         } 
     }
 }
