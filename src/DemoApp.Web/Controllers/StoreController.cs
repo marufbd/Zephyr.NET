@@ -10,7 +10,7 @@ using Zephyr.Data.Repository.Contract;
 using Zephyr.Web.Mvc.Controllers;
 
 namespace DemoApp.Web.Controllers
-{
+{    
     public class StoreController : ZephyrController
     {
         private readonly IRepository<Book> _repositoryBook;
