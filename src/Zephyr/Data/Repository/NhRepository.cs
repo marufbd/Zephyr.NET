@@ -71,7 +71,7 @@ namespace Zephyr.Data.Repository
             Session.SaveOrUpdate(entity);
             
             //line below triggers a NHibernate.AssertionFailure
-            //Session.Flush();
+            //Session.Flush();           
 
             return entity;
         }

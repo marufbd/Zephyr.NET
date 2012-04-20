@@ -12,7 +12,7 @@ namespace MyTests
         [TestMethod]
         public void LoadData()
         {
-            ISession session = NHibernateSession.Initialize(null); 
+            ISession session = NHibernateSession.Initialize(); 
 
             var pubOrelly = new Publisher();
             var pubWrox = new Publisher();
@@ -62,11 +62,16 @@ namespace MyTests
             session.SaveOrUpdate(pubWrox);
             session.SaveOrUpdate(pubManning);
 
+            session.FlushMode=FlushMode.Never;
+            session.Flush();
+
             var bob = new User("bob", "password");
             var jeff = new User("jeff", "password");
 
             session.SaveOrUpdate(bob);
             session.SaveOrUpdate(jeff);
+
+            session.Flush();
         }
 
         [TestMethod]
