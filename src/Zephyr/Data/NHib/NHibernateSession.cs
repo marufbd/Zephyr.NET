@@ -52,6 +52,15 @@ namespace Zephyr.Data.NHib
         }
 
         /// <summary>
+        /// Initialize. No Argument
+        /// </summary>
+        /// <returns></returns>
+        public static ISession Initialize()
+        {
+            return Initialize(null);
+        }
+
+        /// <summary>
         /// Initialize.
         /// </summary>
         /// <returns></returns>

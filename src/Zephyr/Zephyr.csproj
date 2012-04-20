@@ -70,6 +70,11 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Data\NHib\Mapping\Filter\DeletedFilter.cs" />
+    <Compile Include="Data\NHib\UoW\NhUnitOfWork.cs" />
+    <Compile Include="Data\NHib\UoW\NhUnitOfWorkfactory.cs" />
+    <Compile Include="Data\UnitOfWork\IUnitOfWork.cs" />
+    <Compile Include="Data\UnitOfWork\IUnitOfWorkFactory.cs" />
+    <Compile Include="Data\UnitOfWork\UnitOfWork.cs" />
     <Compile Include="DesignByContract\AssertionException.cs" />
     <Compile Include="DesignByContract\Check.cs" />
     <Compile Include="DesignByContract\DesignByContractException.cs" />
