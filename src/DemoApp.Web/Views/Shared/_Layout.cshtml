@@ -62,7 +62,7 @@
                       <li>@Html.ActionLink("Publisher", "Index", "Publisher")</li>
                       <li>@Html.ActionLink("Store Front", "Index", "Store")</li>
                   </ul>
-                  <p class="navbar-text pull-right">Logged in as <a href="#">username</a></p>
+                  <p class="navbar-text pull-right">@Html.Partial("_LogOnPartial")</p>
               </div>              
           </div>
       </div>
