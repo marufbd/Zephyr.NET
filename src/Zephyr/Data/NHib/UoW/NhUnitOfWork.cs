@@ -1,4 +1,4 @@
-﻿using NHibernate;
+using NHibernate;
 using Zephyr.Data.UnitOfWork;
 
 namespace Zephyr.Data.NHib.UoW

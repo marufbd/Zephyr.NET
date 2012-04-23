@@ -1,4 +1,4 @@
-﻿using Zephyr.Data.UnitOfWork;
+using Zephyr.Data.UnitOfWork;
 
 namespace Zephyr.Data.NHib.UoW
 {
