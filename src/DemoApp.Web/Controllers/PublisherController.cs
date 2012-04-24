@@ -46,9 +46,11 @@ namespace DemoApp.Web.Controllers
         [HttpPost]
         public ActionResult Edit(Publisher publisher)
         {
-            if(ModelState.IsValid)
+            var pub = _repository.Get(publisher.Id);
+            
+            if(TryUpdateModel(pub) && ModelState.IsValid)
             {
-                _repository.SaveOrUpdate(publisher);
+                _repository.SaveOrUpdate(pub);
                 return RedirectToAction("Index");
             }
 

@@ -7,6 +7,7 @@ using DemoApp.Web.ViewModels;
 using Zephyr.Data.Models;
 using Zephyr.Data.Repository;
 using Zephyr.Data.Repository.Contract;
+using Zephyr.Data.UnitOfWork;
 using Zephyr.Web.Mvc.Controllers;
 
 namespace DemoApp.Web.Controllers
@@ -52,13 +53,16 @@ namespace DemoApp.Web.Controllers
         [HttpPost]
         public ActionResult SaveBook(VmBook vmbook)
         {            
-            vmbook.Book = _repositoryBook.Get(vmbook.Book.Id);
+            //vmbook.Book = _repositoryBook.Get(vmbook.Book.Id);
 
-            if (TryUpdateModel(vmbook) &&  ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                vmbook.Book.Publisher = _repositoryPublisher.Get(vmbook.SelectPublisherId);
-                
-                _repositoryBook.SaveOrUpdate(vmbook.Book);
+                using (UnitOfWorkScope.Start())
+                {
+                    vmbook.Book.Publisher = _repositoryPublisher.Get(vmbook.SelectPublisherId);
+
+                    _repositoryBook.SaveOrUpdate(vmbook.Book);
+                }
                 
                 return RedirectToAction("Index");
             }

@@ -2,12 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
+using NHibernate;
 using NHibernate.Event;
-using NHibernate.Event.Default;
-using Zephyr.Data.Repository.Contract;
 using Zephyr.Domain;
 using Zephyr.Domain.Audit;
-using System.Linq;
 using Zephyr.Exceptions;
 
 namespace Zephyr.Data.NHib.EventListeners
@@ -51,10 +49,12 @@ namespace Zephyr.Data.NHib.EventListeners
                             changeLog.OldPropertyValue = GetPropertyValue(e.OldState[dirtyFieldIndex], changeLog.PropertyName, entity);
                             changeLog.NewPropertyValue = GetPropertyValue(e.State[dirtyFieldIndex], changeLog.PropertyName, entity);
 
-                            changeLogs.Add(changeLog);                            
+                            changeLogs.Add(changeLog); 
                         }
 
-                        changeLogs.ForEach(log=>e.Session.SaveOrUpdate(log));
+                        IStatelessSession session = e.Session.SessionFactory.OpenStatelessSession();
+                        changeLogs.ForEach(log=>session.Insert(log));
+                        session.Close();
                     } 
                 }
 

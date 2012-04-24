@@ -1,7 +1,9 @@
 namespace Zephyr.Data.UnitOfWork
 {
-    internal interface IUnitOfWorkFactory
+    public interface IUnitOfWorkFactory
     {
         IUnitOfWork Create();
+
+        void DisposeUnitOfWork(IUnitOfWork adapter);
     }
 }

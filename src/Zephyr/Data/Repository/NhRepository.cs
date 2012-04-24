@@ -18,10 +18,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using NHibernate;
 using NHibernate.Criterion;
 using NHibernate.Linq;
 using Zephyr.Data.Models;
+using Zephyr.Data.NHib.UoW;
+using Zephyr.Data.UnitOfWork;
 using Zephyr.Extensions;
 using System.Linq;
 using Zephyr.Data.NHib;
@@ -39,7 +42,9 @@ namespace Zephyr.Data.Repository
 
         public NhRepository(ISession session)
         {
-            Session = session;
+            //Session = session;            
+            Session = UnitOfWorkScope.IsStarted ? ((NhUnitOfWorkFactory)UnitOfWorkScope.Factory).CurrentSession : session;
+
             Session.EnableFilter("DeletedFilter").SetParameter("IsDeleted", false);
         }
 
@@ -67,11 +72,10 @@ namespace Zephyr.Data.Repository
         }
 
         public T SaveOrUpdate(T entity)
-        {                        
-            Session.SaveOrUpdate(entity);
-            
-            //line below triggers a NHibernate.AssertionFailure
-            //Session.Flush();           
+        {
+            //Session.BeginTransaction();
+            Session.SaveOrUpdate(entity); 
+            //Session.Transaction.Commit();
 
             return entity;
         }

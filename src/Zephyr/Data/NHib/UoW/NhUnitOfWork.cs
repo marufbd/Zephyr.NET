@@ -1,3 +1,5 @@
+using System;
+using System.Data;
 using NHibernate;
 using Zephyr.Data.UnitOfWork;
 
@@ -5,19 +7,81 @@ namespace Zephyr.Data.NHib.UoW
 {
     internal sealed class NhUnitOfWork : IUnitOfWork
     {
-        private ISession _session;
-        private IUnitOfWorkFactory _factory;
+        private readonly IUnitOfWorkFactory _factory;        
+        private readonly ISession _session;
+        private NhTransaction _transaction;
 
-        public NhUnitOfWork(ISession session)
+        public NhUnitOfWork(IUnitOfWorkFactory factory, ISession session)
         {
+            _factory = factory;
+            
+            session.FlushMode = FlushMode.Commit;
             _session = session;
+
+            BeginTransaction();
+        }          
+
+        public bool IsInActiveTransaction {get { return _session.Transaction.IsActive; }}
+        public void Flush()
+        {
+            _session.Flush();
         }
 
-        public ISession CurrentSession { get { return _session; } }
+        public IGenericTransaction BeginTransaction()
+        {
+            _transaction=new NhTransaction(_session.BeginTransaction());
+
+            return _transaction;
+        }
+
+        private IGenericTransaction BeginTransaction(IsolationLevel isolationLevel)
+        {
+            _transaction = new NhTransaction(_session.BeginTransaction(isolationLevel));
+
+            return _transaction;
+        }
+
+        public void TransactionalFlush()
+        {
+            TransactionalFlush(IsolationLevel.ReadCommitted);
+        }
+
+        private void TransactionalFlush(IsolationLevel isolationLevel)
+        {
+            if(!IsInActiveTransaction)
+                BeginTransaction(IsolationLevel.ReadCommitted);
+            
+            try
+            {
+                _transaction.Commit();
+            }
+            catch (Exception)
+            {
+                _transaction.Rollback();
+                throw;
+            }
+            finally
+            {
+                _transaction.Dispose();
+            }
+        }
 
         public void Dispose()
         {
-            throw new System.NotImplementedException();
+            TransactionalFlush();
+
+            if (_transaction != null)
+            {
+                _transaction.Dispose();
+                _transaction = null;
+            }
+            if (_session != null)
+            {
+                _session.Dispose();                
+            }
+
+            _factory.DisposeUnitOfWork(this);
+            _session.Dispose();
         }
     }
 }

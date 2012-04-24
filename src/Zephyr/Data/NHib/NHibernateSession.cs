@@ -21,10 +21,15 @@ using System.Collections.Generic;
 using System.Reflection;
 using FluentNHibernate.Cfg;
 using NHibernate;
+using NHibernate.Cfg;
 using NHibernate.Event;
 using NHibernate.Linq;
 using Zephyr.Data.NHib.Mapping.Filter;
 using Zephyr.Configuration;
+using Zephyr.Domain;
+using Zephyr.Domain.Audit;
+
+using NHibernate.Envers;
 
 #endregion REFERENCES
 
@@ -45,8 +50,10 @@ namespace Zephyr.Data.NHib
         /// </summary>
         public static NHibernate.Cfg.Configuration Configuration
         {
-            get { 
-                Initialize(null);
+            get {
+                if (_configuration == null)
+                    Initialize(null);
+                
                 return _configuration;
             }
         }
@@ -124,8 +131,10 @@ namespace Zephyr.Data.NHib
                 fConfig.Diagnostics(dia =>dia.Enable().OutputToFile(dataConfig.LogPath + "/fluentNHibernate.log"));
 
 
-            //Enable audit on save or update
-            fConfig.ExposeConfiguration(c => c.EventListeners.PreUpdateEventListeners = new[] {new EventListeners.AuditUpdateListener()});
+            //Enable auditing using NHibernate.Envers
+            var enversConf = new NHibernate.Envers.Configuration.Fluent.FluentConfiguration();
+            enversConf.Audit(zephyrConfig.GetDomainModelTypes()); 
+            //fConfig.ExposeConfiguration(c => c.EventListeners.PreUpdateEventListeners = new[] {new EventListeners.AuditUpdateListener()});
             
             //Set delete listener for soft delete
             if (zephyrConfig.SoftDeleteEnabled)
@@ -134,7 +143,14 @@ namespace Zephyr.Data.NHib
                                                
 
             _configuration = fConfig.BuildConfiguration();
+
+            //integrate envers
+            _configuration.IntegrateWithEnvers(enversConf);
+
+            
             Factory = _configuration.BuildSessionFactory();
+            
+            
             return Factory.OpenSession();
         }
     }
