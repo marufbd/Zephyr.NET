@@ -29,11 +29,9 @@ namespace Zephyr.Data.NHib.UoW
             return new NhUnitOfWork(this, _currentSession);
         }
 
-        public void DisposeUnitOfWork(IUnitOfWork adapter)
+        public void DisposeUnitOfWork()
         {
             _currentSession = null;
-            adapter.Dispose();
-            UnitOfWorkScope.DisposeUnitOfWork();
         }
     }
 }

@@ -12,7 +12,7 @@ namespace Zephyr.Data.UnitOfWork
 
         public static IUnitOfWork Start()
         {
-            _innerUnitOfWorkFactory=new NhUnitOfWorkFactory();
+            _innerUnitOfWorkFactory = new NhUnitOfWorkFactory();
 
             _innerUnitOfWork = _innerUnitOfWorkFactory.Create();
             
@@ -47,7 +47,8 @@ namespace Zephyr.Data.UnitOfWork
 
         public static void DisposeUnitOfWork()
         {
-            //throw new System.NotImplementedException();
+            _innerUnitOfWork = null;
+            _innerUnitOfWorkFactory = null;
         }
     }    
 }

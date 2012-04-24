@@ -4,6 +4,6 @@ namespace Zephyr.Data.UnitOfWork
     {
         IUnitOfWork Create();
 
-        void DisposeUnitOfWork(IUnitOfWork adapter);
+        void DisposeUnitOfWork();
     }
 }

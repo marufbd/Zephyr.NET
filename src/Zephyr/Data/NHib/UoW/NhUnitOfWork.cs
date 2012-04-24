@@ -80,8 +80,8 @@ namespace Zephyr.Data.NHib.UoW
                 _session.Dispose();                
             }
 
-            _factory.DisposeUnitOfWork(this);
-            _session.Dispose();
+            _factory.DisposeUnitOfWork();
+            UnitOfWorkScope.DisposeUnitOfWork();
         }
     }
 }
