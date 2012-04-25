@@ -46,7 +46,7 @@ namespace Zephyr.Data.Repository
             //Session = session;
             if(UnitOfWorkScope.IsStarted)
             {
-                var uow = ServiceLocator.Current.GetInstance<IUnitOfWork>();
+                var uow = UnitOfWorkScope.Current;
                 Session = ((NhUnitOfWork)uow).CurrentSession;
             }
             else

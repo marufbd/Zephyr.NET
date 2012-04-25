@@ -47,26 +47,35 @@ namespace DemoApp.Web.Controllers
 
         [HttpPost]
         public ActionResult Edit(Publisher publisher)
-        {
-            using (UnitOfWorkScope.Start())
+        {            
+            if(ModelState.IsValid)
             {
-                var repo = ServiceLocator.Current.GetInstance<IRepository<Publisher>>();
-                var pub = repo.Get(publisher.Id);
-
-                if (TryUpdateModel(pub) && ModelState.IsValid)
+                //always use Unit of work for save/update
+                using (UnitOfWorkScope.Start())
                 {
-                    repo.SaveOrUpdate(pub);
-                    return RedirectToAction("Index");
-                }
+                    var repo = ServiceLocator.Current.GetInstance<IRepository<Publisher>>();
 
-                return View("Edit", publisher);
-            } 
+                    if (TryUpdateModel(publisher) && ModelState.IsValid)
+                    {
+                        repo.SaveOrUpdate(publisher);
+                        return RedirectToAction("Index");
+                    }
+                }    
+            }            
+
+            return View("Edit", publisher);             
         }
 
         [HttpPost]
         public ActionResult Delete(long id)
         {
-            _repository.Delete(id);
+            //always use Unit of work for save/update
+            using (UnitOfWorkScope.Start())
+            {
+                var repo = ServiceLocator.Current.GetInstance<IRepository<Publisher>>();
+                repo.Delete(id);
+            }
+            
 
             return RedirectToAction("Index");
         }
