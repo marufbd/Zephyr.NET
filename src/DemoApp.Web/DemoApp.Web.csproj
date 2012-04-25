@@ -43,6 +43,9 @@
       <HintPath>..\packages\Iesi.Collections.3.2.0.4000\lib\Net35\Iesi.Collections.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
@@ -185,9 +188,6 @@
     <Content Include="Content\Scripts\bootstrap_1_4_0\bootstrap-dropdown.js" />
     <Content Include="Content\Scripts\bootstrap_1_4_0\bootstrap-modal.js" />
     <Content Include="Content\Scripts\bootstrap_1_4_0\bootstrap-tabs.js" />
-    <Content Include="Content\Scripts\jquery-1.5.1-vsdoc.js" />
-    <Content Include="Content\Scripts\jquery-1.5.1.js" />
-    <Content Include="Content\Scripts\jquery-1.5.1.min.js" />
     <Content Include="Content\Scripts\jquery-1.7.1.min.js" />
     <Content Include="Content\Scripts\jquery-ui-1.8.11.js" />
     <Content Include="Content\Scripts\jquery-ui-1.8.11.min.js" />

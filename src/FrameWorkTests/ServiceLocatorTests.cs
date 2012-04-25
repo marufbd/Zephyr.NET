@@ -1,7 +1,9 @@
 using DemoApp.Web.DomainModels;
 using Microsoft.Practices.ServiceLocation;
+using NHibernate;
 using NUnit.Framework;
 using Zephyr.Data.Repository.Contract;
+using Zephyr.Data.UnitOfWork;
 using Zephyr.Initialization;
 using Zephyr.Web.Mvc.Initialization;
 
@@ -23,16 +25,31 @@ namespace FrameWorkTests {
         {
             appBootstrapper.Dispose();
         }
-        
+
+
+        [Test]
+        public void IsessionFactoryGet()
+        {
+            var sessionFactory = ServiceLocator.Current.GetInstance<ISessionFactory>();
+
+            Assert.NotNull(sessionFactory);
+        }     
         
         [Test]
         public void RepositoryInstanceGet()
         {
-            var repo = ServiceLocator.Current.GetInstance<IRepository<Book>>();
+            // without Unit Of Work
+            var r = ServiceLocator.Current.GetInstance<IRepository<Book>>();
 
-            Assert.NotNull(repo);
-        }
+            Assert.NotNull(r);
 
-        
+            // with Unit Of Work
+            using (UnitOfWorkScope.Start())
+            {
+                var repo = ServiceLocator.Current.GetInstance<IRepository<Book>>();
+                
+                Assert.NotNull(repo);
+            }             
+        }        
     }
 }

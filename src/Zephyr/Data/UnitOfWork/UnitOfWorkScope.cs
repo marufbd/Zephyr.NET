@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Practices.ServiceLocation;
 using NHibernate;
 using Zephyr.Data.NHib.UoW;
 using Zephyr.DesignByContract;
@@ -12,7 +13,7 @@ namespace Zephyr.Data.UnitOfWork
 
         public static IUnitOfWork Start()
         {
-            _innerUnitOfWorkFactory = new NhUnitOfWorkFactory();
+            _innerUnitOfWorkFactory = ServiceLocator.Current.GetInstance<IUnitOfWorkFactory>();
 
             _innerUnitOfWork = _innerUnitOfWorkFactory.Create();
             

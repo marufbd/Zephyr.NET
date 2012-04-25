@@ -19,6 +19,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Microsoft.Practices.ServiceLocation;
 using NHibernate;
 using NHibernate.Criterion;
 using NHibernate.Linq;
@@ -40,10 +41,19 @@ namespace Zephyr.Data.Repository
 
         public ISession Session;
 
-        public NhRepository(ISession session)
+        public NhRepository()
         {
-            //Session = session;            
-            Session = UnitOfWorkScope.IsStarted ? ((NhUnitOfWorkFactory)UnitOfWorkScope.Factory).CurrentSession : session;
+            //Session = session;
+            if(UnitOfWorkScope.IsStarted)
+            {
+                var uow = ServiceLocator.Current.GetInstance<IUnitOfWork>();
+                Session = ((NhUnitOfWork)uow).CurrentSession;
+            }
+            else
+            {
+                Session = ServiceLocator.Current.GetInstance<ISession>();
+            }
+                
 
             Session.EnableFilter("DeletedFilter").SetParameter("IsDeleted", false);
         }
@@ -74,7 +84,7 @@ namespace Zephyr.Data.Repository
         public T SaveOrUpdate(T entity)
         {
             //Session.BeginTransaction();
-            Session = UnitOfWorkScope.IsStarted ? ((NhUnitOfWorkFactory)UnitOfWorkScope.Factory).CurrentSession : Session;
+            //Session = UnitOfWorkScope.IsStarted ? ((NhUnitOfWorkFactory)UnitOfWorkScope.Factory).CurrentSession : Session;
             Session.SaveOrUpdate(entity);
             //Session.Transaction.Commit();
 
@@ -83,7 +93,7 @@ namespace Zephyr.Data.Repository
 
         public void Delete(T entity)
         {
-            Session.Delete(entity);            
+            Session.Delete(entity); 
         }
 
         public void Delete(long id)

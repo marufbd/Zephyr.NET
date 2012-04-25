@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Web.Mvc;
 using DemoApp.Web.DomainModels;
+using Microsoft.Practices.ServiceLocation;
 using Zephyr.Data.Repository;
 using Zephyr.Data.Repository.Contract;
+using Zephyr.Data.UnitOfWork;
 using Zephyr.Web.Mvc.Controllers;
 using System.Linq;
 
@@ -46,15 +48,19 @@ namespace DemoApp.Web.Controllers
         [HttpPost]
         public ActionResult Edit(Publisher publisher)
         {
-            var pub = _repository.Get(publisher.Id);
-            
-            if(TryUpdateModel(pub) && ModelState.IsValid)
+            using (UnitOfWorkScope.Start())
             {
-                _repository.SaveOrUpdate(pub);
-                return RedirectToAction("Index");
-            }
+                var repo = ServiceLocator.Current.GetInstance<IRepository<Publisher>>();
+                var pub = repo.Get(publisher.Id);
 
-            return View("Edit", publisher);
+                if (TryUpdateModel(pub) && ModelState.IsValid)
+                {
+                    repo.SaveOrUpdate(pub);
+                    return RedirectToAction("Index");
+                }
+
+                return View("Edit", publisher);
+            } 
         }
 
         [HttpPost]

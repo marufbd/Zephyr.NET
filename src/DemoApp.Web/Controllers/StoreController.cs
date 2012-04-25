@@ -17,11 +17,11 @@ namespace DemoApp.Web.Controllers
         private readonly IRepository<Book> _repositoryBook;
         private readonly IRepository<Publisher> _repositoryPublisher;
 
-        public StoreController(IRepository<Book> repBook, IRepository<Publisher> repPub)
-        {
-            _repositoryBook = repBook;
-            _repositoryPublisher = repPub;
-        }
+        //public StoreController(IRepository<Book> repBook, IRepository<Publisher> repPub)
+        //{
+        //    _repositoryBook = repBook;
+        //    _repositoryPublisher = repPub;
+        //}
 
         //
         // GET: /Book/

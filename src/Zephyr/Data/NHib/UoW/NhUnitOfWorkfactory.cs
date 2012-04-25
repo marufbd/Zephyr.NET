@@ -1,30 +1,19 @@
 using System;
+using Microsoft.Practices.ServiceLocation;
 using NHibernate;
 using Zephyr.Data.UnitOfWork;
 
 namespace Zephyr.Data.NHib.UoW
 {
-    internal sealed class NhUnitOfWorkFactory : IUnitOfWorkFactory
+    public class NhUnitOfWorkFactory : IUnitOfWorkFactory
     {
         private ISession _currentSession;
-        private ISessionFactory _sessionFactory;
-
-        public NHibernate.Cfg.Configuration Configuration { get; private set; }
-        public ISession CurrentSession { 
-            get
-            { 
-                if(_currentSession==null)
-                    throw new InvalidOperationException("There is no Unit of Work open.");
-
-                return _currentSession;
-            } 
-        } 
+        private ISessionFactory _sessionFactory; 
         
         public IUnitOfWork Create()
-        {
-            _currentSession = NHibernateSession.Initialize();
-            Configuration = NHibernateSession.Configuration;
-            _sessionFactory = NHibernateSession.Factory;
+        {            
+            _sessionFactory = ServiceLocator.Current.GetInstance<ISessionFactory>();
+            _currentSession = _sessionFactory.OpenSession();
 
             return new NhUnitOfWork(this, _currentSession);
         }

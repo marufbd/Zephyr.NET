@@ -7,7 +7,7 @@ namespace Zephyr.Data.NHib.UoW
 {
     internal sealed class NhUnitOfWork : IUnitOfWork
     {
-        private readonly IUnitOfWorkFactory _factory;        
+        private readonly IUnitOfWorkFactory _factory;
         private readonly ISession _session;
         private NhTransaction _transaction;
 
@@ -19,7 +19,18 @@ namespace Zephyr.Data.NHib.UoW
             _session = session;
 
             BeginTransaction();
-        }          
+        }
+
+        public ISession CurrentSession
+        {
+            get
+            {
+                if (_session == null)
+                    throw new InvalidOperationException("There is no Unit of Work open.");
+
+                return _session;
+            }
+        } 
 
         public bool IsInActiveTransaction {get { return _session.Transaction.IsActive; }}
         public void Flush()
@@ -68,6 +79,9 @@ namespace Zephyr.Data.NHib.UoW
 
         public void Dispose()
         {
+            if(_disposed)
+                return;
+
             TransactionalFlush();
 
             if (_transaction != null)
@@ -82,6 +96,10 @@ namespace Zephyr.Data.NHib.UoW
 
             _factory.DisposeUnitOfWork();
             UnitOfWorkScope.DisposeUnitOfWork();
+
+            _disposed = true;
         }
+
+        private bool _disposed = false;
     }
 }
