@@ -84,14 +84,18 @@
                         @Html.MvcSiteMap().SiteMap()
                     </ul> 
                 </div>
-            </div>            
-        </div>
-    
+            </div> 
+        </div>   
         <hr/>
-        <footer>
-            <p>&copy; Company 2011</p>
-            <p class="pull-right"></p>
-        </footer>
+        <div class="row">
+            <div class="span9">
+                <p>&copy; Company 2011</p>
+            </div> 
+            <div class="span3">
+                Powered by <a href="https://github.com/marufbd/DefaultDDDArch" target="_blank">Zephyr</a>
+                <p>@Html.Image("~/Content/images/OSI-logo-70x82.png", "Open Source Initiative")</p>
+            </div>                        
+        </div>
     </div> <!-- /container -->
 
   </body>

@@ -3,16 +3,22 @@
     ViewBag.Title = "Home Page";
 }
 
-<h2>@ViewBag.Message</h2>
+<h3>@ViewBag.Message</h3>
+<br/>
 <p>
+    This is an ASP.NET MVC application powered by <a href="https://github.com/marufbd/DefaultDDDArch" target="_blank">Zephyr</a> framework.    
+</p>
+
+<p>
+    The framework provides an infrastructure for domain driven design based projects.<br/>
     To learn more about ASP.NET MVC visit <a href="http://asp.net/mvc" title="ASP.NET MVC Website">http://asp.net/mvc</a>.
 </p>
 
-@Html.Zephyr().Tabs(new[]{
+@*@Html.Zephyr().Tabs(new[]{
                             new TabItemModel(){ Title = "About", HtmlContent = Html.Partial("_LogOnPartial"), Active = true },
                             new TabItemModel() { Title = "StoreFront", ControllerName = "Store" },
                             new TabItemModel() { Title = "Publisher", ControllerName = "Publisher" }
-                        })
+                        })*@
                         
 
 
