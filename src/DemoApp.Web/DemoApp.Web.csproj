@@ -119,8 +119,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\Demo_DB.mdf" />
-    <Content Include="App_Data\Demo_DB.sdf" />
     <Content Include="Content\images\glyphicons-halflings-white.png" />
     <Content Include="Content\images\glyphicons-halflings.png" />
     <Content Include="Content\Scripts\bootstrap2\bootstrap.js" />
@@ -308,6 +306,9 @@
       <SubType>Designer</SubType>
     </None>
     <Content Include="Views\Shared\_MINIPROFILER UPDATED Layout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
