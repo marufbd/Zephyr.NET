@@ -11,7 +11,7 @@ namespace Zephyr.Data.NHib.Mapping.Conventions
             
             instance.UnsavedValue("0");
             
-            // instance.GeneratedBy.HiLo("1000");
+            //instance.GeneratedBy.HiLo("1000");
         }
     }
 }

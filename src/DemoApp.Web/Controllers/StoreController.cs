@@ -4,13 +4,16 @@ using System.Linq;
 using System.Web.Mvc;
 using DemoApp.Web.DomainModels;
 using DemoApp.Web.ViewModels;
+using Microsoft.Practices.ServiceLocation;
 using Zephyr.Data.Models;
 using Zephyr.Data.Repository;
 using Zephyr.Data.Repository.Contract;
+using Zephyr.Data.UnitOfWork;
+using Zephyr.Domain.Audit;
 using Zephyr.Web.Mvc.Controllers;
 
 namespace DemoApp.Web.Controllers
-{
+{    
     public class StoreController : ZephyrController
     {
         private readonly IRepository<Book> _repositoryBook;
@@ -51,14 +54,26 @@ namespace DemoApp.Web.Controllers
 
         [HttpPost]
         public ActionResult SaveBook(VmBook vmbook)
-        {            
-            vmbook.Book = _repositoryBook.Get(vmbook.Book.Id);
-
-            if (TryUpdateModel(vmbook) &&  ModelState.IsValid)
+        {             
+            if (ModelState.IsValid && vmbook.Book.IsValid())
             {
-                vmbook.Book.Publisher = _repositoryPublisher.Get(vmbook.SelectPublisherId);
-                
-                _repositoryBook.SaveOrUpdate(vmbook.Book);
+                //always use Unit of work for save/update
+                using (UnitOfWorkScope.Start())
+                {
+                    var repo = ServiceLocator.Current.GetInstance<IRepository<Book>>();
+                    vmbook.Book.Publisher = _repositoryPublisher.Get(vmbook.SelectPublisherId);
+
+                    //testing a business transaction
+                    var repoAudit = ServiceLocator.Current.GetInstance<IRepository<AuditChangeLog>>();
+                    var audit = new AuditChangeLog();
+                    audit.ActionBy = "maruf";
+                    audit.ActionType=AuditType.Update;
+                    audit.OldPropertyValue = "Old val";
+                    audit.NewPropertyValue = "New val";
+                    
+                    repoAudit.SaveOrUpdate(audit);
+                    repo.SaveOrUpdate(vmbook.Book);
+                }
                 
                 return RedirectToAction("Index");
             }
@@ -78,7 +93,11 @@ namespace DemoApp.Web.Controllers
         [HttpPost]
         public ActionResult DeleteBook(long id)
         {
-            _repositoryBook.Delete(id);
+            using (UnitOfWorkScope.Start())
+            {
+                var repo = ServiceLocator.Current.GetInstance<IRepository<Book>>();
+                repo.Delete(id);
+            }            
 
             return RedirectToAction("Index");
         }

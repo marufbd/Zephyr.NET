@@ -2,6 +2,7 @@
 
 namespace Zephyr.Web.Mvc.Controllers
 {
+    [HandleError]
     public class ZephyrController : Controller
     {
          

@@ -20,8 +20,8 @@ using System.Data;
 using System.Data.Common;
 using System.Runtime.Remoting.Messaging;
 using System.Runtime.Remoting.Proxies;
-using MvcMiniProfiler;
-using MvcMiniProfiler.Data;
+using StackExchange.Profiling;
+using StackExchange.Profiling.Data;
 
 #endregion REFERENCES
 
@@ -69,8 +69,9 @@ namespace Zephyr.Data.NHib
 
                 if (executeType == ExecuteType.Reader)
                     profiler.ExecuteFinish(instance, executeType, (DbDataReader)returnValue);
-                else if (executeType != ExecuteType.None)
-                    profiler.ExecuteFinish(instance, executeType);
+                
+                    //else if (executeType != ExecuteType.None)
+                    //profiler.ExecuteFinish(instance, executeType);
 
                 return returnMessage;
             }

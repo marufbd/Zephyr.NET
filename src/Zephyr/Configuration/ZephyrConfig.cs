@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Globalization;
+using System.Reflection;
 using System.Web.Hosting;
 using NHibernate.Linq;
 using System.Linq;
+using Zephyr.Domain;
+using Zephyr.Domain.Audit;
 
 namespace Zephyr.Configuration
 {
@@ -83,6 +86,19 @@ namespace Zephyr.Configuration
                 return GetAppPath() + assemblyName.Trim();
 
             return GetAppPath() + ((assemblyName.IndexOf(".dll", System.StringComparison.Ordinal) == -1) ? assemblyName.Trim() + ".dll" : assemblyName.Trim());
+        }
+
+        public IEnumerable<Type> GetDomainModelTypes()
+        {
+            var lst = new List<Type>();
+            foreach (var asmName in DataConfig.MappingAssemblies)
+            {
+                Assembly asm = Assembly.LoadFrom(asmName);
+                lst.AddRange(asm.GetTypes().Where(type => type.GetInterfaces().Any(
+                    x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof (IEntityWithTypedId<>)) ));
+            }
+
+            return lst;
         }
     }
 

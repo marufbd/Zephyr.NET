@@ -36,12 +36,14 @@
             </div>
 
             <div class="editor-label">
-                @Html.CheckBoxFor(m => m.RememberMe)
-                @Html.LabelFor(m => m.RememberMe)
+                <label>
+                    @Html.CheckBoxFor(m => m.RememberMe)                
+                    Remember me                
+                </label>                
             </div>
 
             <p>
-                <input type="submit" value="Log On" />
+                <input type="submit" value="Log On" class="btn-primary" />
             </p>
         </fieldset>
     </div>

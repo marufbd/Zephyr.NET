@@ -1,4 +1,4 @@
-﻿@using MvcMiniProfiler
+﻿@using StackExchange.Profiling
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,6 +17,7 @@
 
     <link href="@Url.Content("~/Content/Styles/bootstrap2/bootstrap.min.css")" rel="stylesheet"
           type="text/css" />
+    <link href="@Url.Content("~/Content/Styles/Site.css")" rel="stylesheet" type="text/css" />
     <style type="text/css">
         body {
             padding-top: 60px;
@@ -35,13 +36,13 @@
     <![endif]-->
 
     <!-- Le fav and touch icons -->
-    <link rel="shortcut icon" href="images/favicon.ico">
-    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+    <link rel="shortcut icon" href="~/Content/images/favicon.ico">
+    <link rel="apple-touch-icon" href="~/Content/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="~/Content//apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="~/Content/images/apple-touch-icon-114x114.png">
         
 </head>
-    @MvcMiniProfiler.MiniProfiler.RenderIncludes(RenderPosition.Right)
+    @MiniProfiler.RenderIncludes(RenderPosition.Right)
 
     <body>
 
@@ -62,7 +63,7 @@
                       <li>@Html.ActionLink("Publisher", "Index", "Publisher")</li>
                       <li>@Html.ActionLink("Store Front", "Index", "Store")</li>
                   </ul>
-                  <p class="navbar-text pull-right">Logged in as <a href="#">username</a></p>
+                  <p class="navbar-text pull-right">@Html.Partial("_LogOnPartial")</p>
               </div>              
           </div>
       </div>
@@ -89,6 +90,7 @@
         <hr/>
         <footer>
             <p>&copy; Company 2011</p>
+            <p class="pull-right"></p>
         </footer>
     </div> <!-- /container -->
 

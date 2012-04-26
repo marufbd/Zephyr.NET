@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 using System.Web.Routing;
 using Zephyr.Initialization;
 
@@ -43,6 +44,6 @@ namespace DemoApp.Web
         protected void Application_End()
         {
             _appBootstrapper.Dispose();
-        }
+        }        
     }
 }
