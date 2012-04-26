@@ -33,6 +33,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Castle.Core">
+      <HintPath>..\packages\Castle.Core.3.0.0.4001\lib\net40-client\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Windsor">
+      <HintPath>..\packages\Castle.Windsor.3.0.0.4001\lib\net40\Castle.Windsor.dll</HintPath>
+    </Reference>
     <Reference Include="FluentNHibernate">
       <HintPath>..\packages\FluentNHibernate.1.3.0.717\lib\FluentNHibernate.dll</HintPath>
     </Reference>
@@ -42,11 +48,18 @@
     <Reference Include="inflector_extension">
       <HintPath>..\packages\inflector_extension.0.0.7\lib\Net40\inflector_extension.dll</HintPath>
     </Reference>
-    <Reference Include="MvcMiniProfiler">
-      <HintPath>..\packages\MiniProfiler.1.9\lib\net40\MvcMiniProfiler.dll</HintPath>
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <HintPath>..\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
-    <Reference Include="NHibernate">
-      <HintPath>..\packages\NHibernate.3.2.0.4000\lib\Net35\NHibernate.dll</HintPath>
+    <Reference Include="MiniProfiler">
+      <HintPath>..\packages\MiniProfiler.2.0.1\lib\net40\MiniProfiler.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate, Version=3.3.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NHibernate.3.3.0.4000\lib\Net35\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate.Envers, Version=1.1.0.2, Culture=neutral, PublicKeyToken=e2c5b946037fb7f8, processorArchitecture=MSIL">
+      <HintPath>..\packages\NHibernate.Envers.1.1.0\lib\Net35\NHibernate.Envers.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -70,12 +83,21 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Data\NHib\Mapping\Filter\DeletedFilter.cs" />
+    <Compile Include="Data\NHib\UoW\NhTransaction.cs" />
+    <Compile Include="Data\NHib\UoW\NhUnitOfWork.cs" />
+    <Compile Include="Data\NHib\UoW\NhUnitOfWorkFactory.cs" />
+    <Compile Include="Data\UnitOfWork\IGenericTransaction.cs" />
+    <Compile Include="Data\UnitOfWork\IUnitOfWork.cs" />
+    <Compile Include="Data\UnitOfWork\IUnitOfWorkFactory.cs" />
+    <Compile Include="Data\UnitOfWork\UnitOfWorkScope.cs" />
     <Compile Include="DesignByContract\AssertionException.cs" />
     <Compile Include="DesignByContract\Check.cs" />
     <Compile Include="DesignByContract\DesignByContractException.cs" />
     <Compile Include="DesignByContract\InvariantException.cs" />
     <Compile Include="DesignByContract\PostconditionException.cs" />
     <Compile Include="DesignByContract\PreconditionException.cs" />
+    <Compile Include="Domain\Audit\AuditType.cs" />
+    <Compile Include="Domain\Audit\AuditChangeLog.cs" />
     <Compile Include="Domain\BaseObject.cs" />
     <Compile Include="Domain\BaseObjectEqualityComparer.cs" />
     <Compile Include="Data\NHib\AutoPersistenceModelGenerator.cs" />
@@ -93,13 +115,16 @@
     <Compile Include="Domain\DomainSignatureAttribute.cs" />
     <Compile Include="Domain\Entity.cs" />
     <Compile Include="Domain\EntityWithTypedId.cs" />
-    <Compile Include="Domain\IAuditable.cs" />
+    <Compile Include="Domain\Audit\IAuditable.cs" />
     <Compile Include="Domain\IEntityWithTypedId.cs" />
     <Compile Include="Domain\IHasAssignedId.cs" />
+    <Compile Include="Domain\MappingOverrides\AuditChangeLogMappingOverride.cs" />
     <Compile Include="Domain\ValidatableObject.cs" />
     <Compile Include="Domain\ValueObject.cs" />
+    <Compile Include="Exceptions\AuditException.cs" />
     <Compile Include="Extensions\LinqExtensions.cs" />
     <Compile Include="Initialization\IAppBootstrapper.cs" />
+    <Compile Include="Initialization\ServiceLocatorAdapter\WindsorServiceLocator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Data\Repository\Contract\IRepository.cs" />
     <Compile Include="Data\Repository\NhRepository.cs" />

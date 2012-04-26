@@ -11,7 +11,7 @@ namespace Zephyr.Domain
     ///     http://devlicio.us/blogs/billy_mccafferty/archive/2007/04/25/using-equals-gethashcode-effectively.aspx
     /// </summary>
     [Serializable]
-    public abstract class EntityWithTypedId<TId> : ValidatableObject, IEntityWithTypedId<TId>, IAuditable
+    public abstract class EntityWithTypedId<TId> : ValidatableObject, IEntityWithTypedId<TId>
     {
         protected EntityWithTypedId()
         {
@@ -133,6 +133,7 @@ namespace Zephyr.Domain
         }
 
 
+        //Audit Info
         public virtual string CreatedBy { get; set; }
         public virtual DateTime CreatedAt { get; set; }
         public virtual string LastUpdatedBy { get; set; }

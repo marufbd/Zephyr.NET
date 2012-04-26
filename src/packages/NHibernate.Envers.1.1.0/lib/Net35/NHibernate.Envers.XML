@@ -1,0 +1,2344 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>NHibernate.Envers</name>
+    </assembly>
+    <members>
+        <member name="T:NHibernate.Envers.Tools.Graph.TopologicalSort`1">
+            Topological sorting of a graph - based on DFS.
+            @author Simon Duduica, port of Envers omonyme class by Adam Warski (adam at warski dot org)
+        </member>
+        <member name="M:NHibernate.Envers.Entities.PropertyData.#ctor(System.String,NHibernate.Envers.Entities.PropertyData)">
+            <summary>
+            Copies the given property data, except the name.
+            </summary>
+            <param name="newName">New name</param>
+            <param name="propertyData">Property data to copy the rest of properties from.</param>
+        </member>
+        <member name="M:NHibernate.Envers.Entities.PropertyData.#ctor(System.String,System.String,System.String)">
+            <summary>
+            </summary>
+            <param name="name">Name of the property.</param>
+            <param name="beanName">Name of the property in the bean.</param>
+            <param name="accessType">Accessor type for this property.</param>
+        </member>
+        <member name="M:NHibernate.Envers.Entities.PropertyData.#ctor(System.String,System.String,System.String,System.Boolean,System.String)">
+            <param name="name">Name of the property.</param>
+            <param name="beanName">Name of the property in the bean.</param>
+            <param name="accessType">Accessor type for this property.</param>
+            <param name="usingModifiedFlag">Defines if field changes should be tracked</param>
+            <param name="modifiedFlagName"></param>
+        </member>
+        <member name="T:NHibernate.Envers.Entities.Mapper.Relation.MiddleIdData">
+            <summary>
+             A class holding information about ids, which form a virtual "relation" from a middle-table. Middle-tables are used
+             when mapping collections.
+            </summary>
+        </member>
+        <member name="M:NHibernate.Envers.Entities.Mapper.Relation.MiddleIdData.IsAudited">
+            <summary>
+            Is the entity, to which this middle id data correspond, audited.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NHibernate.Envers.Entities.Mapper.IPropertyMapper.MapToMapFromEntity(NHibernate.Engine.ISessionImplementor,System.Collections.Generic.IDictionary{System.String,System.Object},System.Object,System.Object)">
+            <summary>
+            Maps properties to the given map, basing on differences between properties of new and old objects.
+            </summary>
+            <param name="session">The current session.</param>
+            <param name="data">Data to map to.</param>
+            <param name="newObj">New state of the entity.</param>
+            <param name="oldObj">Old state of the entity.</param>
+            <returns>True if there are any differences between the states represented by newObj and oldObj.</returns>
+        </member>
+        <member name="M:NHibernate.Envers.Entities.Mapper.IPropertyMapper.MapToEntityFromMap(NHibernate.Envers.Configuration.AuditConfiguration,System.Object,System.Collections.IDictionary,System.Object,NHibernate.Envers.Reader.IAuditReaderImplementor,System.Int64)">
+            <summary>
+            Maps properties from the given map to the given object.
+            </summary>
+            <param name="verCfg">Versions configuration.</param>
+            <param name="obj">object to map to.</param>
+            <param name="data">Data to map from.</param>
+            <param name="primaryKey">Primary key of the object to which we map (for relations)</param>
+            <param name="versionsReader">VersionsReader for reading relations</param>
+            <param name="revision">Revision at which the object is read, for reading relations</param>
+        </member>
+        <member name="M:NHibernate.Envers.Entities.Mapper.IPropertyMapper.MapCollectionChanges(System.String,NHibernate.Collection.IPersistentCollection,System.Object,System.Object)">
+            <summary>
+            Maps collection changes
+            </summary>
+            <param name="referencingPropertyName">Name of the field, which holds the collection in the entity.</param>
+            <param name="newColl">New collection, after updates.</param>
+            <param name="oldColl">Old collection, before updates.</param>
+            <param name="id">Id of the object owning the collection.</param>
+            <returns>List of changes that need to be performed on the persistent store.</returns>
+        </member>
+        <member name="T:NHibernate.Envers.Configuration.Store.IMetaDataProvider">
+            <summary>
+            Knows how to create configuration data
+            </summary>
+        </member>
+        <member name="M:NHibernate.Envers.Configuration.Store.IMetaDataProvider.CreateMetaData(NHibernate.Cfg.Configuration)">
+            <summary>
+            Creates the meta data. Normally not used by user.
+            </summary>
+            <param name="nhConfiguration">The NH Configuration.</param>
+            <returns>
+            A dictionary of <see cref="T:NHibernate.Envers.Configuration.Store.IEntityMeta"/>, keyed by entity type
+            </returns>
+        </member>
+        <member name="T:NHibernate.Envers.Query.Property.IPropertyNameGetter">
+            <summary>
+            Provides a function to get the name of a property, which is used in a query, to apply some restrictions on it.
+            </summary>
+        </member>
+        <member name="M:NHibernate.Envers.Query.Property.IPropertyNameGetter.Get(NHibernate.Envers.Configuration.AuditConfiguration)">
+            <summary>
+            </summary>
+            <param name="auditCfg">Audit configuration.</param>
+            <returns>Name of the property, to be used in a query.</returns>
+        </member>
+        <member name="T:NHibernate.Envers.Configuration.Fluent.FluentAudit`1">
+            <summary>
+            An <see cref="T:NHibernate.Envers.Configuration.Fluent.IAttributeProvider"/> to audit the full class.
+            </summary>
+            <seealso cref="T:NHibernate.Envers.Configuration.Fluent.IFluentAudit`1"/>
+            <seealso cref="T:NHibernate.Envers.Configuration.Fluent.LooselyTypedFluentAudit"/>
+        </member>
+        <member name="T:NHibernate.Envers.Configuration.Fluent.IAttributeProvider">
+            <summary>
+            Creates attributes based on fluent configuration.
+            </summary>
+        </member>
+        <member name="M:NHibernate.Envers.Configuration.Fluent.IAttributeProvider.Attributes(NHibernate.Cfg.Configuration)">
+            <summary>
+            Creates corresponding member attributes
+            </summary>
+            <returns>The attributes</returns>
+        </member>
+        <member name="T:NHibernate.Envers.Configuration.Fluent.IFluentAudit`1">
+            <summary>
+            Provides a fluent interface for custom configuration of an audited
+            entity. This is the generic version of <see cref="T:NHibernate.Envers.Configuration.Fluent.IFluentAudit"/>.
+            </summary>
+        </member>
+        <member name="M:NHibernate.Envers.Configuration.Fluent.IFluentAudit`1.Exclude(System.Linq.Expressions.Expression{System.Func{`0,System.Object}})">
+            <summary>
+            Excludes the property from being audited.
+            </summary>
+            <param name="property"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NHibernate.Envers.Configuration.Fluent.IFluentAudit`1.Exclude(System.String)">
+            <summary>
+            Excludes the property from being audited.
+            </summary>
+            <param name="property"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NHibernate.Envers.Configuration.Fluent.IFluentAudit`1.ExcludeRelationData(System.Linq.Expressions.Expression{System.Func{`0,System.Object}})">
+            <summary>
+            Excludes the property from tracking changes on related entity.
+            </summary>
+            <param name="property"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NHibernate.Envers.Configuration.Fluent.IFluentAudit`1.ExcludeRelationData(System.String)">
+            <summary>
+            Excludes the property from tracking changes on related entity.
+            </summary>
+            <param name="property"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NHibernate.Envers.Configuration.Fluent.IFluentAudit`1.SetTableInfo(System.Action{NHibernate.Envers.Configuration.Attributes.AuditTableAttribute})">
+            <summary>
+            Sets table info (name, schema and/or catalog) on a table.
+            This will override the default strategy for this particular table/entity.
+            </summary>
+            <param name="tableInfo">A lambda expression that will fill an <see cref="T:NHibernate.Envers.Configuration.Attributes.AuditTableAttribute"/></param>
+            <returns></returns>
+        </member>
+        <member name="M:NHibernate.Envers.Configuration.Fluent.IFluentAudit`1.SetTableInfo(System.String,System.Action{NHibernate.Envers.Configuration.Attributes.AuditJoinTableAttribute})">
+            <summary>
+            Sets table info (name, schema and/or catalog) on join table.
+            </summary>
+            <param name="property">A collection</param>
+            <param name="tableInfo">A lambda expression that will fill an <see cref="T:NHibernate.Envers.Configuration.Attributes.AuditJoinTableAttribute"/></param>
+            <returns></returns>
+        </member>
+        <member name="M:NHibernate.Envers.Configuration.Fluent.IFluentAudit`1.SetTableInfo(System.Linq.Expressions.Expression{System.Func{`0,System.Object}},System.Action{NHibernate.Envers.Configuration.Attributes.AuditJoinTableAttribute})">
+            <summary>
+            Sets table info (name, schema and/or catalog) on join table.
+            </summary>
+            <param name="property">A collection</param>
+            <param name="tableInfo">A lambda expression that will fill an <see cref="T:NHibernate.Envers.Configuration.Attributes.AuditJoinTableAttribute"/></param>
+            <returns></returns>
+        </member>
+        <member name="M:NHibernate.Envers.Configuration.AuditEntitiesConfiguration.RevisionInfoEntityFullClassName">
+            <summary>
+            Returns the class name without the assembly name. Used for generating querries
+            </summary>
+        </member>
+        <member name="M:NHibernate.Envers.Configuration.AuditEntitiesConfiguration.GetRevisionPropPath(System.String)">
+            <summary>
+            </summary>
+            <param name="propertyName">Property of the revision entity.</param>
+            <returns>A path to the given property of the revision entity associated with an audit entity.</returns>
+        </member>
+        <member name="M:NHibernate.Envers.Tools.MappingTools.CreateComponentPrefix(System.String)">
+            <summary>
+            </summary>
+            <param name="componentName">Name of the component, that is, 
+            name of the property in the entity that references the component</param>
+            <returns>A prefix for properties in the given component.</returns>
+        </member>
+        <member name="M:NHibernate.Envers.Tools.MappingTools.CreateToOneRelationPrefix(System.String)">
+            <summary>
+            </summary>
+            <param name="referencePropertyName">The name of the property that holds the relation to the entity.</param>
+            <returns>A prefix which should be used to prefix an id mapper for the related entity.</returns>
+        </member>
+        <member name="T:NHibernate.Envers.Synchronization.Work.IWorkUnitMergeVisitor">
+            <summary>
+            Visitor pattern visitor. All methods should be invoked on the first work unit.
+            </summary>
+        </member>
+        <member name="T:NHibernate.Envers.Synchronization.Work.IWorkUnitMergeDispatcher">
+            <summary>
+            Visitor patter dispatcher.
+            </summary>
+        </member>
+        <member name="M:NHibernate.Envers.Synchronization.Work.IWorkUnitMergeDispatcher.Dispatch(NHibernate.Envers.Synchronization.Work.IWorkUnitMergeVisitor)">
+            <summary>
+            Shuold be invoked on the second work unit.
+            </summary>
+            <param name="first">First work unit (that is, the one added earlier).</param>
+            <returns>The work unit that is the result of the merge.</returns>
+        </member>
+        <member name="M:NHibernate.Envers.Synchronization.Work.IAuditWorkUnit.Perform(NHibernate.ISession,System.Object)">
+            <summary>
+            Perform this work unit in the given session.
+            </summary>
+            <param name="session">Session, in which the work unit should be performed.</param>
+            <param name="revisionData">
+            The current revision data, which will be used to populate the work unit with the correct revision relation.
+            </param>
+        </member>
+        <member name="M:NHibernate.Envers.Synchronization.Work.IAuditWorkUnit.GenerateData(System.Object)">
+            <summary>
+            </summary>
+            <param name="revisionData">The current revision data, which will be used to populate the work unit with the correct revision relation.</param>
+            <returns>Generates data that should be saved when performing this work unit.</returns>
+        </member>
+        <member name="P:NHibernate.Envers.Synchronization.Work.IAuditWorkUnit.RevisionType">
+            <summary>
+            Performed modification type.
+            </summary>
+        </member>
+        <member name="M:NHibernate.Envers.RevisionInfo.IRevisionInfoGenerator.EntityChanged(System.Type,System.String,System.Object,NHibernate.Envers.RevisionType,System.Object)">
+            <see cref="M:NHibernate.Envers.IEntityTrackingRevisionListener.EntityChanged(System.Type,System.String,System.Object,NHibernate.Envers.RevisionType,System.Object)"/>
+        </member>
+        <member name="T:NHibernate.Envers.Query.Property.OriginalIdPropertyName">
+            <summary>
+            Used for specifying restrictions on the identifier.
+            TODO: idPropertyName should be read basing on auditCfg + entityName
+            </summary>
+        </member>
+        <member name="M:NHibernate.Envers.Query.Projection.IAuditProjection.GetData(NHibernate.Envers.Configuration.AuditConfiguration)">
+            <summary>
+            </summary>
+            <param name="auditCfg">Configuration.</param>
+            <returns>A triple: (function name - possibly null, property name, add distinct?).</returns>
+        </member>
+        <member name="M:NHibernate.Envers.Entities.EntityInstantiator.CreateInstanceFromVersionsEntity(System.String,System.Collections.IDictionary,System.Int64)">
+            <summary>
+            Creates an entity instance based on an entry from the versions table.
+            </summary>
+            <param name="entityName">Name of the entity, which instances should be read.</param>
+            <param name="versionsEntity">An entry in the versions table, from which data should be mapped.</param>
+            <param name="revision">Revision at which this entity was read.</param>
+            <returns>An entity instance, with versioned properties set as in the versionsEntity map, and proxies created for collections.</returns>
+        </member>
+        <member name="T:NHibernate.Envers.Configuration.Store.IMetaDataStore">
+            <summary>
+            Holds configuration data for all entities
+            </summary>
+        </member>
+        <member name="M:NHibernate.Envers.Configuration.Store.IMetaDataStore.ClassMeta``1(System.Type)">
+            <summary>
+            Gets attribute for certain type.
+            </summary>
+            <typeparam name="T">Attribute type</typeparam>
+            <param name="entityType">Type to search</param>
+            <returns>
+            Only one attribute will be returned, 
+            if multiple exists you'll need to use <see cref="P:NHibernate.Envers.Configuration.Store.IMetaDataStore.EntityMetas"/>
+            If attribute does not exists, null is returned.
+            </returns>
+        </member>
+        <member name="M:NHibernate.Envers.Configuration.Store.IMetaDataStore.MemberMeta``1(System.Reflection.MemberInfo)">
+            <summary>
+            Gets attribute for certain member.
+            <typeparam name="T">Attribute type</typeparam>
+            </summary>
+            <param name="member">The member to search</param>
+            <returns>
+            Only one attribute will be returned, 
+            if multiple exists you'll need to use <see cref="P:NHibernate.Envers.Configuration.Store.IMetaDataStore.EntityMetas"/>
+            If attribute does not exists, null is returned.
+            </returns>
+        </member>
+        <member name="P:NHibernate.Envers.Configuration.Store.IMetaDataStore.EntityMetas">
+            <summary>
+            All entity metas keyed by type.
+            </summary>
+        </member>
+        <member name="T:NHibernate.Envers.Configuration.Store.IMetaDataAdder">
+            <summary>
+            Runs after <see cref="T:NHibernate.Envers.Configuration.Store.IMetaDataProvider"/> has created entity metas.
+            </summary>
+        </member>
+        <member name="M:NHibernate.Envers.Configuration.Store.IMetaDataAdder.AddMetaDataTo(System.Collections.Generic.IDictionary{System.Type,NHibernate.Envers.Configuration.Store.IEntityMeta})">
+            <summary>
+            Adds metadata to <paramref name="currentMetaData"/>
+            </summary>
+            <param name="currentMetaData">The orginal meta data</param>
+        </member>
+        <member name="M:NHibernate.Envers.Configuration.Metadata.MetadataTools.AddOrModifyColumn(System.Xml.XmlElement,System.String)">
+            <summary>
+            Column name shall be wrapped with '`' signs if quotation required.
+            </summary>
+            <param name="parent"></param>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NHibernate.Envers.Configuration.Metadata.MetadataTools.AddColumns(System.Xml.XmlElement,System.Collections.Generic.IEnumerable{NHibernate.Mapping.Column})">
+            <summary>
+            Adds the columns in the enumerator to the any_mapping XmlElement
+            </summary>
+            <param name="anyMapping"></param>
+            <param name="columns">should contain elements of Column type</param>
+        </member>
+        <member name="P:NHibernate.Envers.Configuration.Metadata.EntityXmlMappingData.ClassMapping">
+            <summary>
+            The xml element that maps the class. The root can be one of the folowing elements:
+            class, subclass, union-subclass, joined-subclass
+            </summary>
+        </member>
+        <member name="T:NHibernate.Envers.Configuration.Attributes.AttributeConfiguration">
+            <summary>
+            Tells Envers that attribute configuration is used
+            </summary>
+        </member>
+        <member name="T:NHibernate.Envers.Configuration.Attributes.RevisionEntityAttribute">
+            <summary>
+            Marks an entity to be created whenever a new revision is generated. The revisions entity must have
+            an integer-valued unique property (preferrably the primary id) annotated with <see cref="T:NHibernate.Envers.Configuration.Attributes.RevisionNumberAttribute"/>
+            and a long-valued property annotated with <see cref="T:NHibernate.Envers.Configuration.Attributes.RevisionTimestampAttribute"/>. 
+            The <see cref="T:NHibernate.Envers.DefaultRevisionEntity"/> already has those two fields, so you may extend it, 
+            but you may also write your own revision entity from scratch.
+            </summary>
+        </member>
+        <member name="T:NHibernate.Envers.Query.IEntityAuditQuery`1">
+            <summary>
+            Audit query based on a specific entity.
+            </summary>
+            <typeparam name="T">The entity type.</typeparam>
+            <remarks>No projection are allowed.</remarks>
+            <seealso cref="T:NHibernate.Envers.Query.IAuditQuery"/>
+        </member>
+        <member name="M:NHibernate.Envers.Entities.Mapper.Relation.AbstractCollectionMapper.MapToMapFromObject(System.Collections.Generic.IDictionary{System.String,System.Object},System.Object)">
+            <summary>
+            Maps the changed collection element to the given map.
+            </summary>
+            <param name="data">Where to map the data.</param>
+            <param name="changed">The changed collection element to map.</param>
+        </member>
+        <member name="T:NHibernate.Envers.RevisionInfo.ModifiedEntityNamesReader">
+            <summary>
+            Returns modified entity types from a persisted revision info entity.
+            </summary>
+        </member>
+        <member name="T:NHibernate.Envers.RevisionInfo.DefaultTrackingModifiedEntitiesRevisionInfoGenerator">
+            <summary>
+            Automatically adds entity class names, that have been changed during current revision, to revision entity.
+            <see cref="T:NHibernate.Envers.Configuration.Attributes.ModifiedEntityNamesAttribute"/>
+            <see cref="T:NHibernate.Envers.DefaultTrackingModifiedEntitiesRevisionEntity"/>
+            </summary>
+        </member>
+        <member name="P:NHibernate.Envers.Configuration.GlobalConfiguration.GenerateRevisionsForCollections">
+            <summary>
+            Should a revision be generated when a not-owned relation field changes
+            </summary>
+        </member>
+        <member name="P:NHibernate.Envers.Configuration.GlobalConfiguration.DoNotAuditOptimisticLockingField">
+            <summary>
+            Should the optimistic locking property of an entity be considered unversioned
+            </summary>
+        </member>
+        <member name="P:NHibernate.Envers.Configuration.GlobalConfiguration.CorrelatedSubqueryOperator">
+            <summary>
+            Which operator to use in correlated subqueries (when we want a property to be equal to the result of
+            a correlated subquery).
+            </summary>
+            <remarks>
+            By default the value is "=". However, HSQLDB has an issue related to that, so as a workaround,
+            "in" is used.
+            </remarks>
+        </member>
+        <member name="P:NHibernate.Envers.Configuration.GlobalConfiguration.StoreDataAtDelete">
+            <summary>
+            Should entity data be stored when it is deleted
+            </summary>
+        </member>
+        <member name="P:NHibernate.Envers.Configuration.GlobalConfiguration.DefaultSchemaName">
+            <summary>
+            The default name of the schema of audit tables.
+            </summary>
+        </member>
+        <member name="P:NHibernate.Envers.Configuration.GlobalConfiguration.DefaultCatalogName">
+            <summary>
+            The default name of the catalog of the audit tables.
+            </summary>
+        </member>
+        <member name="T:NHibernate.Envers.Configuration.Store.IEntityMeta">
+            <summary>
+            Holds configuration information for an entity type
+            </summary>
+        </member>
+        <member name="P:NHibernate.Envers.Configuration.Store.IEntityMeta.ClassMetas">
+            <summary>
+            Metas for current class
+            </summary>
+        </member>
+        <member name="P:NHibernate.Envers.Configuration.Store.IEntityMeta.MemberMetas">
+            <summary>
+            Member metas for current class
+            </summary>
+        </member>
+        <member name="T:NHibernate.Envers.Configuration.Metadata.Reader.ComponentAuditedPropertiesReader">
+            <summary>
+            Reads the audited properties for components.
+            </summary>
+        </member>
+        <member name="T:NHibernate.Envers.Configuration.Metadata.Reader.AuditedPropertiesReader">
+            <summary>
+            Reads persistent properties form a
+            <see cref="T:NHibernate.Envers.Configuration.Metadata.Reader.IPersistentPropertiesSource"/>
+            and adds the ones that are audited to a
+            <see cref="T:NHibernate.Envers.Configuration.Metadata.Reader.IAuditedPropertiesHolder"/>
+            filling all the auditing data.
+            </summary>
+        </member>
+        <member name="M:NHibernate.Envers.Configuration.Metadata.Reader.AuditedPropertiesReader.readAuditOverrides(System.Type)">
+            <summary>
+            Recursively constructs sets of audited and not audited properties and classes which behavior has been overridden
+            using <see cref="T:NHibernate.Envers.Configuration.Attributes.AuditOverrideAttribute"/>.
+            </summary>
+            <param name="clazz">Class that is being processed. Currently mapped entity shall be passed during first invocation.</param>
+        </member>
+        <member name="M:NHibernate.Envers.Configuration.Metadata.Reader.AuditedPropertiesReader.checkSuperclass(System.Type,System.Type)">
+            <summary>
+            Checks whether one class is assignable from another. If not <see cref="T:NHibernate.MappingException"/> is thrown.
+            </summary>
+            <param name="child">Subclass.</param>
+            <param name="parent">Superclass.</param>
+        </member>
+        <member name="M:NHibernate.Envers.Configuration.Metadata.Reader.AuditedPropertiesReader.computeAuditConfiguration(System.Type)">
+            <summary>
+            </summary>
+            <param name="clazz">Class which properties are currently being added.</param>
+            <returns>
+            <see cref="T:NHibernate.Envers.Configuration.Attributes.AuditedAttribute"/> of specified class. If processed type hasn't been explicitly marked, method
+            checks whether given class exists in <see cref="F:NHibernate.Envers.Configuration.Metadata.Reader.AuditedPropertiesReader._overriddenAuditedClasses"/> collection.
+            In case of success, <see cref="T:NHibernate.Envers.Configuration.Attributes.AuditedAttribute"/> of currently mapped entity is returned, otherwise
+            <code>null</code>. If processed type exists in <see cref="F:NHibernate.Envers.Configuration.Metadata.Reader.AuditedPropertiesReader._overriddenNotAuditedClasses"/> collection,
+            the result is also <code>null</code>.
+            </returns>
+        </member>
+        <member name="M:NHibernate.Envers.Configuration.Metadata.Reader.AuditedPropertiesReader.addPropertiesFromClass(System.Type)">
+            <summary>
+            Recursively adds all audited properties of entity class and its superclasses.
+            </summary>
+            <param name="clazz">Currently processed class.</param>
+        </member>
+        <member name="M:NHibernate.Envers.Configuration.Metadata.Reader.AuditedPropertiesReader.fillPropertyData(System.Reflection.MemberInfo,System.String,NHibernate.Envers.Configuration.Metadata.Reader.PropertyAuditingData,System.String,NHibernate.Envers.Configuration.Attributes.AuditedAttribute)">
+            <summary>
+            Checks if a property is audited and if yes, fills all of its data.
+            </summary>
+            <param name="property">Property to check.</param>
+            <param name="mappedPropertyName">NH Property name</param>
+            <param name="propertyData">Property data, on which to set this property's modification store.</param>
+            <param name="accessType">Access type for the property.</param>
+            <param name="allClassAudited">Is class fully audited</param>
+            <returns>False if this property is not audited.</returns>
+        </member>
+        <member name="M:NHibernate.Envers.Configuration.Metadata.Reader.AuditedPropertiesReader.processPropertyAuditingOverrides(System.Reflection.MemberInfo,NHibernate.Envers.Configuration.Metadata.Reader.PropertyAuditingData)">
+             Process the {@link org.hibernate.envers.AuditOverride} annotations for this property.
+            
+             @param property
+                        the property for which the {@link org.hibernate.envers.AuditOverride}
+                        annotations are being processed
+             @param propertyData
+                        the Envers auditing data for this property
+             @return {@code false} if isAudited() of the override annotation was set to
+        </member>
+        <member name="T:NHibernate.Envers.Configuration.Metadata.ICollectionProxyMapperFactory">
+            <summary>
+            Mapper factory for collection proxies
+            </summary>
+            <remarks>
+            Implementations of this interface must have a public, default ctor
+            </remarks>
+        </member>
+        <member name="M:NHibernate.Envers.Configuration.Metadata.ICollectionProxyMapperFactory.Array(System.Type,NHibernate.Envers.Entities.Mapper.Relation.CommonCollectionMapperData,NHibernate.Envers.Entities.Mapper.Relation.MiddleComponentData,NHibernate.Envers.Entities.Mapper.Relation.MiddleComponentData)">
+            <summary>
+            Creates a new <see cref="T:NHibernate.Envers.Entities.Mapper.IPropertyMapper"/> for an <see cref="T:System.Array"/>.
+            </summary>
+        </member>
+        <member name="M:NHibernate.Envers.Configuration.Metadata.ICollectionProxyMapperFactory.IdBag``1(NHibernate.Envers.Entities.Mapper.Relation.CommonCollectionMapperData,NHibernate.Envers.Entities.Mapper.Relation.MiddleComponentData,NHibernate.Envers.Entities.Mapper.Relation.MiddleComponentData)">
+            <summary>
+            Creates a new <see cref="T:NHibernate.Envers.Entities.Mapper.IPropertyMapper"/> for an 
+            <see cref="T:System.Collections.Generic.IList`1"/> with identifier bag semantics.
+            </summary>
+        </member>
+        <member name="M:NHibernate.Envers.Configuration.Metadata.ICollectionProxyMapperFactory.IdBag(NHibernate.Envers.Entities.Mapper.Relation.CommonCollectionMapperData,NHibernate.Envers.Entities.Mapper.Relation.MiddleComponentData,NHibernate.Envers.Entities.Mapper.Relation.MiddleComponentData)">
+            <summary>
+            Creates a new <see cref="T:NHibernate.Envers.Entities.Mapper.IPropertyMapper"/> for an 
+            <see cref="T:System.Collections.IList"/> with identifier bag semantics.
+            </summary>
+        </member>
+        <member name="M:NHibernate.Envers.Configuration.Metadata.ICollectionProxyMapperFactory.Set``1(NHibernate.Envers.Entities.Mapper.Relation.CommonCollectionMapperData,NHibernate.Envers.Entities.Mapper.Relation.MiddleComponentData)">
+            <summary>
+            Creates a new <see cref="T:NHibernate.Envers.Entities.Mapper.IPropertyMapper"/> for an <see cref="T:Iesi.Collections.Generic.ISet`1"/>.
+            </summary>
+        </member>
+        <member name="M:NHibernate.Envers.Configuration.Metadata.ICollectionProxyMapperFactory.Set(NHibernate.Envers.Entities.Mapper.Relation.CommonCollectionMapperData,NHibernate.Envers.Entities.Mapper.Relation.MiddleComponentData)">
+            <summary>
+            Creates a new <see cref="T:NHibernate.Envers.Entities.Mapper.IPropertyMapper"/> for an <see cref="T:Iesi.Collections.ISet"/>.
+            </summary>
+        </member>
+        <member name="M:NHibernate.Envers.Configuration.Metadata.ICollectionProxyMapperFactory.SortedSet(NHibernate.Envers.Entities.Mapper.Relation.CommonCollectionMapperData,NHibernate.Envers.Entities.Mapper.Relation.MiddleComponentData,System.Collections.IComparer)">
+            <summary>
+            Creates a new <see cref="T:NHibernate.Envers.Entities.Mapper.IPropertyMapper"/> for an <see cref="T:Iesi.Collections.ISet"/>
+            that is sorted by an <see cref="T:System.Collections.IComparer"/>.
+            </summary>
+        </member>
+        <member name="M:NHibernate.Envers.Configuration.Metadata.ICollectionProxyMapperFactory.SortedSet``1(NHibernate.Envers.Entities.Mapper.Relation.CommonCollectionMapperData,NHibernate.Envers.Entities.Mapper.Relation.MiddleComponentData,System.Collections.Generic.IComparer{``0})">
+            <summary>
+            Creates a new <see cref="T:NHibernate.Envers.Entities.Mapper.IPropertyMapper"/> for an <see cref="T:Iesi.Collections.ISet"/>
+            that is sorted by an <see cref="T:System.Collections.Generic.IComparer`1"/>.
+            </summary>
+        </member>
+        <member name="M:NHibernate.Envers.Configuration.Metadata.ICollectionProxyMapperFactory.List``1(NHibernate.Envers.Entities.Mapper.Relation.CommonCollectionMapperData,NHibernate.Envers.Entities.Mapper.Relation.MiddleComponentData,NHibernate.Envers.Entities.Mapper.Relation.MiddleComponentData)">
+            <summary>
+            Creates a new <see cref="T:NHibernate.Envers.Entities.Mapper.IPropertyMapper"/> for an <see cref="T:System.Collections.Generic.IList`1"/>.
+            </summary>
+        </member>
+        <member name="M:NHibernate.Envers.Configuration.Metadata.ICollectionProxyMapperFactory.List(NHibernate.Envers.Entities.Mapper.Relation.CommonCollectionMapperData,NHibernate.Envers.Entities.Mapper.Relation.MiddleComponentData,NHibernate.Envers.Entities.Mapper.Relation.MiddleComponentData)">
+            <summary>
+            Creates a new <see cref="T:NHibernate.Envers.Entities.Mapper.IPropertyMapper"/> for an <see cref="T:System.Collections.IList"/>.
+            </summary>
+        </member>
+        <member name="M:NHibernate.Envers.Configuration.Metadata.ICollectionProxyMapperFactory.Map``2(NHibernate.Envers.Entities.Mapper.Relation.CommonCollectionMapperData,NHibernate.Envers.Entities.Mapper.Relation.MiddleComponentData,NHibernate.Envers.Entities.Mapper.Relation.MiddleComponentData)">
+            <summary>
+            Creates a new <see cref="T:NHibernate.Envers.Entities.Mapper.IPropertyMapper"/> for an <see cref="T:System.Collections.Generic.IDictionary`2"/>.
+            </summary>
+        </member>
+        <member name="M:NHibernate.Envers.Configuration.Metadata.ICollectionProxyMapperFactory.Map(NHibernate.Envers.Entities.Mapper.Relation.CommonCollectionMapperData,NHibernate.Envers.Entities.Mapper.Relation.MiddleComponentData,NHibernate.Envers.Entities.Mapper.Relation.MiddleComponentData)">
+            <summary>
+            Creates a new <see cref="T:NHibernate.Envers.Entities.Mapper.IPropertyMapper"/> for an <see cref="T:System.Collections.IDictionary"/>.
+            </summary>
+        </member>
+        <member name="M:NHibernate.Envers.Configuration.Metadata.ICollectionProxyMapperFactory.SortedMap(NHibernate.Envers.Entities.Mapper.Relation.CommonCollectionMapperData,NHibernate.Envers.Entities.Mapper.Relation.MiddleComponentData,NHibernate.Envers.Entities.Mapper.Relation.MiddleComponentData,System.Collections.IComparer)">
+            <summary>
+            Creates a new <see cref="T:NHibernate.Envers.Entities.Mapper.IPropertyMapper"/> for an <see cref="T:System.Collections.IDictionary"/>
+            that is sorted by an <see cref="T:System.Collections.IComparer"/>.
+            </summary>
+        </member>
+        <member name="M:NHibernate.Envers.Configuration.Metadata.ICollectionProxyMapperFactory.SortedMap``2(NHibernate.Envers.Entities.Mapper.Relation.CommonCollectionMapperData,NHibernate.Envers.Entities.Mapper.Relation.MiddleComponentData,NHibernate.Envers.Entities.Mapper.Relation.MiddleComponentData,System.Collections.Generic.IComparer{``0})">
+            <summary>
+            Creates a new <see cref="T:NHibernate.Envers.Entities.Mapper.IPropertyMapper"/> for an <see cref="T:System.Collections.Generic.IDictionary`2"/>
+            that is sorted by an <see cref="T:System.Collections.Generic.IComparer`1"/>.
+            </summary>
+        </member>
+        <member name="M:NHibernate.Envers.Configuration.Metadata.ICollectionProxyMapperFactory.Bag``1(NHibernate.Envers.Entities.Mapper.Relation.CommonCollectionMapperData,NHibernate.Envers.Entities.Mapper.Relation.MiddleComponentData)">
+            <summary>
+            Creates a new <see cref="T:NHibernate.Envers.Entities.Mapper.IPropertyMapper"/> for an 
+            <see cref="T:System.Collections.Generic.IList`1"/> with bag semantics.
+            </summary>
+        </member>
+        <member name="M:NHibernate.Envers.Configuration.Metadata.ICollectionProxyMapperFactory.Bag(NHibernate.Envers.Entities.Mapper.Relation.CommonCollectionMapperData,NHibernate.Envers.Entities.Mapper.Relation.MiddleComponentData)">
+            <summary>
+            Creates a new <see cref="T:NHibernate.Envers.Entities.Mapper.IPropertyMapper"/> for an 
+            <see cref="T:System.Collections.IList"/> with bag semantics.
+            </summary>
+        </member>
+        <member name="T:NHibernate.Envers.Query.Property.EntityPropertyName">
+            <summary>
+            Used for specifying restrictions on a property of an audited entity.
+            </summary>
+        </member>
+        <member name="T:NHibernate.Envers.Query.IRevisionEntityInfo`2">
+            <summary>
+            Detailed result of a query over the history of an entity. 
+            </summary>
+            <typeparam name="TEntity">The type of the entity.</typeparam>
+            <typeparam name="TRevisionEntity">The type of RevisionEntity</typeparam>
+            <seealso cref="T:NHibernate.Envers.DefaultRevisionEntity"/>
+        </member>
+        <member name="T:NHibernate.Envers.DefaultTrackingModifiedEntitiesRevisionEntity">
+            <summary>
+            Extension of <see cref="T:NHibernate.Envers.DefaultRevisionEntity"/> that allows tracking entity types changed in each revision. This revision
+            entity is implicitly used when <code>nhibernate.envers.track_entities_changed_in_revision</code> parameter
+            is set to <code>true</code>.
+            </summary>
+        </member>
+        <member name="T:NHibernate.Envers.Configuration.Metadata.Reader.IAuditedPropertiesHolder">
+            <summary>
+            Implementations hold other audited properties.
+            </summary>
+        </member>
+        <member name="M:NHibernate.Envers.Configuration.Metadata.Reader.IAuditedPropertiesHolder.AddPropertyAuditingData(System.String,NHibernate.Envers.Configuration.Metadata.Reader.PropertyAuditingData)">
+            <summary>
+            Add an audited property.
+            </summary>
+            <param name="propertyName">Name of the audited property.</param>
+            <param name="auditingData">Data for the audited property.</param>
+        </member>
+        <member name="M:NHibernate.Envers.Configuration.Metadata.Reader.IAuditedPropertiesHolder.GetPropertyAuditingData(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="propertyName">Name of a property.</param>
+            <returns>Auditing data for the property.</returns>
+        </member>
+        <member name="F:NHibernate.Envers.Configuration.Metadata.CollectionMetadataGenerator.referencedEntityName">
+            <summary>
+            Null if this collection isn't a relation to another entity.
+            </summary>
+        </member>
+        <member name="M:NHibernate.Envers.Configuration.Metadata.CollectionMetadataGenerator.#ctor(NHibernate.Envers.Configuration.Metadata.AuditMetadataGenerator,NHibernate.Mapping.Collection,NHibernate.Envers.Entities.Mapper.ICompositeMapperBuilder,System.String,NHibernate.Envers.Configuration.Metadata.EntityXmlMappingData,NHibernate.Envers.Configuration.Metadata.Reader.PropertyAuditingData)">
+            <summary>
+            Ctor
+            </summary>
+            <param name="mainGenerator">Main generator, giving access to configuration and the basic mapper.</param>
+            <param name="propertyValue">Value of the collection, as mapped by Hibernate.</param>
+            <param name="currentMapper">Mapper, to which the appropriate {@link org.hibernate.envers.entities.mapper.PropertyMapper} will be added.</param>
+            <param name="referencingEntityName">Name of the entity that owns this collection.</param>
+            <param name="xmlMappingData">In case this collection requires a middle table, additional mapping documents will be created using this object.</param>
+            <param name="propertyAuditingData">
+            Property auditing (meta-)data. Among other things, holds the name of the
+            property that references the collection in the referencing entity, the user data for middle (join)
+            table and the value of the <code>@MapKey</code> annotation, if there was one.
+            </param>
+        </member>
+        <member name="M:NHibernate.Envers.Configuration.Metadata.CollectionMetadataGenerator.addRelatedToXmlMapping(System.Xml.XmlElement,System.String,System.Collections.Generic.IEnumerable{System.String},NHibernate.Envers.Entities.IdMappingData)">
+            <summary>
+            Adds mapping of the id of a related entity to the given xml mapping, prefixing the id with the given prefix.
+            </summary>
+            <param name="xmlMapping">Mapping, to which to add the xml.</param>
+            <param name="prefix">Prefix for the names of properties which will be prepended to properties that form the id.</param>
+            <param name="columnNames">Column names that will be used for properties that form the id.</param>
+            <param name="relatedIdMapping">Id mapping data of the related entity.</param>
+        </member>
+        <member name="M:NHibernate.Envers.Configuration.Metadata.CollectionMetadataGenerator.addValueToMiddleTable(NHibernate.Mapping.IValue,System.Xml.XmlElement,NHibernate.Envers.Configuration.Metadata.Reader.QueryGeneratorBuilder,System.String,System.String[])">
+            <summary>
+            Add value to middle table
+            </summary>
+            <param name="value">Value, which should be mapped to the middle-table, either as a relation to another entity, or as a simple value.</param>
+            <param name="xmlMapping">If not <code>null</code>, xml mapping for this value is added to this element.</param>
+            <param name="queryGeneratorBuilder">In case <code>value</code> is a relation to another entity, information about it should be added to the given.</param>
+            <param name="prefix">Prefix for proeprty names of related entities identifiers.</param>
+            <param name="joinColumns">Names of columns to use in the xml mapping, if this array isn't null and has any elements.</param>
+            <returns>Data for mapping this component.</returns>
+        </member>
+        <member name="M:NHibernate.Envers.Configuration.AuditConfiguration.Remove(NHibernate.Cfg.Configuration)">
+            <summary>
+            Release Envers resources.
+            </summary>
+            <param name="cfg">
+            The <see cref="T:NHibernate.Cfg.Configuration"/> object belonging to current <see cref="T:NHibernate.ISessionFactory"/>.
+            </param>
+            <returns>
+            Normally not needed to be called.
+            Should be used in environment where multiple Envers aware 
+            <see cref="T:NHibernate.ISessionFactory"/> are created and destroyed during runtime.
+            Call this method when <see cref="T:NHibernate.ISessionFactory"/> is disposed.
+            </returns>
+        </member>
+        <member name="T:NHibernate.Envers.Configuration.Store.AuditMappedByMetaDataAdder">
+            <summary>
+            Adds <see cref="T:NHibernate.Envers.Configuration.Attributes.AuditMappedByAttribute"/> to biref collection with
+            one side set to update=false, insert=false.
+            </summary>
+        </member>
+        <member name="M:NHibernate.Envers.Tools.Graph.GraphTopologicalSort.Sort``2(NHibernate.Envers.Tools.Graph.IGraphDefiner{``0,``1})">
+            <summary>
+            Sorts a graph topologically.
+            </summary>
+            <typeparam name="V"></typeparam>
+            <typeparam name="R"></typeparam>
+            <param name="definer">Defines a graph (values and representations) to sort.</param>
+            <returns>Values of the graph, sorted topologically.</returns>
+        </member>
+        <member name="M:NHibernate.Envers.Query.Order.IAuditOrder.GetData(NHibernate.Envers.Configuration.AuditConfiguration)">
+            <summary>
+            </summary>
+            <param name="auditCfg">Configuration.</param>
+            <returns>A pair: (property name, ascending?).</returns>
+        </member>
+        <member name="T:NHibernate.Envers.Entities.Mapper.Relation.Query.OneAuditEntityQueryGenerator">
+            <summary>
+            Selects data from an audit entity.
+            </summary>
+        </member>
+        <member name="T:NHibernate.Envers.Entities.Mapper.Relation.Query.IRelationQueryGenerator">
+            <summary>
+            Implementations of this interface provide a method to generate queries on a relation table (a table used
+            for mapping relations). The query can select, apart from selecting the content of the relation table, also data of
+            other "related" entities.
+            </summary>
+        </member>
+        <member name="T:NHibernate.Envers.Entities.EntitiesConfigurations">
+            <summary>
+            Configuration of the user entities: property mapping of the entities, relations, inheritance.
+            </summary>
+        </member>
+        <member name="T:NHibernate.Envers.ICrossTypeRevisionChangesReader">
+            <summary>
+            Queries that allow retrieving snapshots of all entities (regardless of their particular type) changed in the given
+            revision. Note that this API can be legally used only when default mechanism of tracking modified entity names
+            is enabled.
+            </summary>
+        </member>
+        <member name="M:NHibernate.Envers.ICrossTypeRevisionChangesReader.FindEntityTypes(System.Int64)">
+            <summary>
+            Returns set of entity classes modified in a given revision.
+            </summary>
+            <param name="revision">Revision number.</param>
+            <returns>Set of classes modified in a given revision.</returns>
+        </member>
+        <member name="M:NHibernate.Envers.ICrossTypeRevisionChangesReader.FindEntities(System.Int64)">
+            <summary>
+            Find all entities changed (added, updated and removed) in a given revision. Executes <i>n+1</i> SQL queries,
+            where <i>n</i> is a number of different entity classes modified within specified revision.
+            </summary>
+            <param name="revision">Revision number.</param>
+            <returns>Snapshots of all audited entities changed in a given revision.</returns>
+        </member>
+        <member name="M:NHibernate.Envers.ICrossTypeRevisionChangesReader.FindEntities(System.Int64,NHibernate.Envers.RevisionType)">
+            <summary>
+            Find all entities changed (added, updated and removed) in a given revision. Executes <i>n+1</i> SQL queries,
+            where <i>n</i> is a number of different entity classes modified within specified revision.
+            </summary>
+            <param name="revision">Revision number.</param>
+            <param name="revisionType">Type of modification</param>
+            <returns>Snapshots of all audited entities changed in a given revision and filtered by modification type.</returns>
+        </member>
+        <member name="M:NHibernate.Envers.ICrossTypeRevisionChangesReader.FindEntitiesGroupByRevisionType(System.Int64)">
+            <summary>
+            Find all entities changed (added, updated and removed) in a given revision grouped by modification type.
+            Executes <i>mn+1</i> SQL queries, where:
+            <ul>
+            <li><i>n</i> - number of different entity classes modified within specified revision.</li>
+            <li><i>m</i> - number of different revision types. See <see cref="T:NHibernate.Envers.RevisionType"/> enum.</li>
+            </ul>
+            </summary>
+            <param name="revision">Revision number.</param>
+            <returns>Map containing lists of entity snapshots grouped by modification operation (e.g. addition, update, removal).</returns>
+        </member>
+        <member name="F:NHibernate.Envers.Configuration.Metadata.Reader.ClassAuditingData.defaultAudited">
+            <summary>
+             True if the class is audited globally (this helps to cover the cases when there are no fields in the class,
+             but it's still audited).
+            </summary>
+        </member>
+        <member name="M:NHibernate.Envers.Tools.Toolz.ListToIndexElementPairList``1(System.Collections.IList)">
+            Transforms a list of arbitrary elements to a list of index-element pairs.
+            @param list List to transform.
+            @return A list of pairs: ((0, element_at_index_0), (1, element_at_index_1), ...)
+        </member>
+        <member name="T:NHibernate.Envers.Query.Property.RevisionTypePropertyName">
+            <summary>
+            Used for specifying restrictions on the revision type, corresponding to an audit entity.
+            </summary>
+        </member>
+        <member name="T:NHibernate.Envers.Configuration.Attributes.RevisionNumberAttribute">
+            <summary>
+            Marks a property which will hold the number of the revision in a revision entity, see
+            <see cref="T:NHibernate.Envers.IRevisionListener"/>. Values of this property should form a strictly-increasing sequence
+            of numbers. The value of this property won't be set by Envers. In most cases, this should be
+            an auto-generated database-assigned primary id.
+            </summary>
+        </member>
+        <member name="T:NHibernate.Envers.Query.Property.RevisionPropertyPropertyName">
+            <summary>
+            Used for specifying restrictions on a property of the revision entity, which is associated with an audit entity.
+            </summary>
+        </member>
+        <member name="T:NHibernate.Envers.Query.Criteria.AuditProperty">
+            <summary>
+            Create restrictions, projections and specify order for a property of an audited entity.
+            </summary>
+        </member>
+        <member name="M:NHibernate.Envers.Query.Criteria.AuditProperty.Maximize">
+            <summary>
+            Apply a "maximalize" constraint, with the ability to specify further constraints on the maximized property
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NHibernate.Envers.Query.Criteria.AuditProperty.Minimize">
+            <summary>
+            Apply a "minimize" constraint, with the ability to specify further constraints on the minimized property
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NHibernate.Envers.Query.Criteria.AuditProperty.Max">
+            <summary>
+            Projection on the maximum value
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NHibernate.Envers.Query.Criteria.AuditProperty.Min">
+            <summary>
+            Projection on the minimum value
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NHibernate.Envers.Query.Criteria.AuditProperty.Function(System.String)">
+            <summary>
+            Projection using a custom function
+            </summary>
+            <param name="functionName"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NHibernate.Envers.Entities.Mapper.Relation.Query.OneEntityQueryGenerator">
+            <summary>
+            Selects data from a relation middle-table only.
+            </summary>
+        </member>
+        <member name="M:NHibernate.Envers.Entities.Mapper.Relation.Component.IMiddleComponentMapper.MapToObjectFromFullMap(NHibernate.Envers.Entities.EntityInstantiator,System.Collections.IDictionary,System.Object,System.Int64)">
+            <summary>
+            Maps from full object data, contained in the given map (or object representation of the map, if
+             available), to an object.
+            </summary>
+            <param name="entityInstantiator">An entity instatiator bound with an open versions reader.</param>
+            <param name="data">Full object data.</param>
+            <param name="dataObject">An optional object representation of the data.</param>
+            <param name="revision">Revision at which the data is read.</param>
+            <returns>An object with data corresponding to the one found in the given map.</returns>
+        </member>
+        <member name="M:NHibernate.Envers.Entities.Mapper.Relation.Component.IMiddleComponentMapper.MapToMapFromObject(System.Collections.Generic.IDictionary{System.String,System.Object},System.Object)">
+            <summary>
+            Maps from an object to the object's map representation (for an entity - only its id).
+            </summary>
+            <param name="data">Map to which data should be added.</param>
+            <param name="obj">Object to map from.</param>
+        </member>
+        <member name="M:NHibernate.Envers.Entities.Mapper.Relation.Component.IMiddleComponentMapper.AddMiddleEqualToQuery(NHibernate.Envers.Tools.Query.Parameters,System.String,System.String)">
+            <summary>
+            Adds query statements, which contains restrictions, which express the property that part of the middle
+            entity with alias prefix1, is equal to part of the middle entity with alias prefix2 (the entity is the same).
+            The part is the component's representation in the middle entity.
+            </summary>
+            <param name="parameters">Parameters, to which to add the statements.</param>
+            <param name="prefix1">First alias of the entity + prefix to add to the properties.</param>
+            <param name="prefix2">Second alias of the entity + prefix to add to the properties.</param>
+        </member>
+        <member name="T:NHibernate.Envers.Configuration.PersistentClassGraphDefiner">
+            <summary>
+            Defines a graph, where the vertexes are all persistent classes, and there is an edge from
+            p.c. A to p.c. B iff A is a superclass of B.
+            </summary>
+        </member>
+        <member name="T:NHibernate.Envers.Tools.Graph.IGraphDefiner`2">
+            Defines a graph, where each vertex has a representation, which identifies uniquely a value.
+            Representations are comparable, values - not.
+            @author Simon Duduica, port of Envers omonyme class by Adam Warski (adam at warski dot org)
+        </member>
+        <member name="T:NHibernate.Envers.Configuration.Metadata.ComponentMetadataGenerator">
+            <summary>
+            Generates metadata for components.
+            </summary>
+        </member>
+        <member name="T:NHibernate.Envers.Configuration.Fluent.IFluentAudit">
+            <summary>
+            Provides a fluent interface for custom configuration of an audited
+            entity.
+            </summary>
+        </member>
+        <member name="M:NHibernate.Envers.Configuration.Fluent.IFluentAudit.Exclude(System.String)">
+            <summary>
+            Excludes the property from being audited.
+            </summary>
+            <param name="property"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NHibernate.Envers.Configuration.Fluent.IFluentAudit.ExcludeRelationData(System.String)">
+            <summary>
+            Excludes the property from tracking changes on related entity.
+            </summary>
+            <param name="property"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NHibernate.Envers.Configuration.Fluent.IFluentAudit.SetTableInfo(System.Action{NHibernate.Envers.Configuration.Attributes.AuditTableAttribute})">
+            <summary>
+            Sets table info (name, schema and/or catalog) on a table.
+            This will override the default strategy for this particular table/entity.
+            </summary>
+            <param name="tableInfo">A lambda expression that will fill an <see cref="T:NHibernate.Envers.Configuration.Attributes.AuditTableAttribute"/></param>
+            <returns></returns>
+        </member>
+        <member name="M:NHibernate.Envers.Configuration.Fluent.IFluentAudit.SetTableInfo(System.String,System.Action{NHibernate.Envers.Configuration.Attributes.AuditJoinTableAttribute})">
+            <summary>
+            Sets table info (name, schema and/or catalog) on join table.
+            </summary>
+            <param name="property">A collection</param>
+            <param name="tableInfo">A lambda expression that will fill an <see cref="T:NHibernate.Envers.Configuration.Attributes.AuditJoinTableAttribute"/></param>
+            <returns></returns>
+        </member>
+        <member name="P:NHibernate.Envers.Configuration.Attributes.AuditJoinTableAttribute.TableName">
+            <summary>
+            Name of the join table. Defaults to a concatenation of the names of the primary table of the entity
+            owning the association and of the primary table of the entity referenced by the association.
+            </summary>
+        </member>
+        <member name="P:NHibernate.Envers.Configuration.Attributes.AuditJoinTableAttribute.Schema">
+            <summary>
+            The schema of the join table. Defaults to the schema of the entity owning the association.
+            </summary>
+        </member>
+        <member name="P:NHibernate.Envers.Configuration.Attributes.AuditJoinTableAttribute.Catalog">
+            <summary>
+            The catalog of the join table. Defaults to the catalog of the entity owning the association.
+            </summary>
+        </member>
+        <member name="P:NHibernate.Envers.Configuration.Attributes.AuditJoinTableAttribute.InverseJoinColumns">
+            <summary>
+             The foreign key columns of the join table which reference the primary table of the entity that does not
+             own the association (i.e. the inverse side of the association).
+            </summary>
+        </member>
+        <member name="T:NHibernate.Envers.Configuration.Attributes.AuditedAttribute">
+            <summary>
+            When applied to a class, indicates that all of its properties should be audited.
+            When applied to a field, indicates that this field should be audited.
+            </summary>
+        </member>
+        <member name="P:NHibernate.Envers.Configuration.Attributes.AuditedAttribute.TargetAuditMode">
+            <summary>
+            Specifies if the entity that is the target of the relation should be audited or not. If not, then when
+            reading a historic version an audited entity, the relation will always point to the "current" entity.
+            This is useful for dictionary-like entities, which don't change and don't need to be audited.
+            </summary>
+        </member>
+        <member name="P:NHibernate.Envers.Configuration.Attributes.AuditedAttribute.WithModifiedFlag">
+            <summary>
+            Should a modification flag be stored for each property in the annotated class or for the annotated
+            property. The flag stores information if a property has been changed at a given revision.
+            This can be used for example in queries.
+            </summary>
+        </member>
+        <member name="T:NHibernate.Envers.Reader.FirstLevelCache">
+            <summary>
+            First level cache for versioned entities, versions reader-scoped. Each entity is uniquely identified by a
+            revision number and entity id.
+            </summary>
+        </member>
+        <member name="T:NHibernate.Envers.Entities.Mapper.Relation.Component.MiddleMapKeyIdComponentMapper">
+            <summary>
+            A component mapper for the @MapKey mapping: the value of the map's key is the id of the entity. This
+            doesn't have an effect on the data stored in the versions tables, so <code>mapToMapFromObject</code> is
+            empty.
+            </summary>
+        </member>
+        <member name="T:NHibernate.Envers.Configuration.Fluent.FluentConfiguration">
+            <summary>
+            This implementation of <see cref="T:NHibernate.Envers.Configuration.Store.IMetaDataProvider"/>
+            is used to programmaticly configure envers.
+            </summary>
+        </member>
+        <member name="M:NHibernate.Envers.Configuration.Fluent.FluentConfiguration.Audit``1">
+            <summary>
+            Register entity type T to be audited.
+            </summary>
+            <typeparam name="T">The type to be audited.</typeparam>
+            <returns>A fluent audit object where you can fine grain the auditing.</returns>
+        </member>
+        <member name="M:NHibernate.Envers.Configuration.Fluent.FluentConfiguration.Audit(System.Type)">
+            <summary>
+            Register an entity type to be audited.
+            </summary>
+            <param name="type">The type to be audited.</param>
+            <returns>A fluent audit object where you can fine grain the auditing.</returns>
+        </member>
+        <member name="M:NHibernate.Envers.Configuration.Fluent.FluentConfiguration.Audit(System.Collections.Generic.IEnumerable{System.Type})">
+            <summary>
+            Register multiple audited entities.
+            </summary>
+            <param name="types">All types to be audited.</param>
+            <remarks>
+            Each class will be audited using default values of <see cref="T:NHibernate.Envers.Configuration.Attributes.AuditedAttribute"/> without exclusions of properties.
+            </remarks>
+        </member>
+        <member name="M:NHibernate.Envers.Configuration.Fluent.FluentConfiguration.SetRevisionEntity``1(System.Linq.Expressions.Expression{System.Func{``0,System.Object}},System.Linq.Expressions.Expression{System.Func{``0,System.Object}})">
+            <summary>
+            Defines a custom revision entity.
+            </summary>
+            <typeparam name="T">The custom revision entity type</typeparam>
+            <param name="revisionNumber">Revision number property on custom revision entity</param>
+            <param name="revisionTimestamp">Revision timestamp property on custom revision entity</param>
+        </member>
+        <member name="M:NHibernate.Envers.Configuration.Fluent.FluentConfiguration.SetRevisionEntity``1(System.Linq.Expressions.Expression{System.Func{``0,System.Object}},System.Linq.Expressions.Expression{System.Func{``0,System.Object}},NHibernate.Envers.IRevisionListener)">
+            <summary>
+            Defines a custom revision entity with a custom <see cref="T:NHibernate.Envers.IRevisionListener"/>.
+            </summary>
+            <typeparam name="T">The custom revision entity type</typeparam>
+            <param name="revisionNumber">Revision number property on custom revision entity</param>
+            <param name="revisionTimestamp">Revision timestamp property on custom revision entity</param>
+            <param name="revisionListener">The listener singleton</param>
+        </member>
+        <member name="M:NHibernate.Envers.Configuration.Fluent.FluentConfiguration.SetRevisionEntity``1(System.Linq.Expressions.Expression{System.Func{``0,System.Object}},System.Linq.Expressions.Expression{System.Func{``0,System.Object}},System.Linq.Expressions.Expression{System.Func{``0,System.Object}})">
+            <summary>
+            Defines a custom revision entity.
+            </summary>
+            <typeparam name="T">The custom revision entity type</typeparam>
+            <param name="revisionNumber">Revision number property on custom revision entity</param>
+            <param name="revisionTimestamp">Revision timestamp property on custom revision entity</param>
+            <param name="modifiedEntityNames">
+            Modified entity names property on custom revision entity.
+            Must be of type <code>ISet{string}</code>.
+            </param>
+        </member>
+        <member name="T:NHibernate.Envers.RevisionType">
+            <summary>
+            Type of the revision.
+            </summary>
+        </member>
+        <member name="F:NHibernate.Envers.RevisionType.Added">
+            <summary>
+            Indicates that the entity was added (persisted) at that revision.
+            </summary>
+        </member>
+        <member name="F:NHibernate.Envers.RevisionType.Modified">
+            <summary>
+            Indicates that the entity was modified (one or more of its fields) at that revision.
+            </summary>
+        </member>
+        <member name="F:NHibernate.Envers.RevisionType.Deleted">
+            <summary>
+            Indicates that the entity was deleted (removed) at that revision.
+            </summary>
+        </member>
+        <member name="T:NHibernate.Envers.Entities.RelationType">
+            <summary>
+            Type of a relation between two entities.
+            </summary>
+        </member>
+        <member name="F:NHibernate.Envers.Entities.RelationType.ToOne">
+            <summary>
+            A single-reference-valued relation. The entity owns the relation.
+            </summary>
+        </member>
+        <member name="F:NHibernate.Envers.Entities.RelationType.ToOneNotOwning">
+            <summary>
+            A single-reference-valued relation. The entity doesn't own the relation. It is directly mapped in the related entity.
+            </summary>
+        </member>
+        <member name="F:NHibernate.Envers.Entities.RelationType.ToManyNotOwning">
+            <summary>
+            A collection-of-references-valued relation. The entity doesn't own the relation. It is directly mapped in the related entity.
+            </summary>
+        </member>
+        <member name="F:NHibernate.Envers.Entities.RelationType.ToManyMiddle">
+            <summary>
+            A collection-of-references-valued relation. The entity owns the relation. It is mapped using a middle table.
+            </summary>
+        </member>
+        <member name="F:NHibernate.Envers.Entities.RelationType.ToManyMiddleNotOwning">
+            <summary>
+            A collection-of-references-valued relation. The entity doesn't own the relation. It is mapped using a middle table.
+            </summary>
+        </member>
+        <member name="T:NHibernate.Envers.Configuration.Metadata.AuditEntityNameRegister">
+            <summary>
+            A register of all audit entity names used so far.
+            </summary>
+        </member>
+        <member name="M:NHibernate.Envers.Configuration.Metadata.AuditEntityNameRegister.check(System.String)">
+            <summary>
+            </summary>
+            <param name="auditEntityName">Name of the audit entity.</param>
+            <returns>True if the given audit entity name is already used.</returns>
+        </member>
+        <member name="M:NHibernate.Envers.Configuration.Metadata.AuditEntityNameRegister.Register(System.String)">
+            <summary>
+            Register an audit entity name. If the name is already registered, an exception is thrown.
+            </summary>
+            <param name="auditEntityName">
+            Name of the audit entity.
+            </param>
+        </member>
+        <member name="M:NHibernate.Envers.Configuration.Metadata.AuditEntityNameRegister.CreateUnique(System.String)">
+            <summary>
+            Creates a unique (not yet registered) audit entity name by appending consecutive numbers to the base
+            name. If the base name is not yet used, it is returned unmodified.
+            </summary>
+            <param name="baseAuditEntityName">The base entity name.</param>
+            <returns></returns>
+        </member>
+        <member name="T:NHibernate.Envers.Configuration.Attributes.AuditOverrideAttribute">
+            <summary>
+            The AuditingOverrideAttribute is used to override the auditing
+            behavior of a superclass or single property inherited from 
+            a non mapped base type, or inside an embedded component.
+            </summary>
+        </member>
+        <member name="P:NHibernate.Envers.Configuration.Attributes.AuditOverrideAttribute.PropertyName">
+            <summary>
+            Name of the field (or property) whose mapping is being overridden.
+            </summary>
+        </member>
+        <member name="P:NHibernate.Envers.Configuration.Attributes.AuditOverrideAttribute.IsAudited">
+            <summary>
+            Indicates if the field (or property) is audited; defaults to <code>true</code>.
+            </summary>
+        </member>
+        <member name="P:NHibernate.Envers.Configuration.Attributes.AuditOverrideAttribute.ForClass">
+            <summary>
+            Can be used together with <seealso cref="P:NHibernate.Envers.Configuration.Attributes.AuditOverrideAttribute.IsAudited"/> to set all properties to be audited or not.
+            </summary>
+        </member>
+        <member name="T:NHibernate.Envers.Tools.Query.QueryBuilder">
+            <summary>
+            A class for incrementaly building a HQL query.
+            </summary>
+        </member>
+        <member name="M:NHibernate.Envers.Tools.Query.QueryBuilder.#ctor(System.String,System.String)">
+            <param name="entityName">Main entity which should be selected.</param>
+            <param name="alias">Alias of the entity</param>
+        </member>
+        <member name="M:NHibernate.Envers.Tools.Query.QueryBuilder.AddFrom(System.String,System.String)">
+            <summary>
+            Add an entity from which to select.
+            </summary>
+            <param name="entName">Name of the entity from which to select.</param>
+            <param name="als">Alias of the entity. Should be different than all other aliases.</param>
+        </member>
+        <member name="M:NHibernate.Envers.Tools.Query.QueryBuilder.NewSubQueryBuilder">
+            <returns>
+            A sub-query builder for the same entity (with an auto-generated alias). The sub-query can
+            be later used as a value of a parameter.
+            </returns>
+        </member>
+        <member name="M:NHibernate.Envers.Tools.Query.QueryBuilder.NewSubQueryBuilder(System.String,System.String)">
+            <param name="entityName">Entity name, which will be the main entity for the sub-query.</param>
+            <param name="alias">Alias of the entity, which can later be used in parameters.</param>
+            <returns>
+            A sub-query builder for the given entity, with the given alias. The sub-query can
+            be later used as a value of a parameter.
+            </returns>
+        </member>
+        <member name="M:NHibernate.Envers.Tools.Query.QueryBuilder.Build(System.Text.StringBuilder,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Builds the given query, appending results to the given string buffer, and adding all query parameter values
+            that are used to the map provided.
+            </summary>
+            <param name="sb">String builder to which the query will be appended.</param>
+            <param name="queryParamValues">
+            Map to which name and values of parameters used in the query should be added.
+            <code>null</code> is allowed if no additional parameters are to be added.
+            </param>
+        </member>
+        <member name="P:NHibernate.Envers.Tools.Query.QueryBuilder.RootParameters">
+            <summary>
+            Main "where" parameters for this query.
+            </summary>
+        </member>
+        <member name="M:NHibernate.Envers.Query.AuditEntity.Property(System.String)">
+            <summary>
+            Create restrictions, projections and specify order for a property of an audited entity.
+            </summary>
+            <param name="propertyName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NHibernate.Envers.Query.AuditEntity.RevisionNumber">
+            <summary>
+            Create restrictions, projections and specify order for the revision number, corresponding to an audited entity.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NHibernate.Envers.Query.AuditEntity.RevisionProperty(System.String)">
+            <summary>
+            Create restrictions, projections and specify order for a property of the revision entity, corresponding to an audited entity.
+            </summary>
+            <param name="propertyName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NHibernate.Envers.Query.AuditEntity.RevisionType">
+            <summary>
+            Create restrictions, projections and specify order for the revision type, corresponding to an audited entity.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NHibernate.Envers.Query.AuditEntity.RelatedId(System.String)">
+            <summary>
+            Create restrictions on an id of a related entity.
+            </summary>
+            <param name="propertyName">Name of the property, which is the relation.</param>
+            <returns></returns>
+        </member>
+        <member name="M:NHibernate.Envers.Query.AuditEntity.And(NHibernate.Envers.Query.Criteria.IAuditCriterion,NHibernate.Envers.Query.Criteria.IAuditCriterion)">
+            <summary>
+            Return the conjuction of two criterions.
+            </summary>
+            <param name="lhs"></param>
+            <param name="rhs"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NHibernate.Envers.Query.AuditEntity.Or(NHibernate.Envers.Query.Criteria.IAuditCriterion,NHibernate.Envers.Query.Criteria.IAuditCriterion)">
+            <summary>
+            Return the disjuction of two criterions.
+            </summary>
+            <param name="lhs"></param>
+            <param name="rhs"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NHibernate.Envers.Query.AuditEntity.Not(NHibernate.Envers.Query.Criteria.IAuditCriterion)">
+            <summary>
+            Return the negation of a criterion.
+            </summary>
+            <param name="expression"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NHibernate.Envers.Query.AuditEntity.Conjunction">
+            <summary>
+            Group criterions together in a single conjunction (A and B and C...).
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NHibernate.Envers.Query.AuditEntity.Disjunction">
+            <summary>
+            Group criterions together in a single disjunction (A or B or C...).
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NHibernate.Envers.Entities.Mapper.Id.IIdMapper.MapToEntityFromMap(System.Object,System.Collections.IDictionary)">
+            <summary>
+            </summary>
+            <param name="obj">Object to map to.</param>
+            <param name="data">Data to map.</param>
+            <returns>True if data was mapped; false otherwise (when the id is <code>null</code>).</returns>
+        </member>
+        <member name="M:NHibernate.Envers.Entities.Mapper.Id.IIdMapper.PrefixMappedProperties(System.String)">
+            <summary>
+             Creates a mapper with all mapped properties prefixed. A mapped property is a property which
+             is directly mapped to values (not composite).
+            </summary>
+            <param name="prefix">Prefix to add to mapped properties</param>
+            <returns>A copy of the current property mapper, with mapped properties prefixed.</returns>
+        </member>
+        <member name="M:NHibernate.Envers.Entities.Mapper.Id.IIdMapper.MapToQueryParametersFromId(System.Object)">
+            <summary>
+            </summary>
+            <param name="obj">Id from which to map.</param>
+            <returns>A set parameter data, needed to build a query basing on the given id.</returns>
+        </member>
+        <member name="M:NHibernate.Envers.Entities.Mapper.Id.IIdMapper.AddIdsEqualToQuery(NHibernate.Envers.Tools.Query.Parameters,System.String,System.String)">
+            <summary>
+            Adds query statements, which contains restrictions, which express the property that the id of the entity
+            with alias prefix1, is equal to the id of the entity with alias prefix2 (the entity is the same).
+            </summary>
+            <param name="parameters">Parameters, to which to add the statements.</param>
+            <param name="prefix1">First alias of the entity + prefix to add to the properties.</param>
+            <param name="prefix2">Second alias of the entity + prefix to add to the properties.</param>
+        </member>
+        <member name="M:NHibernate.Envers.Entities.Mapper.Id.IIdMapper.AddIdsEqualToQuery(NHibernate.Envers.Tools.Query.Parameters,System.String,NHibernate.Envers.Entities.Mapper.Id.IIdMapper,System.String)">
+            <summary>
+            Adds query statements, which contains restrictions, which express the property that the id of the entity
+            with alias prefix1, is equal to the id of the entity with alias prefix2 mapped by the second mapper
+            (the second mapper must be for the same entity, but it can have, for example, prefixed properties).
+            </summary>
+            <param name="parameters">Parameters, to which to add the statements.</param>
+            <param name="prefix1">First alias of the entity + prefix to add to the properties.</param>
+            <param name="mapper2">Second mapper for the same entity, which will be used to get properties for the right side of the equation.</param>
+            <param name="prefix2">Second alias of the entity + prefix to add to the properties.</param>
+        </member>
+        <member name="M:NHibernate.Envers.Entities.Mapper.Id.IIdMapper.AddIdEqualsToQuery(NHibernate.Envers.Tools.Query.Parameters,System.Object,System.String,System.Boolean)">
+            <summary>
+            Adds query statements, which contains restrictions, which express the property that the id of the entity with alias prefix, is equal to the given object.
+            </summary>
+            <param name="parameters">Parameters, to which to add the statements.</param>
+            <param name="id">Value of id.</param>
+            <param name="prefix">Prefix to add to the properties (may be null).</param>
+            <param name="equals">Should this query express the "=" relation or the "!=" relation.</param>
+        </member>
+        <member name="M:NHibernate.Envers.Entities.Mapper.Id.IIdMapper.AddNamedIdEqualsToQuery(NHibernate.Envers.Tools.Query.Parameters,System.String,System.Boolean)">
+            <summary>
+            Adds query statements, which contains named parameters, which express the property that the id of the entity with alias prefix, is equal to the given object.
+            </summary>
+            <param name="parameters">Parameters, to which to add the statements.</param>
+            <param name="prefix">Prefix to add to the properties (may be null).</param>
+            <param name="equals">Should this query express the "=" relation or the "!=" relation.</param>
+            <remarks>It is the responsibility of the using method to read parameter values from the id and specify them on the final query object.</remarks>
+        </member>
+        <member name="T:NHibernate.Envers.Strategy.DefaultAuditStrategy">
+            <summary>
+            Default strategy is to simply persist the audit data.
+            </summary>
+        </member>
+        <member name="T:NHibernate.Envers.Strategy.IAuditStrategy">
+            <summary>
+            Behaviours of different audit strategy for populating audit data.
+            </summary>
+        </member>
+        <member name="M:NHibernate.Envers.Strategy.IAuditStrategy.Perform(NHibernate.ISession,System.String,NHibernate.Envers.Configuration.AuditConfiguration,System.Object,System.Object,System.Object)">
+            <summary>
+            Perform the persistence of audited data for regular entities.
+            </summary>
+            <param name="session">Session, which can be used to persist the data.</param>
+            <param name="entityName">Name of the entity, in which the audited change happens</param>
+            <param name="auditCfg">Audit configuration</param>
+            <param name="id">Id of the entity.</param>
+            <param name="data">Audit data to persist</param>
+            <param name="revision">Current revision data</param>
+        </member>
+        <member name="M:NHibernate.Envers.Strategy.IAuditStrategy.PerformCollectionChange(NHibernate.ISession,NHibernate.Envers.Configuration.AuditConfiguration,NHibernate.Envers.Entities.Mapper.PersistentCollectionChangeData,System.Object)">
+            <summary>
+            Perform the persistence of audited data for collection ("middle") entities.
+            </summary>
+            <param name="session">Session, which can be used to persist the data.</param>
+            <param name="auditCfg">Audit configuration</param>
+            <param name="persistentCollectionChangeData">Collection change data to be persisted.</param>
+            <param name="revision">Current revision data</param>
+        </member>
+        <member name="M:NHibernate.Envers.Strategy.IAuditStrategy.AddEntityAtRevisionRestriction(NHibernate.Envers.Configuration.GlobalConfiguration,NHibernate.Envers.Tools.Query.QueryBuilder,System.String,System.String,System.Boolean,NHibernate.Envers.Entities.Mapper.Relation.MiddleIdData,System.String,System.String,System.String,System.String)">
+            <summary>
+            Update the rootQueryBuilder with an extra WHERE clause to restrict the revision for a two-entity relation.
+            This WHERE clause depends on the AuditStrategy, as follows:
+            <ul>
+            <li>For {@link DefaultAuditStrategy} a subquery is created: 
+            <p><code>e.revision = (SELECT max(...) ...)</code></p>
+            </li>
+            <li>for {@link ValidityAuditStrategy} the revision-end column is used: 
+            <p><code>
+            <![CDATA[e.revision <= :revision and (e.endRevision > :revision or e.endRevision is null)]]>
+            </code></p>
+            </li>
+            </ul>
+            </summary>
+            <param name="globalCfg">The <see cref="T:NHibernate.Envers.Configuration.GlobalConfiguration"/></param>
+            <param name="rootQueryBuilder">The <see cref="T:NHibernate.Envers.Tools.Query.QueryBuilder"/> that will be updated</param>
+            <param name="revisionProperty">Property of the revision column</param>
+            <param name="revisionEndProperty">Property of the revisionEnd column (only used for <see cref="T:NHibernate.Envers.Strategy.ValidityAuditStrategy"/>)</param>
+            <param name="addAlias"><code>bool</code> indicator if a left alias is needed</param>
+            <param name="idData">Id-information for the two-entity relation (only used for <see cref="T:NHibernate.Envers.Strategy.DefaultAuditStrategy"/>)</param>
+            <param name="revisionPropertyPath">Path of the revision property (only used for <see cref="T:NHibernate.Envers.Strategy.ValidityAuditStrategy"/>)</param>
+            <param name="originalIdPropertyName">name of the id property (only used for <see cref="T:NHibernate.Envers.Strategy.ValidityAuditStrategy"/>)</param>
+            <param name="alias1">alias1 an alias used for subquery (only used for <see cref="T:NHibernate.Envers.Strategy.ValidityAuditStrategy"/>)</param>
+            <param name="alias2">alias1 an alias used for subquery (only used for <see cref="T:NHibernate.Envers.Strategy.ValidityAuditStrategy"/>)</param>
+        </member>
+        <member name="M:NHibernate.Envers.Strategy.IAuditStrategy.AddAssociationAtRevisionRestriction(NHibernate.Envers.Tools.Query.QueryBuilder,System.String,System.String,System.Boolean,NHibernate.Envers.Entities.Mapper.Relation.MiddleIdData,System.String,System.String,System.String,System.String,NHibernate.Envers.Entities.Mapper.Relation.MiddleComponentData[])">
+            <summary>
+            Update the rootQueryBuilder with an extra WHERE clause to restrict the revision for a middle-entity 
+            association. This WHERE clause depends on the AuditStrategy, as follows:
+            <ul>
+            <li>For {@link DefaultAuditStrategy} a subquery is created: 
+            <p><code>e.revision = (SELECT max(...) ...)</code></p>
+            </li>
+            <li>for {@link ValidityAuditStrategy} the revision-end column is used: 
+            <p><code><![CDATA[e.revision <= :revision and (e.endRevision > :revision or e.endRevision is null)]]></code></p>
+            </li>
+            </ul>
+            </summary>
+            <param name="rootQueryBuilder">The <see cref="T:NHibernate.Envers.Tools.Query.QueryBuilder"/> that will be updated</param>
+            <param name="revisionProperty">Property of the revision column</param>
+            <param name="revisionEndProperty">Property of the revisionEnd column (only used for <see cref="T:NHibernate.Envers.Strategy.ValidityAuditStrategy"/>)</param>
+            <param name="addAlias"><code>bool</code> indicator if a left alias is needed</param>
+            <param name="referencingIdData">id-information for the middle-entity association (only used for <see cref="T:NHibernate.Envers.Strategy.DefaultAuditStrategy"/>)</param>
+            <param name="versionsMiddleEntityName">name of the middle-entity</param>
+            <param name="eeOriginalIdPropertyPath">name of the id property (only used for <see cref="T:NHibernate.Envers.Strategy.ValidityAuditStrategy"/>)</param>
+            <param name="revisionPropertyPath">path of the revision property (only used for <see cref="T:NHibernate.Envers.Strategy.ValidityAuditStrategy"/>)</param>
+            <param name="originalIdPropertyName">name of the id property (only used for <see cref="T:NHibernate.Envers.Strategy.ValidityAuditStrategy"/>)</param>
+            <param name="componentDatas">information about the middle-entity relation
+            <remarks>
+            <code>null</code> is accepted.
+            </remarks>
+            </param>
+        </member>
+        <member name="T:NHibernate.Envers.Query.Impl.EntitiesModifiedAtRevisionQuery">
+            <summary>
+            In comparison to <see cref="T:NHibernate.Envers.Query.Impl.EntitiesAtRevisionQuery"/> this query returns an empty collection if an entity
+            of a certain type has not been changed in a given revision.
+            </summary>
+        </member>
+        <member name="M:NHibernate.Envers.Configuration.Metadata.InheritanceTypeExtensions.GetInheritanceType(NHibernate.Mapping.PersistentClass)">
+            <summary>
+            Get the <see cref="T:NHibernate.Envers.Configuration.Metadata.InheritanceType"/> for a given <see cref="T:NHibernate.Mapping.PersistentClass"/>.
+            </summary>
+            <param name="source">The class for which to get the inheritance type.</param>
+            <returns>
+            The inheritance type of this class. NONE, if this class does not inherit from another persisten class.
+            </returns>
+        </member>
+        <member name="M:NHibernate.Envers.AuditReaderFactory.Get(NHibernate.ISession)">
+            <summary>
+            Create an audit reader associated with an open session.
+            </summary>
+            <param name="session">An open session.</param>
+            <returns>An audit reader associated with the given sesison. It shouldn't be used after the session is closed.</returns>
+            <exception cref="T:NHibernate.Envers.Exceptions.AuditException">When the given required listeners aren't installed.</exception>
+        </member>
+        <member name="M:NHibernate.Envers.AuditReaderFactory.Auditer(NHibernate.ISession)">
+            <summary>
+            Create an audit reader associated with an open session.
+            </summary>
+            <param name="session">An open session.</param>
+            <returns>An audit reader associated with the given sesison. It shouldn't be used after the session is closed.</returns>
+            <exception cref="T:NHibernate.Envers.Exceptions.AuditException">When the given required listeners aren't installed.</exception>
+        </member>
+        <member name="T:NHibernate.Envers.Tools.Graph.Vertex`1">
+            <summary>
+            A graph vertex - stores its representation, neighbours, start and end time in (D|B)FS.
+            </summary>
+            <typeparam name="R"></typeparam>
+        </member>
+        <member name="T:NHibernate.Envers.Reader.IAuditReaderImplementor">
+            <summary>
+            An interface exposed by a VersionsReader to library-facing classes.
+            </summary>
+        </member>
+        <member name="M:NHibernate.Envers.IAuditReader.Find``1(System.Object,System.Int64)">
+            <summary>
+            Find an entity by primary key at the given revision.
+            </summary>
+            <typeparam name="T">Type of entity</typeparam>
+            <param name="primaryKey">Primary key of the entity.</param>
+            <param name="revision">Revision in which to get the entity</param>
+            <returns>
+            The found entity instance at the given revision (its properties may be partially filled
+            if not all properties are audited) or null, if an entity with that id didn't exist at that
+            revision.
+            </returns>
+        </member>
+        <member name="M:NHibernate.Envers.IAuditReader.Find(System.Type,System.Object,System.Int64)">
+            <summary>
+            Find an entity by primary key at the given revision.
+            </summary>
+            <param name="cls">Type of entity</param>
+            <param name="primaryKey">Primary key of the entity.</param>
+            <param name="revision">Revision in which to get the entity</param>
+            <returns>
+            The found entity instance at the given revision (its properties may be partially filled
+            if not all properties are audited) or null, if an entity with that id didn't exist at that
+            revision.
+            </returns>
+        </member>
+        <member name="M:NHibernate.Envers.IAuditReader.Find(System.String,System.Object,System.Int64)">
+            <summary>
+            Find an entity by primary key at the given revision with the specified entityName.
+            </summary>
+            <param name="entityName">Name of the entity (if can't be guessed basing on the {@code cls}).</param>
+            <param name="primaryKey">Primary key of the entity.</param>
+            <param name="revision">Revision in which to get the entity</param>
+            <returns>
+            The found entity instance at the given revision (its properties may be partially filled
+            if not all properties are audited) or null, if an entity with that id didn't exist at that
+            revision.
+            </returns>
+        </member>
+        <member name="M:NHibernate.Envers.IAuditReader.GetRevisions(System.Type,System.Object)">
+            <summary>
+            Get a list of revision numbers, at which an entity was modified.
+            </summary>
+            <param name="cls">Type of entity</param>
+            <param name="primaryKey">Primary key of the entity.</param>
+            <returns>
+            A list of revision numbers, at which the entity was modified, sorted in ascending order (so older
+            revisions come first).
+            </returns>
+        </member>
+        <member name="M:NHibernate.Envers.IAuditReader.GetRevisions(System.String,System.Object)">
+            <summary>
+            Get a list of revision numbers, at which an entity was modified, looking by entityName.
+            </summary>
+            <param name="entityName">Name of the entity </param>
+            <param name="primaryKey">Primary key of the entity.</param>
+            <returns>
+            A list of revision numbers, at which the entity was modified, sorted in ascending order (so older
+            revisions come first).
+            </returns>
+        </member>
+        <member name="M:NHibernate.Envers.IAuditReader.GetRevisionDate(System.Int64)">
+            <summary>
+            Get the date, at which a revision was created. 
+            </summary>
+            <param name="revision">Number of the revision for which to get the date.</param>
+            <returns>Date of commiting the given revision.</returns>
+        </member>
+        <member name="M:NHibernate.Envers.IAuditReader.GetRevisionNumberForDate(System.DateTime)">
+            <summary>
+            Gets the revision number, that corresponds to the given date.
+            </summary>
+            <param name="date">Date for which to get the revision.</param>
+            <returns>The number of the highest revision, which was created on or before the given <paramref name="date"/>.</returns>
+            <remarks>
+            The result is that:
+            <code>
+            <![CDATA[
+            GetRevisionDate(GetRevisionNumberForDate(date)) <= date
+            ]]>
+            </code>
+            and
+            <code>
+            <![CDATA[
+            GetRevisionDate(GetRevisionNumberForDate(date)+1) > date
+            ]]>
+            </code>
+            </remarks>
+        </member>
+        <member name="M:NHibernate.Envers.IAuditReader.FindRevision``1(System.Int64)">
+            <summary>
+            A helper method; should be used only if a custom revision entity is used.
+            </summary>
+            <typeparam name="T">Class of the revision entity. Should be annotated with RevisionEntity.</typeparam>
+            <param name="revision">Number of the revision for which to get the data.</param>
+            <returns>Entity containing data for the given revision.</returns>
+        </member>
+        <member name="M:NHibernate.Envers.IAuditReader.FindRevision(System.Int64)">
+            <summary>
+            A helper method; should be used only if a custom revision entity is used.
+            </summary>
+            <param name="revision">Number of the revision for which to get the data.</param>
+            <returns>Entity containing data for the given revision.</returns>
+        </member>
+        <member name="M:NHibernate.Envers.IAuditReader.FindRevisions(System.Collections.Generic.IEnumerable{System.Int64})">
+            <summary>
+            Find a map of revisions using the revision numbers specified.
+            </summary>
+            <param name="revisions">Revision numbers of the revision for which to get the data.</param>
+            <returns>A map of revision number and the given revision entity.</returns>
+        </member>
+        <member name="M:NHibernate.Envers.IAuditReader.FindRevisions``1(System.Collections.Generic.IEnumerable{System.Int64})">
+            <summary>
+            Find a map of revisions using the revision numbers specified.
+            </summary>
+            <typeparam name="T">The revision type user has defined</typeparam>
+            <param name="revisions">Revision numbers of the revision for which to get the data.</param>
+            <returns>A map of revision number and the given revision entity.</returns>
+        </member>
+        <member name="M:NHibernate.Envers.IAuditReader.GetCurrentRevision``1(System.Boolean)">
+            <summary>
+            Gets an instance of the current revision entity, to which any entries in the audit tables will be bound.
+            Please note the if {@code persist} is {@code false}, and no audited entities are modified in this session,
+            then the obtained revision entity instance won't be persisted. If {@code persist} is {@code true}, the revision
+            entity instance will always be persisted, regardless of whether audited entities are changed or not.
+            </summary>
+            <typeparam name="T">Class of the revision entity. Should be annotated with {@link RevisionEntity}.</typeparam>
+            <param name="persist">
+            If the revision entity is not yet persisted, should it become persisted. This way, the primary
+            identifier (id) will be filled (if it's assigned by the DB) and available, but the revision entity will be
+            persisted even if there are no changes to audited entities. Otherwise, the revision number (id) can be
+            null.</param>
+            <returns>The current revision entity, to which any entries in the audit tables will be bound.</returns>
+        </member>
+        <member name="M:NHibernate.Envers.IAuditReader.GetCurrentRevision(System.Boolean)">
+            <summary>
+            Gets an instance of the current revision entity, to which any entries in the audit tables will be bound.
+            Please note the if {@code persist} is {@code false}, and no audited entities are modified in this session,
+            then the obtained revision entity instance won't be persisted. If {@code persist} is {@code true}, the revision
+            entity instance will always be persisted, regardless of whether audited entities are changed or not.
+            </summary>
+            <param name="persist">
+            If the revision entity is not yet persisted, should it become persisted. This way, the primary
+            identifier (id) will be filled (if it's assigned by the DB) and available, but the revision entity will be
+            persisted even if there are no changes to audited entities. Otherwise, the revision number (id) can be
+            null.</param>
+            <returns>The current revision entity, to which any entries in the audit tables will be bound.</returns>
+        </member>
+        <member name="M:NHibernate.Envers.IAuditReader.CreateQuery">
+            <summary>
+            Creates a query
+            </summary>
+            <returns>
+            A query creator, associated with this AuditReader instance, with which queries can be
+            created and later executed. Shouldn't be used after the associated Session or EntityManager
+            is closed.
+            </returns>
+        </member>
+        <member name="M:NHibernate.Envers.IAuditReader.CrossTypeRevisionChangesReader">
+             <returns>
+             	Basic implementation of &amp;lt;see cref=&amp;quot;ICrossTypeRevisionChangesReader&amp;quot;/&amp;gt; interface. Raises an exception if the default
+             	mechanism of tracking entity names modified during revisions has not been enabled.
+             </returns>
+            <exception cref="T:NHibernate.Envers.Exceptions.AuditException">
+             If none of the following conditions is satisfied:
+             <ul>
+            	<li><code>nhibernate.envers.track_entities_changed_in_revision</code>
+               parameter is set to <code>true</code>.</li>
+               <li>Custom revision entity (annotated with <see cref="T:NHibernate.Envers.Configuration.Attributes.RevisionEntityAttribute"/>)
+            	extends <see cref="T:NHibernate.Envers.DefaultTrackingModifiedEntitiesRevisionEntity"/> base class.</li>
+               <li>Custom revision entity (annotated with <see cref="T:NHibernate.Envers.Configuration.Attributes.RevisionEntityAttribute"/>) encapsulates a field
+               marked with <see cref="T:NHibernate.Envers.Configuration.Attributes.ModifiedEntityNamesAttribute"/> attribute.</li>
+             </ul>
+             </exception>
+        </member>
+        <member name="M:NHibernate.Envers.IAuditReader.GetEntityName(System.Object,System.Int64,System.Object)">
+            <summary>
+            
+            </summary>
+            <param name="primaryKey"></param>
+            <param name="revision"></param>
+            <param name="entity">entity that was obtained previously from the same AuditReader.</param>
+            <returns>
+            the entityName for the given entity, null in case the entity is
+            not associated with this AuditReader instance.
+            </returns>
+        </member>
+        <member name="M:NHibernate.Envers.IAuditReader.IsEntityClassAudited(System.Type)">
+            <summary>
+            Checks if the entityClass was configured to be audited.
+            </summary>
+            <param name="entityClass">Class of the entity asking for audit support</param>
+            <returns>true if the entityClass is audited.</returns>
+        </member>
+        <member name="M:NHibernate.Envers.IAuditReader.IsEntityNameAudited(System.String)">
+            <summary>
+            Checks if the entityName was configured to be audited.
+            </summary>
+            <param name="entityName">EntityName of the entity asking for audit support.</param>
+            <returns>true if the entityName is audited.</returns>
+        </member>
+        <member name="M:NHibernate.Envers.IRevisionListener.NewRevision(System.Object)">
+            <summary>
+            Called when a new revision is created.
+            </summary>
+            <remarks>
+            Implementations must have a default ctor.
+            </remarks>
+            <param name="revisionEntity">
+            An instance of the entity annotated with <see cref="T:NHibernate.Envers.Configuration.Attributes.RevisionEntityAttribute"/> which will be persisted
+            after this method returns. All properties on this entity that are to be persisted should be set by this method.
+            </param>
+        </member>
+        <member name="T:NHibernate.Envers.Entities.Mapper.Relation.Component.MiddleMapKeyPropertyComponentMapper">
+            <summary>
+            A component mapper for the @MapKey mapping with the name parameter specified: the value of the map's key
+            is a property of the entity. This doesn't have an effect on the data stored in the versions tables,
+            so <code>mapToMapFromObject</code> is empty.
+            </summary>
+        </member>
+        <member name="T:NHibernate.Envers.Configuration.Metadata.Reader.QueryGeneratorBuilder">
+            <summary>
+            Builds query generators, for reading collection middle tables, along with any related entities.
+            The related entities information can be added gradually, and when complete, the query generator can be built.
+            </summary>
+        </member>
+        <member name="P:NHibernate.Envers.Configuration.Metadata.Reader.QueryGeneratorBuilder.CurrentIndex">
+            <summary>
+            Current index of data in the array, which will be the element of a list, returned when executing a query
+            generated by the built query generator.
+            </summary>
+        </member>
+        <member name="T:NHibernate.Envers.Synchronization.Work.PersistentCollectionChangeWorkUnit.PersistentCollectionChangeWorkUnitId">
+            <summary>
+            A unique identifier for a collection work unit. Consists of an id of the owning entity and the name of
+            the entity plus the name of the field (the role). This is needed because such collections aren't entities
+            in the "normal" mapping, but they are entities for Envers.
+            </summary>
+        </member>
+        <member name="T:NHibernate.Envers.Configuration.Attributes.NotAuditedAttribute">
+            <summary>
+            When applied to a field, indicates that this field should not be audited.
+            </summary>
+        </member>
+        <member name="T:NHibernate.Envers.Entities.Mapper.Relation.Query.TwoEntityOneAuditedQueryGenerator">
+            <summary>
+            Selects data from a relation middle-table and a related non-audited entity.
+            </summary>
+        </member>
+        <member name="T:NHibernate.Envers.Entities.Mapper.Relation.CommonCollectionMapperData">
+            <summary>
+            Data that is used by all collection mappers, regardless of the type.  
+            </summary>
+        </member>
+        <member name="M:NHibernate.Cfg.NhConfigurationExtension.IntegrateWithEnvers(NHibernate.Cfg.Configuration,NHibernate.Envers.Event.AuditEventListener,NHibernate.Envers.Configuration.Store.IMetaDataProvider)">
+            <summary>
+            Integrate Envers with NHibernate.
+            </summary>
+            <param name="configuration">The NHibernate configuration.</param>
+            <param name="auditEventListener">The custom implementation for all listeners (better if inherited from <see cref="T:NHibernate.Envers.Event.AuditEventListener"/>&gt;)</param>
+            <param name="metaDataProvider">The provider of metadata (attributes, embedded fluent-configuration or custom <see cref="T:NHibernate.Envers.Configuration.Store.IMetaDataProvider"/> for custom DSL.</param>
+            <returns>The NHibernate configuration.</returns>
+            <remarks>
+            WARNING: Be sure to call this method after set all configuration properties, after have added all your mappings 
+            and after integrate NHibernate with all others packages as NHibernate.Validator, NHibernate.Search, NHibernate.Spatial.
+            </remarks>
+        </member>
+        <member name="M:NHibernate.Cfg.NhConfigurationExtension.IntegrateWithEnvers(NHibernate.Cfg.Configuration,NHibernate.Envers.Configuration.Store.IMetaDataProvider)">
+            <summary>
+            Integrate Envers with NHibernate.
+            </summary>
+            <param name="configuration">The NHibernate configuration.</param>
+            <param name="metaDataProvider">The provider of metadata (attributes, embedded fluent-configuration or custom <see cref="T:NHibernate.Envers.Configuration.Store.IMetaDataProvider"/> for custom DSL.</param>
+            <returns>The NHibernate configuration.</returns>
+            <remarks>
+            The default <see cref="T:NHibernate.Envers.Event.AuditEventListener"/> will be used.
+            WARNING: Be sure to call this method after set all configuration properties, after have added all your mappings 
+            and after integrate NHibernate with all others packages as NHibernate.Validator, NHibernate.Search, NHibernate.Spatial.
+            </remarks>
+            <seealso cref="T:NHibernate.Envers.Configuration.Attributes.AttributeConfiguration"/>
+            <seealso cref="T:NHibernate.Envers.Configuration.Fluent.FluentConfiguration"/>
+        </member>
+        <member name="M:NHibernate.Cfg.NhConfigurationExtension.IntegrateWithEnvers(NHibernate.Cfg.Configuration)">
+            <summary>
+            Integrate Envers with NHibernate.
+            </summary>
+            <param name="configuration">The NHibernate configuration.</param>
+            <returns>The NHibernate configuration.</returns>
+            <remarks>
+            The default <see cref="T:NHibernate.Envers.Event.AuditEventListener"/> and the <see cref="T:NHibernate.Envers.Configuration.Attributes.AttributeConfiguration"/> will be used.
+            WARNING: Be sure to call this method after set all configuration properties, after have added all your mappings 
+            and after integrate NHibernate with all others packages as NHibernate.Validator, NHibernate.Search, NHibernate.Spatial.
+            </remarks>
+        </member>
+        <member name="M:NHibernate.Cfg.NhConfigurationExtension.SetEnversProperty``1(NHibernate.Cfg.Configuration,NHibernate.Envers.Configuration.ConfigurationEntry{``0},``0)">
+            <summary>
+            A type safe way setting Envers properties on <see cref="T:NHibernate.Cfg.Configuration"/> object.
+            </summary>
+            <typeparam name="T">The type of the value</typeparam>
+            <param name="configuration">The <see cref="T:NHibernate.Cfg.Configuration"/> object</param>
+            <param name="configurationEntry">The configuration entry</param>
+            <param name="value">The value set by user</param>
+            <returns></returns>
+        </member>
+        <member name="T:NHibernate.Envers.Configuration.Metadata.Reader.AnnotationsMetadataReader">
+            <summary>
+            A helper class to read versioning meta-data from annotations on a persistent class.
+            </summary>
+        </member>
+        <member name="F:NHibernate.Envers.Configuration.Metadata.Reader.AnnotationsMetadataReader._auditData">
+            <summary>
+            This object is filled with information read from annotations and returned by the <code>getVersioningData</code>
+            method.
+            </summary>
+        </member>
+        <member name="M:NHibernate.Envers.Configuration.Metadata.AuditMetadataGenerator.CloneAndSetupRevisionInfoRelationMapping(System.Xml.XmlDocument)">
+            <summary>
+             Clones the revision info relation mapping, so that it can be added to other mappings. Also, the name of
+             the property and the column are set properly.
+            </summary>
+            <param name="doc">The xml document</param>
+            <returns>A revision info mapping, which can be added to other mappings (has no parent).</returns>
+        </member>
+        <member name="M:NHibernate.Envers.Configuration.Metadata.AuditMetadataGenerator.GetReferencedIdMappingData(System.String,System.String,NHibernate.Envers.Configuration.Metadata.Reader.PropertyAuditingData,System.Boolean)">
+            Reads the id mapping data of a referenced entity.
+            @param entityName Name of the entity which is the source of the relation.
+            @param referencedEntityName Name of the entity which is the target of the relation.
+            @param propertyAuditingData Auditing data of the property that is the source of the relation.
+            @param allowNotAuditedTarget Are not-audited target entities allowed.
+            @throws MappingException If a relation from an audited to a non-audited entity is detected, which is not
+            mapped using {@link RelationTargetAuditMode#NotAudited}.
+            @return The id mapping data of the related entity. 
+        </member>
+        <member name="T:NHibernate.Envers.Query.Criteria.IdentifierEqAuditExpression">
+            <summary>
+            A criterion that expresses that the id of an entity is equal or not equal to some specified value.
+            </summary>
+        </member>
+        <member name="M:NHibernate.Envers.Query.AuditQueryCreator.ForEntitiesAtRevision(System.Type,System.Int64)">
+            <summary>
+            Creates a query, which will return entities satisfying some conditions (specified later), at a given revision.
+            </summary>
+            <param name="c"><see cref="T:System.Type"/> of the entities for which to query.</param>
+            <param name="revision">Revision number at which to execute the query.</param>
+            <returns>A query for entities at a given revision, to which conditions can be added and which can then be executed</returns>
+            <remarks>The result of the query will be a list of entities instances, unless a projection is added.</remarks>
+        </member>
+        <member name="M:NHibernate.Envers.Query.AuditQueryCreator.ForEntitiesAtRevision(System.String,System.Int64)">
+            <summary>
+            Creates a query, which will return entities satisfying some conditions (specified later), at a given revision.
+            </summary>
+            <param name="entityName">Name of entity</param>
+            <param name="revision">Revision number at which to execute the query.</param>
+            <returns>A query for entities at a given revision, to which conditions can be added and which can then be executed</returns>
+            <remarks>The result of the query will be a list of entities instances, unless a projection is added.</remarks>
+        </member>
+        <member name="M:NHibernate.Envers.Query.AuditQueryCreator.ForEntitiesModifiedAtRevision(System.Type,System.Int64)">
+            <summary>
+            Creates a query, which will return entities modified at the specified revision.
+            In comparison, the <seealso cref="M:NHibernate.Envers.Query.AuditQueryCreator.ForEntitiesAtRevision(System.Type,System.Int64)"/> query takes into all entities
+            which were present at a given revision, even if they were not modified.
+            </summary>
+            <param name="c">Class of the entities for which to query.</param>
+            <param name="revision">Revision number at which to execute the query.</param>
+            <returns>
+            A query for entities changed at a given revision, to which conditions can be added and which
+            can then be executed.
+            </returns>
+        </member>
+        <member name="M:NHibernate.Envers.Query.AuditQueryCreator.ForEntitiesModifiedAtRevision(System.String,System.Int64)">
+            <summary>
+            Creates a query, which will return entities modified at the specified revision.
+            In comparison, the <seealso cref="M:NHibernate.Envers.Query.AuditQueryCreator.ForEntitiesAtRevision(System.Type,System.Int64)"/> query takes into all entities
+            which were present at a given revision, even if they were not modified.
+            </summary>
+            <param name="entityName">Name of the entity.</param>
+            <param name="revision">Revision number at which to execute the query.</param>
+            <returns>
+            A query for entities changed at a given revision, to which conditions can be added and which
+            can then be executed.
+            </returns>
+        </member>
+        <member name="M:NHibernate.Envers.Query.AuditQueryCreator.ForEntitiesAtRevision``1(System.Int64)">
+            <summary>
+            Creates a query, which will return entities satisfying some conditions (specified later), at a given revision.
+            </summary>
+            <typeparam name="TEntity">The <see cref="T:System.Type"/> of the entities for which to query.</typeparam>
+            <param name="revision">Revision number at which to execute the query.</param>
+            <returns>A query for entities at a given revision, to which conditions can be added and which can then be executed</returns>
+        </member>
+        <member name="M:NHibernate.Envers.Query.AuditQueryCreator.ForRevisionsOfEntity(System.Type,System.Boolean,System.Boolean)">
+            <summary>
+            Creates a query, which selects the revisions, at which the given entity was modified.
+            Unless an explicit projection is set, the result will be a list of three-element arrays, containing:
+            <ol>
+            <li>the entity instance</li>
+            <li>revision entity, corresponding to the revision at which the entity was modified. If no custom
+            revision entity is used, this will be an instance of <see cref="T:NHibernate.Envers.DefaultRevisionEntity"/></li>
+            <li>type of the revision (an enum instance of class <see cref="T:NHibernate.Envers.RevisionType"/></li>.
+            </ol>
+            Additional conditions that the results must satisfy may be specified. 
+            </summary>
+            <param name="c">Class of the entities for which to query.</param>
+            <param name="selectEntitiesOnly">
+            If true, instead of a list of three-element arrays, a list of entites will be returned as a result of executing this query.
+            </param>
+            <param name="selectDeletedEntities">
+            If true, also revisions where entities were deleted will be returned. 
+            The additional entities will have revision type "delete", and contain no data (all fields null), except for the id field.
+            </param>
+            <returns>
+            A query for revisions at which instances of the given entity were modified, to which
+            conditions can be added (for example - a specific id of an entity of class <code>c</code>), and which
+            can then be executed. The results of the query will be sorted in ascending order by the revision number,
+            unless an order or projection is added.
+            </returns>
+        </member>
+        <member name="M:NHibernate.Envers.Query.AuditQueryCreator.ForRevisionsOfEntity(System.String,System.Boolean,System.Boolean)">
+            <summary>
+            Creates a query, which selects the revisions, at which the given entity was modified.
+            Unless an explicit projection is set, the result will be a list of three-element arrays, containing:
+            <ol>
+            <li>the entity instance</li>
+            <li>revision entity, corresponding to the revision at which the entity was modified. If no custom
+            revision entity is used, this will be an instance of <see cref="T:NHibernate.Envers.DefaultRevisionEntity"/></li>
+            <li>type of the revision (an enum instance of class <see cref="T:NHibernate.Envers.RevisionType"/></li>.
+            </ol>
+            Additional conditions that the results must satisfy may be specified. 
+            </summary>
+            <param name="entityName">Name of the entity</param>
+            <param name="selectEntitiesOnly">
+            If true, instead of a list of three-element arrays, a list of entites will be returned as a result of executing this query.
+            </param>
+            <param name="selectDeletedEntities">
+            If true, also revisions where entities were deleted will be returned. 
+            The additional entities will have revision type "delete", and contain no data (all fields null), except for the id field.
+            </param>
+            <returns>
+            A query for revisions at which instances of the given entity were modified, to which
+            conditions can be added (for example - a specific id of an entity of class <code>c</code>), and which
+            can then be executed. The results of the query will be sorted in ascending order by the revision number,
+            unless an order or projection is added.
+            </returns>
+        </member>
+        <member name="M:NHibernate.Envers.Query.AuditQueryCreator.ForRevisionsOf``1">
+            <summary>
+            Creates a query, which selects the revisions, at which the given entity was modified.
+            </summary>
+            <typeparam name="TEntity">The <see cref="T:System.Type"/> of the entities for which to query.</typeparam>
+            <returns>List of <typeparamref name="TEntity"/> instances of each revision excluding deletation.</returns>
+            <remarks>The results of the query will be sorted in ascending order by the revision number, unless an order or projection is added.</remarks>
+        </member>
+        <member name="M:NHibernate.Envers.Query.AuditQueryCreator.ForRevisionsOf``1(System.Boolean)">
+            <summary>
+            Creates a query, which selects the revisions, at which the given entity was modified.
+            </summary>
+            <typeparam name="TEntity">The <see cref="T:System.Type"/> of the entities for which to query.</typeparam>
+            <param name="includesDeleted">If true, also revisions where entities were deleted will be returned.
+            <remarks>
+            The additional entities will have revision type <see cref="F:NHibernate.Envers.RevisionType.Deleted"/>, and contain no data (all fields null), except for the id field.
+            </remarks>
+            </param>
+            <remarks>The results of the query will be sorted in ascending order by the revision number, unless an order or projection is added.</remarks>
+        </member>
+        <member name="M:NHibernate.Envers.Query.AuditQueryCreator.ForHistoryOf``2">
+            <summary>
+            Creates a query, which selects the revisions, at which the given entity was modified.
+            </summary>
+            <typeparam name="TEntity">The <see cref="T:System.Type"/> of the entities for which to query.</typeparam>
+            <typeparam name="TRevisionEntity">The <see cref="T:System.Type"/> of the revision entity</typeparam>
+            <returns>
+            A query for revisions at which instances of the given entity were modified (including deletation), to which
+            conditions can be added (for example - a specific id of the entity) and which can then be executed.
+            The results of the query will be sorted in ascending order by the revision number,
+            unless an order or projection is added.		
+            </returns>
+        </member>
+        <member name="M:NHibernate.Envers.Query.AuditQueryCreator.ForHistoryOf``2(System.Boolean)">
+            <summary>
+            Creates a query, which selects the revisions, at which the given entity was modified.
+            </summary>
+            <typeparam name="TEntity">The <see cref="T:System.Type"/> of the entities for which to query.</typeparam>
+            <typeparam name="TRevisionEntity">The <see cref="T:System.Type"/> of the revision entity</typeparam>
+            <param name="includeDeleted">If true, also revisions where entities were deleted will be returned.</param> 
+            <returns>
+            A query for revisions at which instances of the given entity were modified, to which
+            conditions can be added (for example - a specific id of the entity) and which can then be executed.
+            The results of the query will be sorted in ascending order by the revision number,
+            unless an order or projection is added.		
+            </returns>
+        </member>
+        <member name="T:NHibernate.Envers.Strategy.ValidityAuditStrategy">
+            <summary>
+            Audit strategy which persists and retrieves audit information using a validity algorithm, based on the 
+            start-revision and end-revision of a row in the audit tables. 
+            <p>This algorithm works as follows:
+            <ul>
+            <li>For a <strong>new row</strong> that is persisted in an audit table, only the <strong>start-revision</strong> column of that row is set</li>
+            <li>At the same time the <strong>end-revision</strong> field of the <strong>previous</strong> audit row is set to this revision</li>
+            <li>Queries are retrieved using 'between start and end revision', instead of a subquery.</li>
+            </ul>
+            </p>
+            
+            <p>
+            This has a few important consequences that need to be judged against against each other:
+            <ul>
+            <li>Persisting audit information is a bit slower, because an extra row is updated</li>
+            <li>Retrieving audit information is a lot faster</li>
+            </ul>
+            </p>
+            </summary>
+        </member>
+        <member name="T:NHibernate.Envers.Configuration.Attributes.ModifiedEntityNamesAttribute">
+            <summary>
+            Marks a property which holds entity class names that have been modified during each revision.
+            This annotation expects property of <code><![CDATA[ISet<string>]]></code> type.
+            </summary>
+        </member>
+        <member name="T:NHibernate.Envers.Query.Criteria.AuditId">
+            <summary>
+            Create restrictions and projections for the id of an audited entity.
+            </summary>
+        </member>
+        <member name="M:NHibernate.Envers.Query.Criteria.AuditId.Count(System.String)">
+            Projection counting the values
+            TODO: idPropertyName isn't needed, should be read from the configuration
+            @param idPropertyName Name of the identifier property
+        </member>
+        <member name="T:NHibernate.Envers.Entities.Mapper.Relation.Component.MiddleStraightComponentMapper">
+            <summary>
+            A mapper for reading and writing a property straight to/from maps. This mapper cannot be used with middle tables,
+            but only with "fake" bidirectional indexed relations. 
+            </summary>
+        </member>
+        <member name="T:NHibernate.Envers.Configuration.Attributes.AuditMappedByAttribute">
+            <summary>
+            Annotation to specify a "fake" bi-directional relation. Such a relation uses {@code @OneToMany} +
+            {@code @JoinColumn} on the one side, and {@code @ManyToOne} + {@code @Column(insertable=false, updatable=false)} on
+            the many side. Then, Envers won't use a join table to audit this relation, but will store changes as in a normal
+            bi-directional relation.
+            <remarks>
+            In NHibernate.Envers this attribute is made internal. 
+            It'll created in <see cref="T:NHibernate.Envers.Configuration.Store.MetaDataStore"/> if it's a biref collection with column insertable=false and updateable=false.
+            </remarks>
+            </summary>
+        </member>
+        <member name="P:NHibernate.Envers.Configuration.Attributes.AuditMappedByAttribute.MappedBy">
+            <summary>
+            Name of the property in the related entity which maps back to this entity. The property should be
+            mapped with {@code @ManyToOne} and {@code @Column(insertable=false, updatable=false)}.
+            </summary>
+        </member>
+        <member name="P:NHibernate.Envers.Configuration.Attributes.AuditMappedByAttribute.PositionMappedBy">
+            <summary>
+            Name of the property in the related entity which maps to the position column. Should be specified only
+            for indexed collection, when @{@link org.hibernate.annotations.IndexColumn} is used on the collection.
+            The property should be mapped with {@code @Column(insertable=false, updatable=false)}.
+            </summary>
+        </member>
+        <member name="T:NHibernate.Envers.Tools.Query.Parameters">
+            <summary>
+            Generates metadata for to-one relations (reference-valued properties).
+            </summary>
+        </member>
+        <member name="F:NHibernate.Envers.Tools.Query.Parameters.alias">
+            <summary>
+            Main alias of the entity.
+            </summary>
+        </member>
+        <member name="F:NHibernate.Envers.Tools.Query.Parameters.connective">
+            <summary>
+            Connective between these parameters - "and" or "or".
+            </summary>
+        </member>
+        <member name="F:NHibernate.Envers.Tools.Query.Parameters.queryParamCounter">
+            <summary>
+            For use by the parameter generator. Must be the same in all "child" (and parent) parameters.
+            </summary>
+        </member>
+        <member name="F:NHibernate.Envers.Tools.Query.Parameters.subParameters">
+            <summary>
+            A list of sub-parameters (parameters with a different connective).
+            </summary>
+        </member>
+        <member name="F:NHibernate.Envers.Tools.Query.Parameters.negatedParameters">
+            <summary>
+            A list of negated parameters.
+            </summary>
+        </member>
+        <member name="F:NHibernate.Envers.Tools.Query.Parameters.expressions">
+            <summary>
+            A list of complete where-expressions.
+            </summary>
+        </member>
+        <member name="F:NHibernate.Envers.Tools.Query.Parameters.localQueryParamValues">
+            <summary>
+            Values of parameters used in expressions.
+            </summary>
+        </member>
+        <member name="M:NHibernate.Envers.Tools.Query.Parameters.AddSubParameters(System.String)">
+            <summary>
+             Adds sub-parameters with a new connective. That is, the parameters will be grouped in parentheses in the
+             generated query, e.g.: ... and (exp1 or exp2) and ..., assuming the old connective is "and", and the
+             new connective is "or".
+            </summary>
+            <param name="newConnective">New connective of the parameters.</param>
+            <returns>Sub-parameters with the given connective.</returns>
+        </member>
+        <member name="M:NHibernate.Envers.Tools.Query.Parameters.AddNegatedParameters">
+            <summary>
+             Adds negated parameters, by default with the "and" connective. These paremeters will be grouped in parentheses
+             in the generated query and negated, e.g. ... not (exp1 and exp2) ...
+            </summary>
+            <returns>Negated sub paremters.</returns>
+        </member>
+        <member name="M:NHibernate.Envers.Tools.Query.Parameters.AddNullRestriction(System.String,System.Boolean)">
+            <summary>
+            Adds <code>IS NULL</code> restriction.
+            </summary>
+            <param name="propertyName">Property name.</param>
+            <param name="addAlias">Positive if alias to property name shall be added.</param>
+        </member>
+        <member name="M:NHibernate.Envers.Tools.Query.Parameters.AddNotNullRestriction(System.String,System.Boolean)">
+            <summary>
+            Adds <code>IS NOT NULL</code> restriction.
+            </summary>
+            <param name="propertyName">Property name.</param>
+            <param name="addAlias">Positive if alias to property name shall be added.</param>
+        </member>
+        <member name="T:NHibernate.Envers.Configuration.Attributes.RevisionTimestampAttribute">
+            <summary>
+            Marks a property which will hold the timestamp of the revision in a revision entity, see
+            <see cref="T:NHibernate.Envers.IRevisionListener"/>. The value of this property will be automatically set by Envers.
+            </summary>
+        </member>
+        <member name="T:NHibernate.Envers.Synchronization.SessionCacheCleaner">
+            <summary>
+            Class responsible for evicting audit data entries that have been stored in the session level cache. 
+            This operation increases Envers performance in case of massive entity updates without clearing persistence context.
+            </summary>
+        </member>
+        <member name="M:NHibernate.Envers.Synchronization.SessionCacheCleaner.ScheduleAuditDataRemoval(NHibernate.ISession,System.Object)">
+            <summary>
+            Schedules audit data removal from session level cache after transaction completion. 
+            The operation is performed regardless of commit success if session still is open.
+            </summary>
+            <param name="session">Active NHibernate session</param>
+            <param name="data">Audit data that shall be evicted (e.g. revision data or entity snapshot)</param>
+        </member>
+        <member name="T:NHibernate.Envers.Synchronization.EntityChangeNotifier">
+            <summary>
+            Notifies <see cref="T:NHibernate.Envers.RevisionInfo.IRevisionInfoGenerator"/> about changes made in the current revision.
+            </summary>
+        </member>
+        <member name="M:NHibernate.Envers.Synchronization.EntityChangeNotifier.EntityChanged(NHibernate.ISession,System.Object,NHibernate.Envers.Synchronization.Work.IAuditWorkUnit)">
+            <summary>
+            Notifies <see cref="T:NHibernate.Envers.RevisionInfo.IRevisionInfoGenerator"/> about changes made in the current revision. Provides information
+            about modified entity class, entity name and its id, as well as <see cref="T:NHibernate.Envers.RevisionType"/> and revision log entity.
+            </summary>
+            <param name="session">Active session.</param>
+            <param name="currentRevisionData">Revision log entity.</param>
+            <param name="vwu">Performed work unit.</param>
+        </member>
+        <member name="T:NHibernate.Envers.IEntityTrackingRevisionListener">
+            <summary>
+            Extension of standard <see cref="T:NHibernate.Envers.IRevisionListener"/> that notifies whenever an entity instance has been
+            added, modified or removed within current revision boundaries.
+            </summary>
+        </member>
+        <member name="M:NHibernate.Envers.IEntityTrackingRevisionListener.EntityChanged(System.Type,System.String,System.Object,NHibernate.Envers.RevisionType,System.Object)">
+            <summary>
+            Called after audited entity data has been persisted.
+            </summary>
+            <param name="entityClass">Audited entity class.</param>
+            <param name="entityName">
+            Name of the audited entity. May be useful when Java class is mapped multiple times,
+            potentially to different tables. 
+            </param>
+            <param name="entityId">Identifier of modified entity.</param>
+            <param name="revisionType">Modification type (addition, update or removal).</param>
+            <param name="revisionEntity">An instance of the entity annotated with <see cref="T:NHibernate.Envers.Configuration.Attributes.RevisionEntityAttribute"/>.</param>
+        </member>
+        <member name="T:NHibernate.Envers.Configuration.Fluent.LooselyTypedFluentAudit">
+            <summary>
+            An <see cref="T:NHibernate.Envers.Configuration.Fluent.IAttributeProvider"/> to audit the full class.
+            </summary>
+            <seealso cref="T:NHibernate.Envers.Configuration.Fluent.IFluentAudit"/>
+            <seealso cref="T:NHibernate.Envers.Configuration.Fluent.IFluentAudit`1"/>
+            <seealso cref="T:NHibernate.Envers.Configuration.Fluent.FluentAudit`1"/>
+        </member>
+        <member name="T:NHibernate.Envers.Configuration.ConfigurationKey">
+            <summary>
+            Configuration keys for <see cref="N:NHibernate.Envers.Configuration"/>
+            </summary>
+        </member>
+        <member name="F:NHibernate.Envers.Configuration.ConfigurationKey.TrackEntitiesChangedInRevision">
+            <summary>
+            Should Envers track (persist) entity types that have been changed during each revision.
+            </summary>
+        </member>
+        <member name="F:NHibernate.Envers.Configuration.ConfigurationKey.RevisionOnCollectionChange">
+            <summary>
+            Should a revision be generated when a not-owned relation
+            field changes (this can be either a collection in a
+            one-to-many relation, or the field using "mappedBy"
+            attribute in a one-to-one relation).
+            </summary>
+        </member>
+        <member name="F:NHibernate.Envers.Configuration.ConfigurationKey.DoNotAuditOptimisticLockingField">
+            <summary>
+            When true, properties to be used for optimistic locking
+            will be automatically not audited (their history won't be
+            stored; it normally doesn't make sense to store it).
+            </summary>
+        </member>
+        <member name="F:NHibernate.Envers.Configuration.ConfigurationKey.StoreDataAtDelete">
+            <summary>
+            Should the entity data be stored in the revision when
+            the entity is deleted (instead of only storing the id and
+            all other properties as null). This is normally not
+            needed, as the data is present in the last-but-one revision.
+            Sometimes, however, it is easier and more efficient
+            to access it in the last revision (then the data that
+            the entity contained before deletion is stored twice).
+            </summary>
+        </member>
+        <member name="F:NHibernate.Envers.Configuration.ConfigurationKey.DefaultSchema">
+            <summary>
+            The default schema name that should be used for audit
+            tables. Can be overriden using the <see cref="T:NHibernate.Envers.Configuration.Attributes.AuditTableAttribute"/>.
+            If not present,  the schema will be the same as the schema of the normal
+            tables.
+            </summary>
+        </member>
+        <member name="F:NHibernate.Envers.Configuration.ConfigurationKey.DefaultCatalog">
+            <summary>
+            The default catalog name that should be used for audit
+            tables. Can be overriden using the <see cref="T:NHibernate.Envers.Configuration.Attributes.AuditTableAttribute"/>.
+            If not present,  the catalog will be the same as the catalog of the normal
+            tables.
+            </summary>
+        </member>
+        <member name="F:NHibernate.Envers.Configuration.ConfigurationKey.CollectionProxyMapperFactory">
+            <summary>
+            Responsible to create collection proxies for audited entities.
+            May be used if NHibernate Core isn't using its
+            normal types for its mapped collections, eg if a user
+            defined CollectionTypeFactory is used.
+            </summary>
+        </member>
+        <member name="F:NHibernate.Envers.Configuration.ConfigurationKey.AuditTablePrefix">
+            <summary>
+            String that will be appended to the name of an audited
+            entity to create the name of the entity, that will hold
+            audit information. If you audit an entity with a table
+            name Person, in the default setting Envers will generate
+            a Person_AUD table to store historical data.
+            </summary>
+        </member>
+        <member name="F:NHibernate.Envers.Configuration.ConfigurationKey.AuditTableSuffix">
+            <summary>
+            String that will be prepended to the name of an audited
+            entity to create the name of the entity, that will hold
+            audit information.
+            </summary>
+        </member>
+        <member name="F:NHibernate.Envers.Configuration.ConfigurationKey.RevisionFieldName">
+            <summary>
+            Name of a field in the audit entity that will hold the revision number.
+            </summary>
+        </member>
+        <member name="F:NHibernate.Envers.Configuration.ConfigurationKey.RevisionTypeFieldName">
+            <summary>
+            Name of a field in the audit entity that will hold the
+            type of the revision (currently, this can be: add, mod, del).
+            </summary>
+        </member>
+        <member name="F:NHibernate.Envers.Configuration.ConfigurationKey.AuditStrategy">
+            <summary>
+            The audit strategy that should be used when persisting
+            audit data. The default stores only the revision, at
+            which an entity was modified. An alternative, the
+            <see cref="T:NHibernate.Envers.Strategy.ValidityAuditStrategy"/> stores
+            both the start revision and the end revision. Together
+            these define when an audit row was valid, hence the
+            name ValidityAuditStrategy.
+            </summary>
+        </member>
+        <member name="F:NHibernate.Envers.Configuration.ConfigurationKey.AuditStrategyValidityStoreRevendTimestamp">
+            <summary>
+            Should the timestamp of the end revision be stored, until
+            which the data was valid, in addition to the end revision
+            itself. This is useful to be able to purge old Audit
+            records out of a relational database by using table partitioning.
+            Partitioning requires a column that exists within
+            the table. This property is only evaluated if the
+            ValidityAuditStrategy is used.
+            </summary>
+        </member>
+        <member name="F:NHibernate.Envers.Configuration.ConfigurationKey.AuditStrategyValidityEndRevFieldName">
+            <summary>
+            The column name that will hold the end revision number
+            in audit entities. This property is only valid if the
+            validity audit strategy is used.
+            </summary>
+        </member>
+        <member name="F:NHibernate.Envers.Configuration.ConfigurationKey.AuditStrategyValidityRevendTimestampFieldName">
+            <summary>
+            Column name of the timestamp of the end revision until
+            which the data was valid. Only used if the ValidityAuditStrategy
+            is used, and <see cref="F:NHibernate.Envers.Configuration.ConfigurationKey.AuditStrategyValidityStoreRevendTimestamp"/>evaluates to <code>true</code>.
+            </summary>
+        </member>
+        <member name="F:NHibernate.Envers.Configuration.ConfigurationKey.ModifiedFlagSuffix">
+            <summary>
+            Suffix to be used for modified flags columns.
+            </summary>
+        </member>
+        <member name="F:NHibernate.Envers.Configuration.ConfigurationKey.GlobalWithModifiedFlag">
+            <summary>
+            Should Envers use modified property flags by default
+            </summary>
+        </member>
+        <member name="M:NHibernate.Envers.Tools.StringTools.GetLastComponent(System.String)">
+            <summary>
+            </summary>
+            <param name="s">String, from which to get the last component.</param>
+            <returns>
+            The last component of the dot-separated string <code>s</code>. For example, for a string
+            * "a.b.c", the result is "c".
+            </returns>
+        </member>
+        <member name="T:NHibernate.Envers.Query.Property.RevisionNumberPropertyName">
+            <summary>
+            Used for specifying restrictions on the revision number, corresponding to an audit entity.
+            </summary>
+        </member>
+        <member name="T:NHibernate.Envers.Entities.Mapper.Relation.Query.TwoEntityQueryGenerator">
+            <summary>
+            Selects data from a relation middle-table and a related versions entity.
+            </summary>
+        </member>
+        <member name="T:NHibernate.Envers.Entities.Mapper.Relation.MiddleComponentData">
+            <summary>
+            A data holder for a middle relation component (which is either the collection element or index):
+            - component mapper used to map the component to and from versions entities
+            - an index, which specifies in which element of the array returned by the query for reading the collection the data
+            of the component is
+            </summary>
+        </member>
+        <member name="T:NHibernate.Envers.Configuration.Metadata.ToOneRelationMetadataGenerator">
+            <summary>
+            Generates metadata for to-one relations (reference-valued properties).
+            </summary>
+        </member>
+        <member name="T:NHibernate.Envers.Configuration.ClassesAuditingData">
+            <summary>
+            A helper class holding auditing meta-data for all persistent classes.
+            </summary>
+        </member>
+        <member name="M:NHibernate.Envers.Configuration.ClassesAuditingData.AddClassAuditingData(NHibernate.Mapping.PersistentClass,NHibernate.Envers.Configuration.Metadata.Reader.ClassAuditingData)">
+            <summary>
+            Stores information about auditing meta-data for the given class.
+            </summary>
+            <param name="pc">Persistent class.</param>
+            <param name="cad">Auditing meta-data for the given class.</param>
+        </member>
+        <member name="M:NHibernate.Envers.Configuration.ClassesAuditingData.UpdateCalculatedFields">
+            <summary>
+            After all meta-data is read, updates calculated fields. This includes:
+            <ul>
+            <li>setting {@code forceInsertable} to {@code true} for properties specified by {@code @AuditMappedBy}</li> 
+            </ul>
+            </summary>
+        </member>
+        <member name="P:NHibernate.Envers.Configuration.ClassesAuditingData.AllClassAuditedData">
+            <summary>
+            A collection of all auditing meta-data for persistent classes.
+            </summary>
+        </member>
+        <member name="T:NHibernate.Envers.Tools.Incrementor">
+            <summary>
+            Util class to get the incremental number for aliases and parameters
+            </summary>
+            <remarks>
+            Increment the value at each get.
+            </remarks>
+        </member>
+        <member name="T:NHibernate.Envers.Synchronization.Work.FakeBidirectionalRelationWorkUnit">
+            <summary>
+            A work unit that handles "fake" bidirectional one-to-many relations (mapped with {@code @OneToMany+@JoinColumn} and
+            {@code @ManyToOne+@Column(insertable=false, updatable=false)}.
+            </summary>
+        </member>
+        <member name="M:NHibernate.Envers.Synchronization.Work.FakeBidirectionalRelationWorkUnit.#ctor(NHibernate.Engine.ISessionImplementor,System.String,NHibernate.Envers.Configuration.AuditConfiguration,System.Object,System.String,System.Object,NHibernate.Envers.Entities.RelationDescription,NHibernate.Envers.RevisionType,System.Object,NHibernate.Envers.Synchronization.Work.IAuditWorkUnit)">
+            <summary>
+            The work unit responsible for generating the "raw" entity data to be saved.
+            </summary>
+            <param name="sessionImplementor"></param>
+            <param name="entityName"></param>
+            <param name="verCfg"></param>
+            <param name="id"></param>
+            <param name="referencingPropertyName"></param>
+            <param name="owningEntity"></param>
+            <param name="rd"></param>
+            <param name="revisionType"></param>
+            <param name="index"></param>
+            <param name="nestedWorkUnit"></param>
+        </member>
+        <member name="T:NHibernate.Envers.Synchronization.Work.FakeBidirectionalRelationWorkUnit.FakeRelationChange">
+            <summary>
+            Describes a change to a single fake bidirectional relation.
+            </summary>
+        </member>
+        <member name="M:NHibernate.Envers.Synchronization.AuditProcess.alreadyScheduledWorkUnit(NHibernate.Envers.Tools.Pair{System.String,System.Object})">
+            <summary>
+            Checks if another work unit associated with the same entity hierarchy and identifier has already been scheduled.
+            </summary>
+            <param name="idKey"> Work unit's identifier.</param>
+            <returns>Corresponding work unit or <code>null</code> if no satisfying result was found.</returns>
+        </member>
+        <member name="T:NHibernate.Envers.Entities.Mapper.SubclassPropertyMapper">
+            <summary>
+            A mapper which maps from a parent mapper and a "main" one, but adds only to the "main". The "main" mapper
+            should be the mapper of the subclass.
+            </summary>
+        </member>
+        <member name="T:NHibernate.Envers.Entities.Mapper.Relation.Query.ThreeEntityQueryGenerator">
+            <summary>
+            Selects data from a relation middle-table and a two related versions entity.
+            </summary>
+        </member>
+    </members>
+</doc>

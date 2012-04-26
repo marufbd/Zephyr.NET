@@ -1,22 +1,22 @@
+using System;
 using System.Web;
 using System.Web.Mvc;
 using System.Linq;
-using DemoApp.Web.App_Start;
-using MvcMiniProfiler;
-using MvcMiniProfiler.MVCHelpers;
+using StackExchange.Profiling;
+using StackExchange.Profiling.MVCHelpers;
+using Microsoft.Web.Infrastructure;
 using Microsoft.Web.Infrastructure.DynamicModuleHelper;
-
 //using System.Data;
 //using System.Data.Entity;
 //using System.Data.Entity.Infrastructure;
-//using MvcMiniProfiler.Data.EntityFramework;
-//using MvcMiniProfiler.Data.Linq2Sql;
+//using StackExchange.Profiling.Data.EntityFramework;
+//using StackExchange.Profiling.Data.Linq2Sql;
 
 [assembly: WebActivator.PreApplicationStartMethod(
-	typeof(MiniProfilerPackage), "PreStart")]
+	typeof(DemoApp.Web.App_Start.MiniProfilerPackage), "PreStart")]
 
 [assembly: WebActivator.PostApplicationStartMethod(
-	typeof(MiniProfilerPackage), "PostStart")]
+	typeof(DemoApp.Web.App_Start.MiniProfilerPackage), "PostStart")]
 
 
 namespace DemoApp.Web.App_Start 
@@ -29,15 +29,15 @@ namespace DemoApp.Web.App_Start
             // Be sure to restart you ASP.NET Developement server, this code will not run until you do that. 
 
             //TODO: See - _MINIPROFILER UPDATED Layout.cshtml
-            //      For profiling to display in the UI you will have to include the line @MvcMiniProfiler.MiniProfiler.RenderIncludes() 
+            //      For profiling to display in the UI you will have to include the line @StackExchange.Profiling.MiniProfiler.RenderIncludes() 
             //      in your master layout
 
-            //TODO: Non SQL Server based installs can use other formatters like: new MvcMiniProfiler.SqlFormatters.InlineFormatter()
-            MiniProfiler.Settings.SqlFormatter = new MvcMiniProfiler.SqlFormatters.SqlServerFormatter();
+            //TODO: Non SQL Server based installs can use other formatters like: new StackExchange.Profiling.SqlFormatters.InlineFormatter()
+            MiniProfiler.Settings.SqlFormatter = new StackExchange.Profiling.SqlFormatters.SqlServerFormatter();
 
 			//TODO: To profile a standard DbConnection: 
-			//var profiled = new ProfiledDbConnection((DbConnection)NHibernateSession.Initialize(null).Connection, MiniProfiler.Current);
-            
+			// var profiled = new ProfiledDbConnection(cnn, MiniProfiler.Current);
+
             //TODO: If you are profiling EF code first try: 
 			// MiniProfilerEF.Initialize();
 
@@ -46,6 +46,20 @@ namespace DemoApp.Web.App_Start
 
             //Setup profiler for Controllers via a Global ActionFilter
             GlobalFilters.Filters.Add(new ProfilingActionFilter());
+
+			// You can use this to check if a request is allowed to view results
+            //MiniProfiler.Settings.Results_Authorize = (request) =>
+            //{
+                // you should implement this if you need to restrict visibility of profiling on a per request basis 
+            //    return !DisableProfilingResults; 
+            //};
+
+            // the list of all sessions in the store is restricted by default, you must return true to alllow it
+            //MiniProfiler.Settings.Results_List_Authorize = (request) =>
+            //{
+                // you may implement this if you need to restrict visibility of profiling lists on a per request basis 
+                //return true; // all requests are kosher
+            //};
         }
 
         public static void PostStart()
@@ -70,10 +84,7 @@ namespace DemoApp.Web.App_Start
                 var request = ((HttpApplication)sender).Request;
                 //TODO: By default only local requests are profiled, optionally you can set it up
                 //  so authenticated users are always profiled
-                if (request.IsLocal)
-                {                    
-                    MiniProfiler.Start();
-                }
+                if (request.IsLocal) { MiniProfiler.Start(); }
             };
 
 
@@ -83,7 +94,7 @@ namespace DemoApp.Web.App_Start
             {
                 if (!CurrentUserIsAllowedToSeeProfiler())
                 {
-                    MvcMiniProfiler.MiniProfiler.Stop(discardResults: true);
+                    StackExchange.Profiling.MiniProfiler.Stop(discardResults: true);
                 }
             };
             */

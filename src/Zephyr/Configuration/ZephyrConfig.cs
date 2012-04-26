@@ -2,8 +2,12 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Globalization;
+using System.Reflection;
 using System.Web.Hosting;
 using NHibernate.Linq;
+using System.Linq;
+using Zephyr.Domain;
+using Zephyr.Domain.Audit;
 
 namespace Zephyr.Configuration
 {
@@ -35,9 +39,12 @@ namespace Zephyr.Configuration
             IDictionary<string, object> settings=new Dictionary<string, object>();
 
             IList<string> mappingAssemblies=new List<string>();
-            
-            ConfigurationManager.AppSettings["MappingAssemblies"].ToString(CultureInfo.InvariantCulture).Split(';')
-                .ForEach(s=>mappingAssemblies.Add(MakeLoadReadyAssemblyName(s)));
+
+            var asmNames =
+                ConfigurationManager.AppSettings["MappingAssemblies"].ToString(CultureInfo.InvariantCulture).Split(';').
+                    Where(n => !String.IsNullOrEmpty(n)).ToList();
+            asmNames.Add(typeof(ZephyrConfiguration).Assembly.GetName().Name);
+            asmNames.Distinct().ForEach(s=>mappingAssemblies.Add(MakeLoadReadyAssemblyName(s)));
             
             settings.Add("MappingAssemblies", mappingAssemblies);
             settings.Add("OverrideAssembly", MakeLoadReadyAssemblyName(ConfigurationManager.AppSettings["OverrideAssembly"]));            
@@ -50,7 +57,7 @@ namespace Zephyr.Configuration
             var mapConfigLogPath = ConfigurationManager.AppSettings["MappingConfigLogPath"] as string;
             if (mapConfigLogPath!=null)
             {                
-                settings.Add("MappingConfigLogPath", ConfigurationManager.AppSettings["MappingConfigLogPath"]);
+                settings.Add("MappingConfigLogPath", mapConfigLogPath);
             }            
 
             settings.Add("NHibConfigPath", GetNHibConfigPath());
@@ -74,11 +81,24 @@ namespace Zephyr.Configuration
         }
 
         private string MakeLoadReadyAssemblyName(string assemblyName)
-        {
+        {            
             if (assemblyName.EndsWith(".exe"))
                 return GetAppPath() + assemblyName.Trim();
 
             return GetAppPath() + ((assemblyName.IndexOf(".dll", System.StringComparison.Ordinal) == -1) ? assemblyName.Trim() + ".dll" : assemblyName.Trim());
+        }
+
+        public IEnumerable<Type> GetDomainModelTypes()
+        {
+            var lst = new List<Type>();
+            foreach (var asmName in DataConfig.MappingAssemblies)
+            {
+                Assembly asm = Assembly.LoadFrom(asmName);
+                lst.AddRange(asm.GetTypes().Where(type => type.GetInterfaces().Any(
+                    x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof (IEntityWithTypedId<>)) ));
+            }
+
+            return lst;
         }
     }
 

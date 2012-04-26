@@ -21,10 +21,15 @@ using System.Collections.Generic;
 using System.Reflection;
 using FluentNHibernate.Cfg;
 using NHibernate;
+using NHibernate.Cfg;
 using NHibernate.Event;
 using NHibernate.Linq;
 using Zephyr.Data.NHib.Mapping.Filter;
 using Zephyr.Configuration;
+using Zephyr.Domain;
+using Zephyr.Domain.Audit;
+
+using NHibernate.Envers;
 
 #endregion REFERENCES
 
@@ -45,10 +50,21 @@ namespace Zephyr.Data.NHib
         /// </summary>
         public static NHibernate.Cfg.Configuration Configuration
         {
-            get { 
-                Initialize(null);
+            get {
+                if (_configuration == null)
+                    Initialize(null);
+                
                 return _configuration;
             }
+        }
+
+        /// <summary>
+        /// Initialize. No Argument
+        /// </summary>
+        /// <returns></returns>
+        public static ISession Initialize()
+        {
+            return Initialize(null);
         }
 
         /// <summary>
@@ -56,7 +72,8 @@ namespace Zephyr.Data.NHib
         /// </summary>
         /// <returns></returns>
         public static ISession Initialize(IAutoPersistenceModelGenerator modelGenerator)
-        {
+        {            
+
             var zephyrConfig = new ZephyrConfig();
             var dataConfig = zephyrConfig.DataConfig;
             var mappingAssemblyNames = dataConfig.MappingAssemblies;
@@ -73,7 +90,7 @@ namespace Zephyr.Data.NHib
             FluentConfiguration fConfig = Fluently.Configure(cfg)
                                             .Mappings(m =>
                                                           {
-                                                              //add hbm files from mapping assembliems of any
+                                                              //add hbm files from mapping assemblies
                                                               mappingAssemblies.ForEach(asm=>m.HbmMappings.AddFromAssembly(asm));
 
                                                               if (modelGenerator == null)
@@ -81,7 +98,11 @@ namespace Zephyr.Data.NHib
                                                                   //get default persistent model generator
                                                                   var model =
                                                                       new AutoPersistenceModelGenerator(overrideAssembly)
-                                                                          {AutoMappingAssemblies = mappingAssemblies};
+                                                                          {
+                                                                              AutoMappingAssemblies = mappingAssemblies,
+                                                                              CoreFrameworkAssembly =
+                                                                                  typeof (ZephyrConfiguration).Assembly
+                                                                          };
 
 
                                                                   if(zephyrConfig.ExportHbm)
@@ -110,9 +131,11 @@ namespace Zephyr.Data.NHib
                 fConfig.Diagnostics(dia =>dia.Enable().OutputToFile(dataConfig.LogPath + "/fluentNHibernate.log"));
 
 
-            //Enable audit on save or update
-            fConfig.ExposeConfiguration(
-                c => c.EventListeners.PreUpdateEventListeners = new[] {new EventListeners.AuditUpdateListener()});
+            //Enable auditing using NHibernate.Envers
+            var enversConf = new NHibernate.Envers.Configuration.Fluent.FluentConfiguration();
+            enversConf.Audit(zephyrConfig.GetDomainModelTypes()); 
+            //fConfig.ExposeConfiguration(c => c.EventListeners.PreUpdateEventListeners = new[] {new EventListeners.AuditUpdateListener()});
+            
             //Set delete listener for soft delete
             if (zephyrConfig.SoftDeleteEnabled)
                 fConfig.ExposeConfiguration(
@@ -120,7 +143,14 @@ namespace Zephyr.Data.NHib
                                                
 
             _configuration = fConfig.BuildConfiguration();
+
+            //integrate envers
+            _configuration.IntegrateWithEnvers(enversConf);
+
+            
             Factory = _configuration.BuildSessionFactory();
+            
+            
             return Factory.OpenSession();
         }
     }

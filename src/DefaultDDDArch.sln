@@ -28,6 +28,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{1BA434
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrameWorkTests", "FrameWorkTests\FrameWorkTests.csproj", "{0BFA13CF-EB81-4720-8311-D5C9F2D1EC8C}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = NHAutoMvcDemo.vsmdi
@@ -53,6 +55,10 @@ Global
 		{60B2CF98-AE23-49EE-911D-789A04709AFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{60B2CF98-AE23-49EE-911D-789A04709AFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{60B2CF98-AE23-49EE-911D-789A04709AFF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BFA13CF-EB81-4720-8311-D5C9F2D1EC8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BFA13CF-EB81-4720-8311-D5C9F2D1EC8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BFA13CF-EB81-4720-8311-D5C9F2D1EC8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BFA13CF-EB81-4720-8311-D5C9F2D1EC8C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -61,6 +67,7 @@ Global
 		{4D6444C0-273D-4B49-85C8-6CBA7E57CE02} = {3BDAA20C-548E-4E8B-B9B1-E46F6EAE9E20}
 		{443E0ADB-87D4-4298-96F5-ED4E189DFBDF} = {3BDAA20C-548E-4E8B-B9B1-E46F6EAE9E20}
 		{4D3C7FBC-944A-49AF-AC0C-C65EC125D275} = {22B367AE-6A5A-483C-B2F1-DA65615D4940}
+		{0BFA13CF-EB81-4720-8311-D5C9F2D1EC8C} = {22B367AE-6A5A-483C-B2F1-DA65615D4940}
 		{60B2CF98-AE23-49EE-911D-789A04709AFF} = {7FF1319F-DAC1-45EC-9C45-4999E61C494E}
 	EndGlobalSection
 EndGlobal

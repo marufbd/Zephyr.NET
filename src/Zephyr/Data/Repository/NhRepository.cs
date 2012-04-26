@@ -18,10 +18,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using Microsoft.Practices.ServiceLocation;
 using NHibernate;
 using NHibernate.Criterion;
 using NHibernate.Linq;
 using Zephyr.Data.Models;
+using Zephyr.Data.NHib.UoW;
+using Zephyr.Data.UnitOfWork;
 using Zephyr.Extensions;
 using System.Linq;
 using Zephyr.Data.NHib;
@@ -37,9 +41,20 @@ namespace Zephyr.Data.Repository
 
         public ISession Session;
 
-        public NhRepository(ISession session)
+        public NhRepository()
         {
-            Session = session;
+            //Session = session;
+            if(UnitOfWorkScope.IsStarted)
+            {
+                var uow = UnitOfWorkScope.Current;
+                Session = ((NhUnitOfWork)uow).CurrentSession;
+            }
+            else
+            {
+                Session = ServiceLocator.Current.GetInstance<ISession>();
+            }
+                
+
             Session.EnableFilter("DeletedFilter").SetParameter("IsDeleted", false);
         }
 
@@ -67,21 +82,24 @@ namespace Zephyr.Data.Repository
         }
 
         public T SaveOrUpdate(T entity)
-        {                        
+        {
+            //Session.BeginTransaction();
+            //Session = UnitOfWorkScope.IsStarted ? ((NhUnitOfWorkFactory)UnitOfWorkScope.Factory).CurrentSession : Session;
+
             Session.SaveOrUpdate(entity);
-            Session.Flush();
+            //Session.Transaction.Commit();
 
             return entity;
         }
 
         public void Delete(T entity)
         {
-            Session.Delete(entity);
+            Session.Delete(entity); 
         }
 
         public void Delete(long id)
         {
-            Session.Delete(Session.Get<T>(id));
+            Session.Delete(Session.Get<T>(id));            
         } 
     }
 }

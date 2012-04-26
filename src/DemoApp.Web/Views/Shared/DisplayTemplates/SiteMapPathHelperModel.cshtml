@@ -3,13 +3,18 @@
 @using System.Linq
 @using MvcSiteMapProvider.Web.Html.Models
 
-<ul class="breadcrumb">
-@foreach (var node in Model) { 
-    <li>
-    @Html.DisplayFor(m => node)    
-    @if (node != Model.Last()) {
-        <span class="divider"> &gt; </span>
+@if (Model.Any())
+{
+    <ul class="breadcrumb">
+    @foreach (var node in Model)
+    { 
+        <li>
+        @Html.DisplayFor(m => node)    
+        @if (node != Model.Last())
+        {
+            <span class="divider"> &gt; </span>
+        }
+        </li>
     }
-    </li>
+    </ul> 
 }
-</ul>
