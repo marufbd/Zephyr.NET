@@ -85,6 +85,7 @@ namespace Zephyr.Data.Repository
         {
             //Session.BeginTransaction();
             //Session = UnitOfWorkScope.IsStarted ? ((NhUnitOfWorkFactory)UnitOfWorkScope.Factory).CurrentSession : Session;
+
             Session.SaveOrUpdate(entity);
             //Session.Transaction.Commit();
 

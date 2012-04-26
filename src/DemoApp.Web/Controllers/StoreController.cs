@@ -60,7 +60,7 @@ namespace DemoApp.Web.Controllers
                 //always use Unit of work for save/update
                 using (UnitOfWorkScope.Start())
                 {
-                    var repo = ServiceLocator.Current.GetInstance<IRepository<Book>>();                    
+                    var repo = ServiceLocator.Current.GetInstance<IRepository<Book>>();
                     vmbook.Book.Publisher = _repositoryPublisher.Get(vmbook.SelectPublisherId);
 
                     //testing a business transaction
@@ -70,8 +70,8 @@ namespace DemoApp.Web.Controllers
                     audit.ActionType=AuditType.Update;
                     audit.OldPropertyValue = "Old val";
                     audit.NewPropertyValue = "New val";
+                    
                     repoAudit.SaveOrUpdate(audit);
-
                     repo.SaveOrUpdate(vmbook.Book);
                 }
                 
