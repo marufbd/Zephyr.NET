@@ -10,7 +10,7 @@ namespace DemoApp.Web.Controllers
     { 
         public ActionResult Index()
         {
-            ViewBag.Message = "Welcome to demo site!";
+            ViewBag.Message = "Demo app on Zephyr framework";
             
             return View();
         }

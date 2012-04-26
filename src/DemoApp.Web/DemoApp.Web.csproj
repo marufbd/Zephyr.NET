@@ -121,6 +121,9 @@
   <ItemGroup>
     <Content Include="Content\images\glyphicons-halflings-white.png" />
     <Content Include="Content\images\glyphicons-halflings.png" />
+    <Content Include="Content\images\OSI-logo-70x82.png" />
+    <Content Include="Content\images\osi_standard_logo.png" />
+    <Content Include="Content\images\osi_symbol.png" />
     <Content Include="Content\Scripts\bootstrap2\bootstrap.js" />
     <Content Include="Content\Scripts\bootstrap2\bootstrap.min.js" />
     <Content Include="Content\Styles\bootstrap2\bootstrap-responsive.css" />
