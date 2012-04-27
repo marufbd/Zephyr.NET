@@ -20,6 +20,7 @@
 
 #endregion REFERENCES
 
+using System;
 using System.Collections.Generic;
 using Zephyr.Data.Models;
 using Zephyr.Domain;
@@ -32,11 +33,16 @@ namespace Zephyr.Data.Repository.Contract
 
         IList<T> GetAllPaged(int pageIndex, int pageItems, SortOptions sortOptions=null);
 
+        T Get(string guid);
+
+        T Get(Guid guid);
+
         T Get(long id);
         
         T SaveOrUpdate(T entity);
+        
         void Delete(T entity);
-
+        void Delete(Guid id);
         void Delete(long id);
     }
 }

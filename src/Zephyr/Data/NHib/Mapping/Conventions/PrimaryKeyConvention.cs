@@ -1,5 +1,7 @@
-﻿using FluentNHibernate.Conventions;
+﻿using System;
+using FluentNHibernate.Conventions;
 using FluentNHibernate.Conventions.Instances;
+using Zephyr.Domain;
 
 namespace Zephyr.Data.NHib.Mapping.Conventions
 {
@@ -7,11 +9,19 @@ namespace Zephyr.Data.NHib.Mapping.Conventions
     {
         public void Apply(IIdentityInstance instance)
         {
-            instance.Column("Id");
-            
-            instance.UnsavedValue("0");
-            
-            //instance.GeneratedBy.HiLo("1000");
+            if(instance.EntityType.BaseType==typeof(DomainEntity))
+            {                
+                //Guid
+                instance.Column("Guid");
+                //instance.UnsavedValue(Guid.Empty.ToString());
+                instance.GeneratedBy.GuidComb();
+            }
+            else
+            {
+                instance.Column("Id");
+                instance.UnsavedValue("0");
+                //instance.GeneratedBy.HiLo("1000");
+            }
         }
     }
 }

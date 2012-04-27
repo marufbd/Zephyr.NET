@@ -76,9 +76,19 @@ namespace Zephyr.Data.Repository
         }
 
 
+        public T Get(Guid guid)
+        {
+            return this.Session.Get<T>(guid);
+        }
+
+        public T Get(string guid)
+        {
+            throw new NotImplementedException("Not implemented.");
+        }
+
         public T Get(long id)
         {
-            return this.Session.Get<T>(id);
+            throw new NotImplementedException("Not implemented.");
         }
 
         public T SaveOrUpdate(T entity)
@@ -99,7 +109,12 @@ namespace Zephyr.Data.Repository
 
         public void Delete(long id)
         {
-            Session.Delete(Session.Get<T>(id));            
+            Session.Delete(Session.Get<T>(id));
+        } 
+
+        public void Delete(Guid guid)
+        {
+            Session.Delete(Session.Get<T>(guid));
         } 
     }
 }

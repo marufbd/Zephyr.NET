@@ -25,7 +25,7 @@ using Zephyr.Domain;
 
 namespace DemoApp.Web.DomainModels
 {
-    public class Publisher : Entity
+    public class Publisher : DomainEntity
     {
         public Publisher()
         {

@@ -23,7 +23,7 @@
     {
         foreach(var book in Model.Books){
         <div class="display-field">
-            @Html.ActionLink(book.BookName, "BookDetails", "Store", new { id = book.Id }, null)
+            @Html.ActionLink(book.BookName, "BookDetails", "Store", new { guid = book.Guid }, null)
         </div>
         }
     }
@@ -50,6 +50,6 @@
     </div>
 </fieldset>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Edit", "Edit", new { guid = Model.Guid }) |
     @Html.ActionLink("Back to List", "Index")    
 </p>

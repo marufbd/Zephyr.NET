@@ -11,9 +11,7 @@ namespace MyTests
     {
         [TestMethod]
         public void LoadData()
-        {
-            ISession session = NHibernateSession.Initialize(); 
-
+        {            
             var pubOrelly = new Publisher();
             var pubWrox = new Publisher();
             var pubManning = new Publisher();
@@ -58,20 +56,21 @@ namespace MyTests
             //change tenantid for manning
             //pubManning.TenantId = 1;
 
-            session.SaveOrUpdate(pubOrelly);
-            session.SaveOrUpdate(pubWrox);
-            session.SaveOrUpdate(pubManning);
+            ISession session = NHibernateSession.Initialize(); 
+            using (var tx=session.BeginTransaction())
+            {
+                session.SaveOrUpdate(pubOrelly);
+                session.SaveOrUpdate(pubWrox);
+                session.SaveOrUpdate(pubManning);                
 
-            session.FlushMode=FlushMode.Never;
-            session.Flush();
+                var bob = new User("bob", "password");
+                var jeff = new User("jeff", "password");
 
-            var bob = new User("bob", "password");
-            var jeff = new User("jeff", "password");
+                session.SaveOrUpdate(bob);
+                session.SaveOrUpdate(jeff);
 
-            session.SaveOrUpdate(bob);
-            session.SaveOrUpdate(jeff);
-
-            session.Flush();
+                tx.Commit();
+            } 
         }
 
         [TestMethod]

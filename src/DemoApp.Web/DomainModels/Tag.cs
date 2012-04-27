@@ -3,7 +3,7 @@ using Zephyr.Domain;
 
 namespace DemoApp.Web.DomainModels
 {
-    public class Tag : Entity
+    public class Tag
     {
         [Required]
         public virtual string Name { get; set; }

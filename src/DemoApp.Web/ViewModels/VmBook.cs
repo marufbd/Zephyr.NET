@@ -17,6 +17,7 @@
 
 #region REFERENCES
 
+using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
@@ -35,6 +36,6 @@ namespace DemoApp.Web.ViewModels
         
         [Required(ErrorMessage = "A Publisher is required")]
         [DisplayName("Publisher")]
-        public long SelectPublisherId { get; set; } 
+        public Guid SelectPublisherId { get; set; } 
     }
 }

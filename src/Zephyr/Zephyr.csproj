@@ -116,6 +116,7 @@
     <Compile Include="Domain\Entity.cs" />
     <Compile Include="Domain\EntityWithTypedId.cs" />
     <Compile Include="Domain\Audit\IAuditable.cs" />
+    <Compile Include="Domain\DomainEntity.cs" />
     <Compile Include="Domain\IEntityWithTypedId.cs" />
     <Compile Include="Domain\IHasAssignedId.cs" />
     <Compile Include="Domain\MappingOverrides\AuditChangeLogMappingOverride.cs" />

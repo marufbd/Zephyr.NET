@@ -45,11 +45,11 @@
             @Html.DisplayFor(modelItem => item.CreatedAt)
         </td>      
         <td>
-            @(Html.ActionLink<StoreController>(c=>c.SaveBook(item.Id), "Edit")) |
-            @(Html.ActionLink<StoreController>(c=>c.BookDetails(item.Id), "Details"))
+            @(Html.ActionLink<StoreController>(c=>c.SaveBook(item.Guid), "Edit")) |
+            @(Html.ActionLink<StoreController>(c=>c.BookDetails(item.Guid), "Details"))
         </td>
         <td>
-            @using(Html.BeginForm<StoreController>(c=>c.DeleteBook(item.Id)))
+            @using(Html.BeginForm<StoreController>(c=>c.DeleteBook(item.Guid)))
             {
                 @Html.AntiForgeryToken()
                 <input class="btn" type="submit" value="delete" onclick="return confirm('Are you sure?')"/>

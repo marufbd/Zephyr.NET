@@ -2,7 +2,7 @@
 
 namespace Zephyr.Domain.Audit
 {
-    public class AuditChangeLog : Entity
+    public class AuditChangeLog : DomainEntity
     {
         public virtual string EntityIdentifier { get; set; }
         

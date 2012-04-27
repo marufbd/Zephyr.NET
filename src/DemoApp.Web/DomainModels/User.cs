@@ -24,7 +24,7 @@ using Zephyr.Domain;
 
 namespace DemoApp.Web.DomainModels
 {
-    public class User : Entity
+    public class User : DomainEntity
     {
         [RegularExpression(@"[^A-Za-z0-9_@\.]|@{2,}|\.{5,}")]
         public virtual string Username { get; set; }

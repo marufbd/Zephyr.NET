@@ -1,8 +1,8 @@
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
   <class xmlns="urn:nhibernate-mapping-2.2" name="DemoApp.Web.DomainModels.User, DemoApp.Web, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" table="Users">
-    <id name="Id" type="System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" unsaved-value="0">
-      <column name="Id" />
-      <generator class="identity" />
+    <id name="Guid" type="System.Guid, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <column name="Guid" />
+      <generator class="guid.comb" />
     </id>
     <property name="Username" type="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
       <column name="Username" />
@@ -12,6 +12,9 @@
     </property>
     <property name="Email" type="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
       <column name="Email" />
+    </property>
+    <property name="Id" type="System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <column name="Id" />
     </property>
     <property name="CreatedBy" type="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
       <column name="CreatedBy" />

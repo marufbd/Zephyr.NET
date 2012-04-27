@@ -28,6 +28,7 @@ namespace Zephyr.Data.NHib
                     .Conventions
                     .Setup(this.GetConventions())
                     .IgnoreBase<Entity>()
+                    .IgnoreBase<DomainEntity>()
                     .UseOverridesFromAssembly(this.OverrideAssembly)
                     .UseOverridesFromAssembly(this.CoreFrameworkAssembly);
         }

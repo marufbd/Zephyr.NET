@@ -37,19 +37,19 @@ namespace DemoApp.Web.Controllers
 
         public ActionResult AddBook()
         {
-            SelectList lstPublishers = new SelectList(_repositoryPublisher.GetAll(), "Id", "PublisherName");
+            SelectList lstPublishers = new SelectList(_repositoryPublisher.GetAll(), "Guid", "PublisherName");
             
 
             return View("SaveBook", new VmBook() { Book = new Book(), PublisherList = lstPublishers });
         }
 
-        public ActionResult SaveBook(long id)
+        public ActionResult SaveBook(Guid guid)
         {            
-            var editBook = _repositoryBook.Get(id);
+            var editBook = _repositoryBook.Get(guid);
 
-            var lstPublishers = new SelectList(_repositoryPublisher.GetAll(), "Id", "PublisherName");
+            var lstPublishers = new SelectList(_repositoryPublisher.GetAll(), "Guid", "PublisherName");
 
-            return View(new VmBook() { Book = editBook, PublisherList = lstPublishers, SelectPublisherId = editBook.Publisher.Id });
+            return View(new VmBook() { Book = editBook, PublisherList = lstPublishers, SelectPublisherId = editBook.Publisher.Guid });
         }
 
         [HttpPost]
@@ -79,24 +79,24 @@ namespace DemoApp.Web.Controllers
             }
             else
             {
-                vmbook.PublisherList = new SelectList(_repositoryPublisher.GetAll(), "Id", "PublisherName");
+                vmbook.PublisherList = new SelectList(_repositoryPublisher.GetAll(), "Guid", "PublisherName");
 
                 return View(vmbook);
             }            
         }
 
-        public ActionResult BookDetails(long id)
+        public ActionResult BookDetails(Guid guid)
         {
-            return View(_repositoryBook.Get(id));
+            return View(_repositoryBook.Get(guid));
         }
 
         [HttpPost]
-        public ActionResult DeleteBook(long id)
+        public ActionResult DeleteBook(Guid guid)
         {
             using (UnitOfWorkScope.Start())
             {
                 var repo = ServiceLocator.Current.GetInstance<IRepository<Book>>();
-                repo.Delete(id);
+                repo.Delete(guid);
             }            
 
             return RedirectToAction("Index");

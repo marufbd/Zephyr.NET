@@ -13,7 +13,7 @@
         <dd>@Html.DisplayFor(model => model.BookDescription)</dd>
         
         <dt>Publisher</dt>
-        <dd>@Html.ActionLink(Model.Publisher.ToString(), "Details", "Publisher", new {id = Model.Publisher.Id}, null)</dd>
+        <dd>@Html.ActionLink(Model.Publisher.ToString(), "Details", "Publisher", new {guid = Model.Publisher.Guid}, null)</dd>
         
         <dt>Published Date</dt>
         <dd>@Html.DisplayFor(model => model.PublishedDate)</dd>
@@ -33,6 +33,6 @@
             
 </fieldset>
 <p>
-    @Html.ActionLink("Edit", "SaveBook", new { id=Model.Id }) |
+    @Html.ActionLink("Edit", "SaveBook", new { id=Model.Guid }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

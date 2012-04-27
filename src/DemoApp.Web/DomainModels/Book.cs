@@ -28,7 +28,7 @@ using Zephyr.Domain.Audit;
 
 namespace DemoApp.Web.DomainModels
 {
-    public class Book : Entity, IAuditable
+    public class Book : DomainEntity
     {        
         public  Book()
         {

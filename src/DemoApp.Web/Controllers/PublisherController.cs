@@ -38,9 +38,9 @@ namespace DemoApp.Web.Controllers
         }
 
         [HttpGet]
-        public ActionResult Edit(long id)
+        public ActionResult Edit(Guid guid)
         {
-            Publisher publisher = _repository.Get(id);
+            Publisher publisher = _repository.Get(guid);
 
             return View(publisher);
         }
@@ -63,29 +63,28 @@ namespace DemoApp.Web.Controllers
                 }    
             }            
 
-            return View("Edit", publisher);             
+            return View("Edit", publisher);
+        }        
+        
+        public ActionResult Details(Guid guid)
+        {
+            var publisher = _repository.Get(guid);
+
+            return View(publisher);
         }
 
         [HttpPost]
-        public ActionResult Delete(long id)
+        public ActionResult Delete(Guid guid)
         {
             //always use Unit of work for save/update
             using (UnitOfWorkScope.Start())
             {
                 var repo = ServiceLocator.Current.GetInstance<IRepository<Publisher>>();
-                repo.Delete(id);
+                repo.Delete(guid);
             }
-            
+
 
             return RedirectToAction("Index");
         }
-        
-        public ActionResult Details(long id)
-        {
-            var publisher = _repository.Get(id);  
-
-            return View(publisher);
-        }
-
     }
 }

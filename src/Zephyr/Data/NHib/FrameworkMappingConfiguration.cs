@@ -10,12 +10,12 @@ namespace Zephyr.Data.NHib
     {
         public override bool AbstractClassIsLayerSupertype(Type type)
         {
-            return type == typeof(EntityWithTypedId<>) || type == typeof(Entity);
+            return type == typeof(EntityWithTypedId<>) || type == typeof(Entity) || type==typeof(DomainEntity);
         }
 
         public override bool IsId(Member member)
-        {
-            return member.Name == "Id";
+        {            
+            return member.Name == "Guid";
         }
 
         public override bool ShouldMap(Type type)

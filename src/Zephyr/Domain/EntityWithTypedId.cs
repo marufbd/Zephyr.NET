@@ -39,8 +39,8 @@ namespace Zephyr.Domain
         ///     This is ignored for XML serialization because it does not have a public setter (which is very much by design).
         ///     See the FAQ within the documentation if you'd like to have the Id XML serialized.
         /// </summary>
-        [XmlIgnore]        
-        public virtual TId Id { get; set; } 
+        [XmlIgnore]
+        public virtual TId Id { get; set; }                
 
         public override bool Equals(object obj)
         {

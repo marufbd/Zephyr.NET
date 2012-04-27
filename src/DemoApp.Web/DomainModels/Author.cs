@@ -26,7 +26,7 @@ using Zephyr.Domain;
 
 namespace DemoApp.Web.DomainModels
 {
-    public class Author : Entity
+    public class Author : DomainEntity
     {
         [Required]
         public virtual string AuthorName { get; set; }
