@@ -16,7 +16,7 @@ namespace Zephyr.Web.Mvc.Windsor.Installers
             foreach (var asmName in config.DataConfig.MappingAssemblies)
             {
                 container.Register(
-                    Classes.FromAssembly(Assembly.LoadFrom(asmName)).BasedOn<ZephyrController>().LifestyleTransient());
+                    Classes.FromAssembly(Assembly.Load(asmName)).BasedOn<ZephyrController>().LifestyleTransient());
             }            
         }
     }

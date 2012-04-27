@@ -77,6 +77,7 @@
     <Compile Include="Configuration\ZephyrConfig.cs" />
     <Compile Include="Configuration\ZephyrConfiguration.cs" />
     <Compile Include="Data\Models\SortOptions.cs" />
+    <Compile Include="Data\NHib\ProfiledSqlClientDriver.cs" />
     <Compile Include="Data\NHib\EventListeners\AuditUpdateListener.cs" />
     <Compile Include="Data\NHib\EventListeners\SoftDeleteListener.cs" />
     <Compile Include="Data\NHib\Mapping\Conventions\ReferenceConvention.cs">

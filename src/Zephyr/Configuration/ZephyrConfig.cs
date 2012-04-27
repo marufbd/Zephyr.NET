@@ -43,11 +43,11 @@ namespace Zephyr.Configuration
             var asmNames =
                 ConfigurationManager.AppSettings["MappingAssemblies"].ToString(CultureInfo.InvariantCulture).Split(';').
                     Where(n => !String.IsNullOrEmpty(n)).ToList();
-            asmNames.Add(typeof(ZephyrConfiguration).Assembly.GetName().Name);
-            asmNames.Distinct().ForEach(s=>mappingAssemblies.Add(MakeLoadReadyAssemblyName(s)));
+            asmNames.Add(typeof(ZephyrConfiguration).Assembly.FullName);
+            asmNames.Distinct().ForEach(mappingAssemblies.Add);
             
             settings.Add("MappingAssemblies", mappingAssemblies);
-            settings.Add("OverrideAssembly", MakeLoadReadyAssemblyName(ConfigurationManager.AppSettings["OverrideAssembly"]));            
+            settings.Add("OverrideAssembly", ConfigurationManager.AppSettings["OverrideAssembly"]);
             
             if(ExportHbm)
                 settings.Add("HbmExportPath", ConfigurationManager.AppSettings["HbmExportPath"]);
@@ -83,9 +83,9 @@ namespace Zephyr.Configuration
         private string MakeLoadReadyAssemblyName(string assemblyName)
         {            
             if (assemblyName.EndsWith(".exe"))
-                return GetAppPath() + assemblyName.Trim();
+                return assemblyName.Trim();
 
-            return GetAppPath() + ((assemblyName.IndexOf(".dll", System.StringComparison.Ordinal) == -1) ? assemblyName.Trim() + ".dll" : assemblyName.Trim());
+            return ((assemblyName.IndexOf(".dll", System.StringComparison.Ordinal) == -1) ? assemblyName.Trim() + ".dll" : assemblyName.Trim());
         }
 
         public IEnumerable<Type> GetDomainModelTypes()
@@ -93,7 +93,7 @@ namespace Zephyr.Configuration
             var lst = new List<Type>();
             foreach (var asmName in DataConfig.MappingAssemblies)
             {
-                Assembly asm = Assembly.LoadFrom(asmName);
+                Assembly asm = Assembly.Load(asmName);
                 lst.AddRange(asm.GetTypes().Where(type => type.GetInterfaces().Any(
                     x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof (IEntityWithTypedId<>)) ));
             }

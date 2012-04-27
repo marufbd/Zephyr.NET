@@ -79,10 +79,10 @@ namespace Zephyr.Data.NHib
             var mappingAssemblyNames = dataConfig.MappingAssemblies;
             var overrideAssemblyFile = dataConfig.OverrideAssembly;
             
-            var overrideAssembly = Assembly.LoadFrom(overrideAssemblyFile);
+            var overrideAssembly = Assembly.Load(overrideAssemblyFile);
 
             var mappingAssemblies = new List<Assembly>();
-            mappingAssemblyNames.ForEach(a => mappingAssemblies.Add(Assembly.LoadFrom(a)));
+            mappingAssemblyNames.ForEach(a => mappingAssemblies.Add(Assembly.Load(a)));
 
             var cfg = new NHibernate.Cfg.Configuration();
             cfg.Configure(dataConfig.NHibConfigPath);
