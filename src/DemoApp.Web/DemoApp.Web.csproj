@@ -235,7 +235,7 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Publisher\Index.cshtml" />
+    <Content Include="Views\Publisher\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Publisher\Edit.cshtml" />

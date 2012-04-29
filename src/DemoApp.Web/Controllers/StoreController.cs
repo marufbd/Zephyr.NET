@@ -31,8 +31,20 @@ namespace DemoApp.Web.Controllers
         {
             //var model = _repositoryBook.GetAllPaged(2, 2);
             var model = _repositoryBook.GetAll();
+            
 
             return View(model);
+        }
+
+
+        public ActionResult Filter()
+        {
+            //var model = _repositoryBook.GetAllPaged(2, 2);
+            var model = _repositoryBook.Query(m => m.PublishedDate > DateTime.Today.AddDays(-2));
+            //var model = _repositoryBook.GetAll();
+
+
+            return View("Index", model);
         }
 
         public ActionResult AddBook()
@@ -54,31 +66,33 @@ namespace DemoApp.Web.Controllers
 
         [HttpPost]
         public ActionResult SaveBook(VmBook vmbook)
-        {             
-            if (ModelState.IsValid && vmbook.Book.IsValid())
+        {            
+            if (ModelState.IsValid)
             {
                 //always use Unit of work for save/update
                 using (UnitOfWorkScope.Start())
                 {
                     var repo = ServiceLocator.Current.GetInstance<IRepository<Book>>();
-                    vmbook.Book.Publisher = _repositoryPublisher.Get(vmbook.SelectPublisherId);
+                    var repoPub = ServiceLocator.Current.GetInstance<IRepository<Publisher>>();
+                    vmbook.Book = repo.Get(vmbook.Book.Guid);
+                    vmbook.Book.Publisher = repoPub.Get(vmbook.SelectPublisherId);                    
 
-                    //testing a business transaction
-                    var repoAudit = ServiceLocator.Current.GetInstance<IRepository<AuditChangeLog>>();
-                    var audit = new AuditChangeLog();
-                    audit.ActionBy = "maruf";
-                    audit.ActionType=AuditType.Update;
-                    audit.OldPropertyValue = "Old val";
-                    audit.NewPropertyValue = "New val";
-                    
-                    repoAudit.SaveOrUpdate(audit);
-                    repo.SaveOrUpdate(vmbook.Book);
+                    ////testing a business transaction
+                    //var repoAudit = ServiceLocator.Current.GetInstance<IRepository<AuditChangeLog>>();
+                    //var audit = new AuditChangeLog();
+                    //audit.ActionBy = "maruf";
+                    //audit.ActionType=AuditType.Update;
+                    //audit.OldPropertyValue = "Old val";
+                    //audit.NewPropertyValue = "New val";                    
+                    //repoAudit.SaveOrUpdate(audit);                    
                 }
                 
                 return RedirectToAction("Index");
             }
             else
             {
+                
+
                 vmbook.PublisherList = new SelectList(_repositoryPublisher.GetAll(), "Guid", "PublisherName");
 
                 return View(vmbook);

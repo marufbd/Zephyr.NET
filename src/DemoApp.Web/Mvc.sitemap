@@ -6,7 +6,7 @@
 
   <mvcSiteMapNode title="Home" controller="Home" action="Index">
     <mvcSiteMapNode title="About" controller="Home" action="About"/>
-    <mvcSiteMapNode title="Publishers" controller="Publisher">
+    <mvcSiteMapNode title="Publishers" controller="Publisher" action="List">
         <mvcSiteMapNode title="Details" controller="Publisher" action="Details" visibility="!MenuHelper"/>
         <mvcSiteMapNode title="Edit" controller="Publisher" action="Edit" visibility="!MenuHelper"/>
         <mvcSiteMapNode title="Books" controller="Store" action="Index">

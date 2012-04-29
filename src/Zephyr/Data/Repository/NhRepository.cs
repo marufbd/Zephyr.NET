@@ -19,6 +19,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq.Expressions;
 using Microsoft.Practices.ServiceLocation;
 using NHibernate;
 using NHibernate.Criterion;
@@ -36,7 +37,7 @@ using Zephyr.Domain;
 
 namespace Zephyr.Data.Repository
 {
-    public class NhRepository<T> : IRepository<T> where T : Entity
+    public class NhRepository<TEntity> : IRepository<TEntity> where TEntity : Entity
     {
 
         public ISession Session;
@@ -58,16 +59,16 @@ namespace Zephyr.Data.Repository
             Session.EnableFilter("DeletedFilter").SetParameter("IsDeleted", false);
         }
 
-        public virtual IList<T> GetAll()
+        public virtual IList<TEntity> GetAll()
         {
-            var query = this.Session.Query<T>();
+            var query = this.Session.Query<TEntity>();
             
             return query.ToList();
         }
 
-        public IList<T> GetAllPaged(int pageIndex, int pageItems, SortOptions sortOptions)
+        public IList<TEntity> GetAllPaged(int pageIndex, int pageItems, SortOptions sortOptions)
         {
-            var query = this.Session.Query<T>();
+            var query = this.Session.Query<TEntity>();
 
             //here the paging is done using linq to object applying OrderBy
             //on the whole list retrieved from database as MsSqlCe does not support variable limit query
@@ -76,45 +77,33 @@ namespace Zephyr.Data.Repository
         }
 
 
-        public T Get(Guid guid)
+        public TEntity Get(Guid guid)
         {
-            return this.Session.Get<T>(guid);
+            return this.Session.Get<TEntity>(guid);
         }
 
-        public T Get(string guid)
+        public TEntity SaveOrUpdate(TEntity entity)
         {
-            throw new NotImplementedException("Not implemented.");
-        }
-
-        public T Get(long id)
-        {
-            throw new NotImplementedException("Not implemented.");
-        }
-
-        public T SaveOrUpdate(T entity)
-        {
-            //Session.BeginTransaction();
-            //Session = UnitOfWorkScope.IsStarted ? ((NhUnitOfWorkFactory)UnitOfWorkScope.Factory).CurrentSession : Session;
-
-            Session.SaveOrUpdate(entity);
-            //Session.Transaction.Commit();
+            Session.SaveOrUpdate(entity);            
 
             return entity;
         }
 
-        public void Delete(T entity)
+        public void Delete(TEntity entity)
         {
             Session.Delete(entity); 
         }
 
-        public void Delete(long id)
-        {
-            Session.Delete(Session.Get<T>(id));
-        } 
-
         public void Delete(Guid guid)
         {
-            Session.Delete(Session.Get<T>(guid));
+            Session.Delete(Session.Get<TEntity>(guid));
         } 
+
+
+        //Queries
+        public IQueryable<TEntity> Query(Expression<Func<TEntity, bool>> specification)
+        {
+            return Session.Query<TEntity>().Where(specification);
+        }
     }
 }

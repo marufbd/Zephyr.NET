@@ -72,8 +72,7 @@ namespace Zephyr.Data.NHib
         /// </summary>
         /// <returns></returns>
         public static ISession Initialize(IAutoPersistenceModelGenerator modelGenerator)
-        {            
-
+        {
             var zephyrConfig = new ZephyrConfig();
             var dataConfig = zephyrConfig.DataConfig;
             var mappingAssemblyNames = dataConfig.MappingAssemblies;

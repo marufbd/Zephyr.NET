@@ -16,7 +16,9 @@
 
 #region REFERENCES
 
-
+using System.Linq;
+using System.Linq.Expressions;
+using NHibernate.Linq;
 
 #endregion REFERENCES
 
@@ -27,22 +29,20 @@ using Zephyr.Domain;
 
 namespace Zephyr.Data.Repository.Contract
 {
-    public interface IRepository<T> where T : Entity
+    public interface IRepository<TEntity> where TEntity : Entity
     {
-        IList<T> GetAll();
+        IList<TEntity> GetAll();
 
-        IList<T> GetAllPaged(int pageIndex, int pageItems, SortOptions sortOptions=null);
+        IList<TEntity> GetAllPaged(int pageIndex, int pageItems, SortOptions sortOptions=null);        
 
-        T Get(string guid);
-
-        T Get(Guid guid);
-
-        T Get(long id);
+        TEntity Get(Guid guid);        
         
-        T SaveOrUpdate(T entity);
+        TEntity SaveOrUpdate(TEntity entity);
         
-        void Delete(T entity);
+        void Delete(TEntity entity);
         void Delete(Guid id);
-        void Delete(long id);
+
+
+        IQueryable<TEntity> Query(Expression<Func<TEntity, bool>> specification);
     }
 }

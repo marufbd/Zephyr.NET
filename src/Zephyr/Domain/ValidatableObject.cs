@@ -7,16 +7,25 @@ namespace Zephyr.Domain
     [Serializable]
     public abstract class ValidatableObject : BaseObject
     {
+        public virtual IList<ValidationResult> Errors { get; private set; }
+
         public virtual bool IsValid()
         {
-            return this.ValidationResults().Count == 0;
+            this.Validate();
+            return Errors.Count == 0;
         }
 
         public virtual ICollection<ValidationResult> ValidationResults()
         {
-            var validationResults = new List<ValidationResult>();
-            Validator.TryValidateObject(this, new ValidationContext(this, null, null), validationResults, true);
-            return validationResults;
+            return this.Errors;
+        }
+
+        public virtual IEnumerable<ValidationResult> Validate()
+        {                        
+            Errors=new List<ValidationResult>();
+            Validator.TryValidateObject(this, new ValidationContext(this, null, null), Errors, true);
+
+            return Errors;
         }
     }
 }

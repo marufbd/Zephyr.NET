@@ -8,7 +8,7 @@ namespace Zephyr.Data.NHib.UoW
     internal sealed class NhUnitOfWork : IUnitOfWork
     {
         private readonly IUnitOfWorkFactory _factory;
-        private readonly ISession _session;
+        private ISession _session;
         private NhTransaction _transaction;
 
         public NhUnitOfWork(IUnitOfWorkFactory factory, ISession session)
@@ -89,10 +89,11 @@ namespace Zephyr.Data.NHib.UoW
                 _transaction.Dispose();
                 _transaction = null;
             }
-            if (_session != null)
-            {
-                _session.Dispose();                
-            }
+            //if (_session != null)
+            //{
+            //    _session.Dispose();           
+            //}
+            _session = null;
 
             _factory.DisposeUnitOfWork();
             UnitOfWorkScope.DisposeUnitOfWork();

@@ -42,6 +42,16 @@ namespace DemoApp.Web.DomainModels
         public override string ToString()
         {
             return this.PublisherName;
-        }        
+        }
+
+        public override IEnumerable<ValidationResult> Validate()
+        {
+            base.Validate();
+
+            if(this.Books.Count>2)
+                Errors.Add(new ValidationResult("Publisher cannot have more than 2 books"));
+
+            return Errors;
+        }
     }
 }

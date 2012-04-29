@@ -66,6 +66,10 @@
     <Compile Include="Controllers\ZephyrCRUDController.cs" />
     <Compile Include="Html\CommonHtmlHelper.cs" />
     <Compile Include="Initialization\MvcAppBootstrapper.cs" />
+    <Compile Include="ViewModel\CreateViewModel.cs" />
+    <Compile Include="ViewModel\DetailsViewModel.cs" />
+    <Compile Include="ViewModel\EditViewModel.cs" />
+    <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="Windsor\Installers\ControllersInstaller.cs" />
     <Compile Include="Windsor\Installers\PersistenceInstaller.cs" />
     <Compile Include="Windsor\Installers\RepositoriesInstaller.cs" />
