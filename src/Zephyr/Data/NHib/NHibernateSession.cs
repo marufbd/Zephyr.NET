@@ -24,6 +24,7 @@ using NHibernate;
 using NHibernate.Cfg;
 using NHibernate.Event;
 using NHibernate.Linq;
+using Zephyr.Data.NHib.EventListeners;
 using Zephyr.Data.NHib.Mapping.Filter;
 using Zephyr.Configuration;
 using Zephyr.Domain;
@@ -127,24 +128,29 @@ namespace Zephyr.Data.NHib
 
             //based on config log diagnostics
             if (dataConfig.LogDiagnostics)
-                fConfig.Diagnostics(dia =>dia.Enable().OutputToFile(dataConfig.LogPath + "/fluentNHibernate.log"));
-
-
-            //Enable auditing using NHibernate.Envers
-            var enversConf = new NHibernate.Envers.Configuration.Fluent.FluentConfiguration();
-            enversConf.Audit(zephyrConfig.GetDomainModelTypes()); 
+                fConfig.Diagnostics(dia =>dia.Enable().OutputToFile(dataConfig.LogPath + "/fluentNHibernate.log"));            
+            
             //fConfig.ExposeConfiguration(c => c.EventListeners.PreUpdateEventListeners = new[] {new EventListeners.AuditUpdateListener()});
             
             //Set delete listener for soft delete
-            if (zephyrConfig.SoftDeleteEnabled)
-                fConfig.ExposeConfiguration(
-                    c => c.SetListener(ListenerType.Delete, new EventListeners.SoftDeleteListener()));
+            //if (zephyrConfig.SoftDeleteEnabled)
+            //    fConfig.ExposeConfiguration(
+            //        c => c.SetListener(ListenerType.Delete, new EventListeners.SoftDeleteListener()));
                                                
 
             _configuration = fConfig.BuildConfiguration();
 
             //integrate envers
+            //Enable auditing using NHibernate.Envers
+            var enversConf = new NHibernate.Envers.Configuration.Fluent.FluentConfiguration();
+            
+            enversConf.SetRevisionEntity<RevisionEntity>(e=>e.RevNo, e=>e.RevisionTimestamp, new NEnversRevInfoListener());
+            
+            enversConf.Audit(zephyrConfig.GetDomainModelTypes());
+            _configuration.Properties.Add("nhibernate.envers.store_data_at_delete", "true");
             _configuration.IntegrateWithEnvers(enversConf);
+
+
 
             
             Factory = _configuration.BuildSessionFactory();

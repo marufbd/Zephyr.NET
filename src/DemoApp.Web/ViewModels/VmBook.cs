@@ -27,7 +27,7 @@ using DemoApp.Web.DomainModels;
 
 namespace DemoApp.Web.ViewModels
 {
-    public class VmBook
+    public class VmBook 
     {
         public Book Book { get; set; }
 

@@ -105,6 +105,7 @@
     </Compile>
     <Compile Include="DomainModels\Author.cs" />
     <Compile Include="DomainModels\Book.cs" />
+    <Compile Include="DomainModels\BookCategory.cs" />
     <Compile Include="DomainModels\MapOverrides\BookMappingOverride.cs" />
     <Compile Include="DomainModels\MapOverrides\PublisherMappingOverride.cs" />
     <Compile Include="DomainModels\PermissionType.cs" />
@@ -119,6 +120,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\images\chosen-sprite.png" />
     <Content Include="Content\images\glyphicons-halflings-white.png" />
     <Content Include="Content\images\glyphicons-halflings.png" />
     <Content Include="Content\images\OSI-logo-70x82.png" />
@@ -128,6 +130,7 @@
     <Content Include="Content\Styles\bootstrap\bootstrap-responsive.min.css" />
     <Content Include="Content\Styles\bootstrap\bootstrap.css" />
     <Content Include="Content\Styles\bootstrap\bootstrap.min.css" />
+    <Content Include="Content\Styles\chosen.css" />
     <Content Include="Content\Styles\Site.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
@@ -186,6 +189,7 @@
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap\bootstrap.js" />
     <Content Include="Scripts\bootstrap\bootstrap.min.js" />
+    <Content Include="Scripts\chosen.jquery.min.js" />
     <Content Include="Scripts\jquery-1.7.2-vsdoc.js" />
     <Content Include="Scripts\jquery-1.7.2.js" />
     <Content Include="Scripts\jquery-1.7.2.min.js" />
@@ -247,7 +251,7 @@
     <Content Include="Views\Store\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Store\BookDetails.cshtml" />
+    <Content Include="Views\Store\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Store\SaveBook.cshtml" />
@@ -301,6 +305,7 @@
       <SubType>Designer</SubType>
     </None>
     <Content Include="Views\Shared\_MINIPROFILER UPDATED Layout.cshtml" />
+    <Content Include="Views\Store\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

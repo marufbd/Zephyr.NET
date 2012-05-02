@@ -37,10 +37,10 @@ using Zephyr.Domain;
 
 namespace Zephyr.Data.Repository
 {
-    public class NhRepository<TEntity> : IRepository<TEntity> where TEntity : Entity
+    public class NhRepository<TEntity> : IRepository<TEntity> where TEntity : DomainEntity
     {
 
-        public ISession Session;
+        public ISession Session { get; private set; }
 
         public NhRepository()
         {

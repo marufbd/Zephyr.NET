@@ -18,7 +18,7 @@ namespace Zephyr.Data.NHib.EventListeners
     { 
         public bool OnPreUpdate(PreUpdateEvent e)
         {
-            if(e.Entity is Entity)
+            if(e.Entity is DomainEntity)
             {
                 if(e.OldState==null)
                     throw new AuditException();
@@ -27,7 +27,7 @@ namespace Zephyr.Data.NHib.EventListeners
 
                 if(dirtyFieldIndexes.Length>0)
                 {
-                    var entity = e.Entity as Entity;
+                    var entity = e.Entity as DomainEntity;
                     entity.LastUpdatedAt = DateTime.UtcNow;
 
                     var changeLogs = new List<AuditChangeLog>();
@@ -41,7 +41,7 @@ namespace Zephyr.Data.NHib.EventListeners
                             var changeLog = new AuditChangeLog
                                                 {
                                                     EntityType = e.Entity.GetType().Name,
-                                                    EntityIdentifier = entity.Id.ToString(CultureInfo.InvariantCulture),
+                                                    EntityIdentifier = entity.Id.ToString(),
                                                     ActionType = AuditType.Update,
                                                     PropertyName = e.Persister.PropertyNames[dirtyFieldIndex]
                                                 };
@@ -64,7 +64,7 @@ namespace Zephyr.Data.NHib.EventListeners
         }
 
 
-        private string GetPropertyValue(object propertyState, string propertyName, Entity entity)
+        private string GetPropertyValue(object propertyState, string propertyName,DomainEntity entity)
         {
             if (propertyState != null)
             {

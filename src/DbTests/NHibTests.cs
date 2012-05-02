@@ -28,11 +28,11 @@ namespace MyTests
             Book bookWrox1 = new Book();
             bookWrox1.BookName = "Professional Microsoft Azure";
             bookWrox1.Publisher = pubWrox;
-            bookWrox1.BookDescription = @" Microsoft cloud platform Azure with Visual Studio 2010.";
+            bookWrox1.BookDescription = @"Microsoft cloud platform Azure with Visual Studio 2010.";
             Book bookWrox2 = new Book();
             bookWrox2.BookName = "ASP.NET Pro 2";
             bookWrox2.Publisher = pubWrox;
-            bookWrox2.BookDescription = @" Sample book desc. This book is for all from beginner to professional.";
+            bookWrox2.BookDescription = @"Sample book desc. This book is for all from beginner to professional.";
             Book bookManning1 = new Book();
             bookManning1.BookName = "Clojure in Action";
             bookManning1.Publisher = pubManning;
@@ -61,7 +61,7 @@ namespace MyTests
             {
                 session.SaveOrUpdate(pubOrelly);
                 session.SaveOrUpdate(pubWrox);
-                session.SaveOrUpdate(pubManning);                
+                session.SaveOrUpdate(pubManning);
 
                 var bob = new User("bob", "password");
                 var jeff = new User("jeff", "password");

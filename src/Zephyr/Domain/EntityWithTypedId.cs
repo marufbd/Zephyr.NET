@@ -13,12 +13,6 @@ namespace Zephyr.Domain
     [Serializable]
     public abstract class EntityWithTypedId<TId> : ValidatableObject, IEntityWithTypedId<TId>
     {
-        protected EntityWithTypedId()
-        {
-            this.CreatedAt = DateTime.UtcNow;
-            this.LastUpdatedAt = DateTime.UtcNow;
-        }
-
         /// <summary>
         ///     To help ensure hashcode uniqueness, a carefully selected random number multiplier 
         ///     is used within the calculation.  Goodrich and Tamassia's Data Structures and
@@ -130,21 +124,6 @@ namespace Zephyr.Domain
         private bool HasSameNonDefaultIdAs(EntityWithTypedId<TId> compareTo)
         {
             return !this.IsTransient() && !compareTo.IsTransient() && this.Id.Equals(compareTo.Id);
-        }
-
-
-        //Audit Info
-        public virtual string CreatedBy { get; set; }
-        public virtual DateTime CreatedAt { get; set; }
-        public virtual string LastUpdatedBy { get; set; }
-        public virtual DateTime LastUpdatedAt { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether this instance is deleted.
-        /// </summary>
-        /// <value>
-        /// 	<c>true</c> if this instance is deleted; otherwise, <c>false</c>.
-        /// </value>
-        public virtual bool IsDeleted { get; set; }
+        } 
     }
 }

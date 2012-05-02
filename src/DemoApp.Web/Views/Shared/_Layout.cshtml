@@ -7,16 +7,12 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>@Html.Zephyr().PageTitle()</title>    
-    <script src="@Url.Content("~/Scripts/jquery-1.7.2.min.js")" type="text/javascript"></script>
-    <script src="@Url.Content("~/Scripts/modernizr-1.7.min.js")" type="text/javascript"></script>   
-    <script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.min.js")" type="text/javascript"></script>
-    
-    <script src="@Url.Content("~/Scripts/bootstrap/bootstrap.min.js")" type="text/javascript"></script>
-    @RenderSection("Scripts", required:false)
 
-    <link href="@Url.Content("~/Content/Styles/bootstrap/bootstrap.min.css")" rel="stylesheet"
-          type="text/css" />
-    <link href="@Url.Content("~/Content/Styles/Site.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/Styles/bootstrap/bootstrap.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/Styles/bootstrap/bootstrap-responsive.min.css")" rel="stylesheet" type="text/css" />
+    
+    <link href="@Url.Content("~/Content/Styles/Site.css")" rel="stylesheet" type="text/css" />    
+    <link href="@Url.Content("~/Content/Styles/Chosen.css")" rel="stylesheet" type="text/css" />    
     <style type="text/css">
         body {
             padding-top: 60px;
@@ -25,9 +21,7 @@
         .sidebar-nav {
             padding: 9px 0;
         }
-    </style>
-    <link href="@Url.Content("~/Content/Styles/bootstrap/bootstrap-responsive.min.css")" rel="stylesheet"
-          type="text/css" />
+    </style>    
           
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -97,6 +91,10 @@
         </div>
     </div> <!-- /container -->
 
-  </body>
+    <script src="@Url.Content("~/Scripts/jquery-1.7.2.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/modernizr-1.7.min.js")" type="text/javascript"></script>    
+    <script src="@Url.Content("~/Scripts/bootstrap/bootstrap.min.js")" type="text/javascript"></script>
+    @RenderSection("Scripts", required:false)
+    </body>
 
 </html>

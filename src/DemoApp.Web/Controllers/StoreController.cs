@@ -11,15 +11,16 @@ using Zephyr.Data.Repository.Contract;
 using Zephyr.Data.UnitOfWork;
 using Zephyr.Domain.Audit;
 using Zephyr.Web.Mvc.Controllers;
+using Zephyr.Web.Mvc.ViewModels;
 
 namespace DemoApp.Web.Controllers
 {    
-    public class StoreController : ZephyrController
+    public class StoreController : ZephyrCRUDController<Book>
     {
         private readonly IRepository<Book> _repositoryBook;
         private readonly IRepository<Publisher> _repositoryPublisher;
 
-        public StoreController(IRepository<Book> repBook, IRepository<Publisher> repPub)
+        public StoreController(IRepository<Book> repBook, IRepository<Publisher> repPub) : base(repBook)
         {
             _repositoryBook = repBook;
             _repositoryPublisher = repPub;
@@ -28,28 +29,24 @@ namespace DemoApp.Web.Controllers
         //
         // GET: /Book/
         public ActionResult Index()
-        {
-            //var model = _repositoryBook.GetAllPaged(2, 2);
-            var model = _repositoryBook.GetAll();
-            
-
-            return View(model);
+        {                        
+            return View();
         }
 
 
         public ActionResult Filter()
         {
             //var model = _repositoryBook.GetAllPaged(2, 2);
-            var model = _repositoryBook.Query(m => m.PublishedDate > DateTime.Today.AddDays(-2));
+            var model = _repositoryBook.Query(m => m.LastUpdatedAt > DateTime.Today.AddDays(-1));
             //var model = _repositoryBook.GetAll();
 
 
-            return View("Index", model);
+            return View("List", new ListViewModel<Book>() {Model = model});
         }
 
         public ActionResult AddBook()
         {
-            SelectList lstPublishers = new SelectList(_repositoryPublisher.GetAll(), "Guid", "PublisherName");
+            SelectList lstPublishers = new SelectList(_repositoryPublisher.GetAll(), "Id", "PublisherName");
             
 
             return View("SaveBook", new VmBook() { Book = new Book(), PublisherList = lstPublishers });
@@ -59,9 +56,9 @@ namespace DemoApp.Web.Controllers
         {            
             var editBook = _repositoryBook.Get(guid);
 
-            var lstPublishers = new SelectList(_repositoryPublisher.GetAll(), "Guid", "PublisherName");
+            var lstPublishers = new SelectList(_repositoryPublisher.GetAll(), "Id", "PublisherName");
 
-            return View(new VmBook() { Book = editBook, PublisherList = lstPublishers, SelectPublisherId = editBook.Publisher.Guid });
+            return View(new VmBook() { Book = editBook, PublisherList = lstPublishers, SelectPublisherId = editBook.Publisher.Id });
         }
 
         [HttpPost]
@@ -72,48 +69,30 @@ namespace DemoApp.Web.Controllers
                 //always use Unit of work for save/update
                 using (UnitOfWorkScope.Start())
                 {
-                    var repo = ServiceLocator.Current.GetInstance<IRepository<Book>>();
+                    var repoBook = ServiceLocator.Current.GetInstance<IRepository<Book>>();
                     var repoPub = ServiceLocator.Current.GetInstance<IRepository<Publisher>>();
-                    vmbook.Book = repo.Get(vmbook.Book.Guid);
-                    vmbook.Book.Publisher = repoPub.Get(vmbook.SelectPublisherId);                    
+                    //vmbook.Book = repo.Get(vmbook.Book.Id);
+                    vmbook.Book.Publisher = repoPub.Get(vmbook.SelectPublisherId);
 
+                    repoBook.SaveOrUpdate(vmbook.Book);
                     ////testing a business transaction
                     //var repoAudit = ServiceLocator.Current.GetInstance<IRepository<AuditChangeLog>>();
                     //var audit = new AuditChangeLog();
                     //audit.ActionBy = "maruf";
                     //audit.ActionType=AuditType.Update;
                     //audit.OldPropertyValue = "Old val";
-                    //audit.NewPropertyValue = "New val";                    
-                    //repoAudit.SaveOrUpdate(audit);                    
+                    //audit.NewPropertyValue = "New val";
+                    //repoAudit.SaveOrUpdate(audit);
                 }
                 
-                return RedirectToAction("Index");
+                return RedirectToAction("List");
             }
             else
-            {
-                
-
-                vmbook.PublisherList = new SelectList(_repositoryPublisher.GetAll(), "Guid", "PublisherName");
+            { 
+                vmbook.PublisherList = new SelectList(_repositoryPublisher.GetAll(), "Id", "PublisherName");
 
                 return View(vmbook);
             }            
-        }
-
-        public ActionResult BookDetails(Guid guid)
-        {
-            return View(_repositoryBook.Get(guid));
-        }
-
-        [HttpPost]
-        public ActionResult DeleteBook(Guid guid)
-        {
-            using (UnitOfWorkScope.Start())
-            {
-                var repo = ServiceLocator.Current.GetInstance<IRepository<Book>>();
-                repo.Delete(guid);
-            }            
-
-            return RedirectToAction("Index");
-        }
+        }        
     }
 }

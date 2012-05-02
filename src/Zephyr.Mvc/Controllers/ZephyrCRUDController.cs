@@ -4,10 +4,11 @@ using Microsoft.Practices.ServiceLocation;
 using Zephyr.Data.Repository.Contract;
 using Zephyr.Data.UnitOfWork;
 using Zephyr.Domain;
+using Zephyr.Web.Mvc.ViewModels;
 
 namespace Zephyr.Web.Mvc.Controllers
 {
-    public class ZephyrCRUDController<TEntity> : ZephyrController where TEntity : Entity
+    public class ZephyrCRUDController<TEntity> : ZephyrController where TEntity : DomainEntity
     {
         public readonly IRepository<TEntity> Repository;
 
@@ -17,29 +18,42 @@ namespace Zephyr.Web.Mvc.Controllers
         }
 
         public virtual ActionResult List()
-        {            
-            return View("List", Repository.GetAll());
+        {
+            var viewModel = new ListViewModel<TEntity>() {Model = Repository.GetAll()};
+            
+            return View("List", viewModel);
         }
 
         public virtual ActionResult Details(Guid guid)
         {
-            return View("Details", Repository.Get(guid));
+            var viewModel = new DetailsViewModel<TEntity>() { Model = Repository.Get(guid) };
+
+            return View("Details", viewModel);
         }
 
         [HttpGet]
         public ActionResult Create()
-        {
-            var model = Activator.CreateInstance<TEntity>();
+        {            
+            if(ViewEngines.Engines.FindView(ControllerContext, "Create", null).View!=null)
+            {
+                var viewModel = new CreateViewModel<TEntity>() { Model = Activator.CreateInstance<TEntity>() };
 
-            return View("Edit", model);
+                return View("Create", viewModel);
+            }
+            else
+            {
+                var viewModel = new EditViewModel<TEntity>() { Model = Activator.CreateInstance<TEntity>() };
+
+                return View("Edit", viewModel);
+            }
         }
 
         [HttpGet]
         public ActionResult Edit(Guid guid)
-        {
-            TEntity model = Repository.Get(guid);
+        {            
+            var viewModel = new EditViewModel<TEntity>() { Model = Repository.Get(guid) }; 
 
-            return View("Edit", model);
+            return View("Edit", viewModel);
         }
 
         [HttpPost]

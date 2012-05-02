@@ -3,6 +3,7 @@ using FluentNHibernate;
 using FluentNHibernate.Automapping;
 using Zephyr.Domain;
 using System.Linq;
+using Zephyr.Domain.Audit;
 
 namespace Zephyr.Data.NHib
 {
@@ -14,8 +15,8 @@ namespace Zephyr.Data.NHib
         }
 
         public override bool IsId(Member member)
-        {            
-            return member.Name == "Guid";
+        { 
+            return member.Name == "Id";
         }
 
         public override bool ShouldMap(Type type)
@@ -27,7 +28,7 @@ namespace Zephyr.Data.NHib
 
         public override bool ShouldMap(Member member)
         {
-            return base.ShouldMap(member) && member.CanWrite;
+            return base.ShouldMap(member) && member.CanWrite && !member.Name.Equals("IsNew");
         }
     }
 }

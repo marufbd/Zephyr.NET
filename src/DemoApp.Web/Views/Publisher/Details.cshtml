@@ -1,7 +1,9 @@
-﻿@model DemoApp.Web.DomainModels.Publisher
+﻿@model DetailsViewModel<DemoApp.Web.DomainModels.Publisher>
 
 @{
     ViewBag.Title = "Publisher / Details";
+    var viewModel = Model;
+    var model = Model.Model;
 }
 
 <h2>Details</h2>
@@ -11,19 +13,19 @@
 
     <div class="clearfix">PublisherName</div>
     <div class="clearfix">
-        @Html.DisplayFor(model => model.PublisherName)
+        @Html.DisplayFor(_ => model.PublisherName)
     </div>
     
     <div class="display-label">Books from this Publisher:</div>
-    @if (Model.Books.Count==0)
+    @if (model.Books.Count==0)
     {
         <div class="display-field">No books</div>
     }
     else
     {
-        foreach(var book in Model.Books){
+        foreach(var book in model.Books){
         <div class="display-field">
-            @Html.ActionLink(book.BookName, "BookDetails", "Store", new { guid = book.Guid }, null)
+            @Html.ActionLink(book.BookName, "BookDetails", "Store", new { guid = book.Id }, null)
         </div>
         }
     }
@@ -31,25 +33,25 @@
 
     <div class="display-label">CreatedBy</div>
     <div class="display-field">
-        @Html.DisplayFor(model => model.CreatedBy)
+        @Html.DisplayFor(_ => model.CreatedBy)
     </div>
 
     <div class="display-label">CreatedAt</div>
     <div class="display-field">
-        @Html.DisplayFor(model => model.CreatedAt)
+        @Html.DisplayFor(_ => model.CreatedAt)
     </div>
 
     <div class="display-label">LastUpdatedBy</div>
     <div class="display-field">
-        @Html.DisplayFor(model => model.LastUpdatedBy)
+        @Html.DisplayFor(_ => model.LastUpdatedBy)
     </div>
 
     <div class="display-label">LastUpdatedAt</div>
     <div class="display-field">
-        @Html.DisplayFor(model => model.LastUpdatedAt)
+        @Html.DisplayFor(_ => model.LastUpdatedAt)
     </div>
 </fieldset>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { guid = Model.Guid }) |
+    @Html.ActionLink("Edit", "Edit", new { guid = model.Id }) |
     @Html.ActionLink("Back to List", "List")    
 </p>

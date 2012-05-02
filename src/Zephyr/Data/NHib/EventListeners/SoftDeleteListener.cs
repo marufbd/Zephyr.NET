@@ -16,9 +16,9 @@ namespace Zephyr.Data.NHib.EventListeners
         protected override void DeleteEntity(IEventSource session, object entity, EntityEntry entityEntry, bool isCascadeDeleteEnabled, IEntityPersister persister, ISet transientEntities)
         {
             //need to implement the condition check
-            if (entity is Entity)
+            if (entity is DomainEntity)
             {
-                ((Entity) entity).IsDeleted = true;
+                ((DomainEntity)entity).IsDeleted = true;
                 this.CascadeBeforeDelete(session, persister, entity, entityEntry, transientEntities);
                 this.CascadeAfterDelete(session, persister, entity, transientEntities);                
             }

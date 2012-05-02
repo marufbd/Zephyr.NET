@@ -1,0 +1,39 @@
+﻿@model DetailsViewModel<DemoApp.Web.DomainModels.Book>
+
+@{
+    ViewBag.Title = "Book Details";
+    var model = Model.Model;
+}
+
+
+<fieldset>
+    <legend>@Html.DisplayFor(_ => model.BookName)</legend>
+    
+    <dl>
+        <dt>@Html.DisplayFor(_ => model.BookName)</dt>
+        <dd>@Html.DisplayFor(_ => model.BookDescription)</dd>
+        
+        <dt>Publisher</dt>
+        <dd>@Html.ActionLink(model.Publisher.ToString(), "Details", "Publisher", new { guid = model.Publisher.Id }, null)</dd>
+        
+        <dt>Published Date</dt>
+        <dd>@Html.DisplayFor(_ => model.PublishedDate)</dd>
+        
+        <hr/>
+        <h4>Audit Info</h4>
+        <dt>Created By</dt>
+        <dd>@Html.DisplayFor(_ => model.CreatedBy)</dd>
+        <dt>Created At</dt>
+        <dd>@Html.DisplayFor(_ => model.CreatedAt)</dd> 
+        
+        <dt>Last Updated by</dt>
+        <dd>@Html.DisplayFor(_ => model.LastUpdatedBy)</dd>
+        <dt>Last Updated At</dt>
+        <dd>@Html.DisplayFor(_ => model.LastUpdatedAt)</dd>
+    </dl>    
+            
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "SaveBook", new { guid = model.Id }) |
+    @Html.ActionLink("Back to List", "List")
+</p>

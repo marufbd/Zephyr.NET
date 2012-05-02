@@ -95,7 +95,8 @@ namespace Zephyr.Configuration
             {
                 Assembly asm = Assembly.Load(asmName);
                 lst.AddRange(asm.GetTypes().Where(type => type.GetInterfaces().Any(
-                    x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof (IEntityWithTypedId<>)) ));
+                    x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof (IEntityWithTypedId<>)) &&
+                                                          !type.GetInterfaces().Contains(typeof (IRevisionEntity))));
             }
 
             return lst;

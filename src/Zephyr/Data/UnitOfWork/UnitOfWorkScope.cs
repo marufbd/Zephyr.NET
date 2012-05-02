@@ -10,7 +10,7 @@ namespace Zephyr.Data.UnitOfWork
     {        
         private static IUnitOfWorkFactory _innerUnitOfWorkFactory; 
         private static IUnitOfWork _innerUnitOfWork; 
-
+        
         public static IUnitOfWork Start()
         {
             _innerUnitOfWorkFactory = ServiceLocator.Current.GetInstance<IUnitOfWorkFactory>();

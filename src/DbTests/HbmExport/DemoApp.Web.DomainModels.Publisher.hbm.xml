@@ -1,7 +1,7 @@
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
   <class xmlns="urn:nhibernate-mapping-2.2" name="DemoApp.Web.DomainModels.Publisher, DemoApp.Web, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" table="Publishers">
-    <id name="Guid" type="System.Guid, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-      <column name="Guid" />
+    <id name="Id" type="System.Guid, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <column name="Id" />
       <generator class="guid.comb" />
     </id>
     <bag batch-size="5" cascade="all" inverse="true" name="Books">
@@ -13,9 +13,6 @@
     </bag>
     <property name="PublisherName" type="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
       <column name="PublisherName" />
-    </property>
-    <property name="Id" type="System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-      <column name="Id" />
     </property>
     <property name="CreatedBy" type="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
       <column name="CreatedBy" />

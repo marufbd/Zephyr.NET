@@ -36,7 +36,9 @@ namespace DemoApp.Web.DomainModels
         }
 
         [Required]
-        public virtual string BookName { get; set; } 
+        public virtual string BookName { get; set; }
+
+        public virtual BookCategory? Category { get; set; }
 
         public virtual string BookDescription { get; set; }
         

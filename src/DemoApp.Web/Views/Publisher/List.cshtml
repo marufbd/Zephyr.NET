@@ -1,5 +1,5 @@
 ﻿@using DemoApp.Web.Controllers
-@model IEnumerable<DemoApp.Web.DomainModels.Publisher>
+@model ListViewModel<DemoApp.Web.DomainModels.Publisher>
 
 @{
     ViewBag.Title = "Publisher / Home";
@@ -37,7 +37,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model) {
+        @foreach (var item in Model.Model) {
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.PublisherName)
@@ -52,11 +52,11 @@
                     @Html.DisplayFor(modelItem => item.LastUpdatedAt)
                 </td>
                 <td colspan="2">
-                    @(Html.ActionLink<PublisherController>(c=>c.Edit(item.Guid), "Edit")) |
-                    @(Html.ActionLink<PublisherController>(c=>c.Details(item.Guid), "Details"))  
+                    @(Html.ActionLink<PublisherController>(c => c.Edit(item.Id), "Edit")) |
+                    @(Html.ActionLink<PublisherController>(c => c.Details(item.Id), "Details"))  
                 </td>
                 <td>
-                    @using(Html.BeginForm<PublisherController>(c=>c.Delete(item.Guid)))
+                    @using (Html.BeginForm<PublisherController>(c => c.Delete(item.Id)))
                     {
                         @Html.AntiForgeryToken()
                         <input class="btn" type="submit" value="delete" onclick="return confirm('Are you sure?')"/>

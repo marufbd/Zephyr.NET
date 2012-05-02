@@ -1,0 +1,19 @@
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class xmlns="urn:nhibernate-mapping-2.2" name="Zephyr.Domain.Audit.RevisionEntity, Zephyr, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" table="RevisionEntities">
+    <id name="Id" type="System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" unsaved-value="0">
+      <column name="Id" />
+      <generator class="identity" />
+    </id>
+    <property name="RevNo" type="System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <column name="RevNo" />
+    </property>
+    <property name="RevisionTimestamp" type="System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <column name="RevisionTimestamp" />
+    </property>
+    <property name="RevisionBy" type="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <column name="RevisionBy" />
+    </property>
+    <filter name="TenantFilter" />
+    <filter name="DeletedFilter" />
+  </class>
+</hibernate-mapping>

@@ -6,6 +6,7 @@ using NHibernate;
 using Zephyr.Data.NHib;
 using Zephyr.Data.NHib.UoW;
 using Zephyr.Data.UnitOfWork;
+using Zephyr.Initialization;
 
 namespace Zephyr.Web.Mvc.Windsor.Installers
 {
@@ -23,10 +24,20 @@ namespace Zephyr.Web.Mvc.Windsor.Installers
         {
             NHibernateSession.Initialize();
             Kernel.Register(
-                Component.For<ISessionFactory>().UsingFactoryMethod(_ => NHibernateSession.Factory).LifestyleSingleton(),
+                Component.For<ISessionFactory>().UsingFactoryMethod(_ => NHibernateSession.Factory).LifestyleSingleton());
+
+            if(ZephyrContext.IsTestMode)
+            {
+                Kernel.Register(
+                Component.For<ISession>().UsingFactoryMethod(k => k.Resolve<ISessionFactory>().OpenSession())
+                    .LifestyleTransient());
+            }
+            else
+            {
+                Kernel.Register(
                 Component.For<ISession>().UsingFactoryMethod(k => k.Resolve<ISessionFactory>().OpenSession())
                     .LifestylePerWebRequest());
-
+            }
 
             Kernel.Register(
                 Component.For<IUnitOfWorkFactory>().ImplementedBy<NhUnitOfWorkFactory>().LifestyleTransient());

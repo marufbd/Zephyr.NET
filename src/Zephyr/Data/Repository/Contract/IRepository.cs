@@ -29,7 +29,7 @@ using Zephyr.Domain;
 
 namespace Zephyr.Data.Repository.Contract
 {
-    public interface IRepository<TEntity> where TEntity : Entity
+    public interface IRepository<TEntity> where TEntity : DomainEntity
     {
         IList<TEntity> GetAll();
 

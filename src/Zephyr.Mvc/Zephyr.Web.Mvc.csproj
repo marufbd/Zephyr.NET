@@ -65,11 +65,13 @@
     <Compile Include="Controllers\ZephyrController.cs" />
     <Compile Include="Controllers\ZephyrCRUDController.cs" />
     <Compile Include="Html\CommonHtmlHelper.cs" />
+    <Compile Include="Html\CommonZephyrHelper.cs" />
     <Compile Include="Initialization\MvcAppBootstrapper.cs" />
-    <Compile Include="ViewModel\CreateViewModel.cs" />
-    <Compile Include="ViewModel\DetailsViewModel.cs" />
-    <Compile Include="ViewModel\EditViewModel.cs" />
-    <Compile Include="ViewModel\ViewModelBase.cs" />
+    <Compile Include="ViewModels\CreateViewModel.cs" />
+    <Compile Include="ViewModels\DetailsViewModel.cs" />
+    <Compile Include="ViewModels\EditViewModel.cs" />
+    <Compile Include="ViewModels\ListViewModel.cs" />
+    <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Windsor\Installers\ControllersInstaller.cs" />
     <Compile Include="Windsor\Installers\PersistenceInstaller.cs" />
     <Compile Include="Windsor\Installers\RepositoriesInstaller.cs" />

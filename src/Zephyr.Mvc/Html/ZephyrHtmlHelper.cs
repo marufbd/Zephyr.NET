@@ -4,11 +4,11 @@ namespace Zephyr.Web.Mvc.Html
 {
     public class ZephyrHtmlHelper
     {
-        public HtmlHelper HtmlHelper { get; protected set; }
+        public HtmlHelper HtmlHelper { get; protected set; }        
 
         public ZephyrHtmlHelper(HtmlHelper helper)
         {
-            //titan helper initilization
+            //Zephyr helper initilization
             ZephyrViewEngine.Register();
             this.HtmlHelper = helper;
         }

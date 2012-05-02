@@ -19,11 +19,8 @@ namespace DemoApp.Web.Controllers
 
         [HttpPost]
         public ActionResult Edit(Publisher publisher)
-        {
-            var model = Repository.Get(publisher.Guid);
-
-
-            if(TryUpdateModel(model) && ModelState.IsValid)
+        {            
+            if(ModelState.IsValid)
             {
                 //always use Unit of work for save/update
                 using (UnitOfWorkScope.Start())

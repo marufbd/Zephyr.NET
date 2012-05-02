@@ -44,6 +44,9 @@
     <Reference Include="NHibernate, Version=3.3.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <HintPath>..\packages\NHibernate.3.3.0.4000\lib\Net35\NHibernate.dll</HintPath>
     </Reference>
+    <Reference Include="NHibernate.Envers, Version=1.1.0.2, Culture=neutral, PublicKeyToken=e2c5b946037fb7f8, processorArchitecture=MSIL">
+      <HintPath>..\packages\NHibernate.Envers.1.1.0\lib\Net35\NHibernate.Envers.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.5.10.11092\lib\nunit.framework.dll</HintPath>
     </Reference>
@@ -65,6 +68,7 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AuditTests.cs" />
     <Compile Include="Test1.cs" />
     <Compile Include="ServiceLocatorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
