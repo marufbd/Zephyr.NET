@@ -10,7 +10,10 @@
 @section Scripts
 {
     <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
-    <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>       
+    <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script> 
+    
+    <script src="@Url.Content("~/Scripts/zephyr/zephyr-form.js")" type="text/javascript"></script>
+    
 }
 
 
@@ -39,9 +42,9 @@
     </fieldset>
     
     <div class="form-actions">
-          <button class="btn btn-primary" type="submit"><i class="icon-ok icon-white"></i>
+          <button class="btn btn-primary" data-loading-text="saving..." type="submit"><i class="icon-ok icon-white"></i>
           Save</button> 
-    </div>    
+    </div>           
 }
 
 <div>

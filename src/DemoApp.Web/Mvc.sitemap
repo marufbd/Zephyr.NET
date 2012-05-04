@@ -6,13 +6,14 @@
 
   <mvcSiteMapNode title="Home" controller="Home" action="Index">
     <mvcSiteMapNode title="About" controller="Home" action="About"/>
-    <mvcSiteMapNode title="Publishers" controller="Publisher" action="List">
+    <mvcSiteMapNode title="Publishers" controller="Publisher" action="List">        
         <mvcSiteMapNode title="Details" controller="Publisher" action="Details" visibility="!MenuHelper"/>
+        <mvcSiteMapNode title="New Publisher" controller="Publisher" action="Create" visibility="!MenuHelper"/>
         <mvcSiteMapNode title="Edit" controller="Publisher" action="Edit" visibility="!MenuHelper"/>
         <mvcSiteMapNode title="Books" controller="Store" action="Index">
             <mvcSiteMapNode title="Add new book" controller="Store" action="AddBook"/>
             <mvcSiteMapNode title="Save book" controller="Store" action="SaveBook" visibility="SiteMapPathHelper,!*"/>
-            <mvcSiteMapNode title="Details" controller="Store" action="BookDetails"/>
+            <mvcSiteMapNode title="Details" controller="Store" action="Details"/>
         </mvcSiteMapNode>
     </mvcSiteMapNode>
   </mvcSiteMapNode>

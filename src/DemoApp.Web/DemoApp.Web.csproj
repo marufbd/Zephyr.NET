@@ -187,8 +187,12 @@
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="Global.asax" />
-    <Content Include="Scripts\bootstrap\bootstrap.js" />
-    <Content Include="Scripts\bootstrap\bootstrap.min.js" />
+    <Content Include="Scripts\bootstrap\bootstrap-button.js" />
+    <Content Include="Scripts\bootstrap\bootstrap-dropdown.js" />
+    <Content Include="Scripts\bootstrap\bootstrap-modal.js" />
+    <Content Include="Scripts\bootstrap\bootstrap-tab.js" />
+    <Content Include="Scripts\bootstrap\bootstrap-tooltip.js" />
+    <Content Include="Scripts\bootstrap\bootstrap-typeahead.js" />
     <Content Include="Scripts\chosen.jquery.min.js" />
     <Content Include="Scripts\jquery-1.7.2-vsdoc.js" />
     <Content Include="Scripts\jquery-1.7.2.js" />
@@ -211,6 +215,7 @@
     <Content Include="Scripts\modernizr-1.7.js" />
     <Content Include="Scripts\modernizr-1.7.min.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
+    <Content Include="Scripts\zephyr\zephyr-form.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -327,7 +332,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>1321</DevelopmentServerPort>
+          <DevelopmentServerPort>2751</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>
