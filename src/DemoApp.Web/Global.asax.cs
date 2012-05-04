@@ -28,6 +28,11 @@ namespace DemoApp.Web
                 new { controller = "Home", action = "Index", guid = UrlParameter.Optional } // Parameter defaults
             );
 
+            routes.MapRoute(
+                "List", // Route name
+                "{controller}/{action}/{page}/{items}", // URL with parameters
+                new { controller = "Home", action = "List", page=1, items=5 } // Parameter defaults
+            );
         }
 
         protected void Application_Start()
