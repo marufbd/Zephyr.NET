@@ -17,7 +17,7 @@ namespace Zephyr.Web.Mvc.Controllers
             Repository = repository;
         }
 
-        public virtual ActionResult List(int? page, int? items)
+        public virtual ActionResult List(int page=1, int items=10)
         {
             var viewModel = new ListViewModel<TEntity>() {Model = Repository.GetAll()};
             

@@ -31,7 +31,7 @@ namespace DemoApp.Web
             routes.MapRoute(
                 "List", // Route name
                 "{controller}/{action}/{page}/{items}", // URL with parameters
-                new { controller = "Home", action = "List", page=1, items=5 } // Parameter defaults
+                new { controller = "Home", action = "List", page=1, items=10 } // Parameter defaults
             );
         }
 

@@ -41,7 +41,7 @@
             @Html.DisplayFor(modelItem => item.BookName)
         </td>
         <td>
-            @Html.ActionLink(item.Publisher.ToString(), "Details", "Publisher", new {id=item.Publisher.Id}, null)
+            @Html.ActionLink(item.Publisher.ToString(), "Details", "Publisher", new {guid=item.Publisher.Id}, null)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.PublishedDate)
