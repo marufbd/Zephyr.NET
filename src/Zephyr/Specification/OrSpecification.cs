@@ -1,4 +1,8 @@
-﻿namespace Zephyr.Specification
+﻿using System;
+using System.Linq.Expressions;
+using Zephyr.Domain;
+
+namespace Zephyr.Specification
 {
     public class OrSpecification<TEntity> : ISpecification<TEntity>
     {
@@ -14,6 +18,11 @@
         public bool IsSatisfiedBy(TEntity canditate)
         {
             return _spec1.IsSatisfiedBy(canditate) || _spec2.IsSatisfiedBy(canditate);
+        }
+
+        public Expression<Func<TEntity, bool>> Predicate
+        {
+            get { throw new NotImplementedException(); }
         }
     }
 }

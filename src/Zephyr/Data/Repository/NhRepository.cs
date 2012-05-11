@@ -32,6 +32,7 @@ using System.Linq;
 using Zephyr.Data.NHib;
 using Zephyr.Data.Repository.Contract;
 using Zephyr.Domain;
+using Zephyr.Specification;
 
 #endregion REFERENCES
 
@@ -104,6 +105,11 @@ namespace Zephyr.Data.Repository
         public IQueryable<TEntity> Query(Expression<Func<TEntity, bool>> specification)
         {
             return Session.Query<TEntity>().Where(specification);
+        }
+
+        public IQueryable<TEntity> Query(ISpecification<TEntity> specification)
+        {
+            return Session.Query<TEntity>().Where(specification.Predicate);
         }
     }
 }

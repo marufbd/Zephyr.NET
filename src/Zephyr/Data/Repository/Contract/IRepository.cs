@@ -26,6 +26,7 @@ using System;
 using System.Collections.Generic;
 using Zephyr.Data.Models;
 using Zephyr.Domain;
+using Zephyr.Specification;
 
 namespace Zephyr.Data.Repository.Contract
 {
@@ -44,5 +45,6 @@ namespace Zephyr.Data.Repository.Contract
 
 
         IQueryable<TEntity> Query(Expression<Func<TEntity, bool>> specification);
+        IQueryable<TEntity> Query(ISpecification<TEntity> specification);
     }
 }

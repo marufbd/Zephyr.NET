@@ -23,16 +23,16 @@ namespace DemoApp.Web
             routes.IgnoreRoute("{*favicon}", new { favicon = @"(.*/)?favicon.ico(/.*)?" });
 
             routes.MapRoute(
-                "Default", // Route name
-                "{controller}/{action}/{guid}", // URL with parameters
-                new { controller = "Home", action = "Index", guid = UrlParameter.Optional } // Parameter defaults
+                "List", // Route name
+                "{controller}/Page/{page}/{items}", // URL with parameters
+                new { controller = "Home", action="List", page = 1, items = 20 } // Parameter defaults
             );
 
             routes.MapRoute(
-                "List", // Route name
-                "{controller}/{action}/{page}/{items}", // URL with parameters
-                new { controller = "Home", action = "List", page=1, items=10 } // Parameter defaults
-            );
+                "Default", // Route name
+                "{controller}/{action}/{guid}", // URL with parameters
+                new { controller = "Home", action = "Index", guid = UrlParameter.Optional } // Parameter defaults
+            );            
         }
 
         protected void Application_Start()

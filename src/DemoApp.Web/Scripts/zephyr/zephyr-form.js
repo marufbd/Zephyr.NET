@@ -1,8 +1,8 @@
 !function ($) {
 
-    $('.btn[type="submit"]').on('click', function() {
+    $('form').on('submit', function() {
         if ($('form').valid())
-            $(this).button('loading');
+            $('.btn[type="submit"]').button('loading');
     });
 
     //chosen plugin for dropdowns

@@ -10,8 +10,10 @@ using Zephyr.Data.Repository;
 using Zephyr.Data.Repository.Contract;
 using Zephyr.Data.UnitOfWork;
 using Zephyr.Domain.Audit;
+using Zephyr.Specification;
 using Zephyr.Web.Mvc.Controllers;
 using Zephyr.Web.Mvc.ViewModels;
+using Zephyr.Extensions;
 
 namespace DemoApp.Web.Controllers
 {    
@@ -33,11 +35,12 @@ namespace DemoApp.Web.Controllers
             return View();
         }
 
-
         public ActionResult Filter()
         {
             //var model = _repositoryBook.GetAllPaged(2, 2);
-            var model = _repositoryBook.Query(m => m.LastUpdatedAt > DateTime.Today.AddDays(-1));
+            //var model = _repositoryBook.Query(m => m.Publisher.PublisherName=="Manning");
+            var querySpec=new Spec<Book>(m => m.Publisher.PublisherName == "Manning").And(new Spec<Book>(m => m.BookName.StartsWith("Clojure")));
+            var model = _repositoryBook.Query(querySpec); //using specification
             //var model = _repositoryBook.GetAll();
 
 
