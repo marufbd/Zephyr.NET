@@ -76,7 +76,7 @@ namespace MyTests
                 var path = zephyrConfig.DataConfig.DbSchemaExportPath;
                 schemaExport.SetOutputFile(path + "/schema_" + DateTime.Now.ToString("yyyy-MM-dd_HH mm ss") + ".sql");
             }                
-            schemaExport.Execute(true, true, false);
+            schemaExport.Execute(true, false, false);
         }
 
         [TestMethod]

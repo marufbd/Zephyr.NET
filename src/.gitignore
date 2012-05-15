@@ -36,6 +36,7 @@
 *.log
 *.lib
 *.sbr
+*.testsettings
 #*.sdf	#include sql ce data file
 ipch/
 obj/

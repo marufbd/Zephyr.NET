@@ -16,7 +16,7 @@
     <property name="EntityType" type="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
       <column name="EntityType" />
     </property>
-    <property name="ActionType" type="FluentNHibernate.Mapping.GenericEnumMapper`1[[Zephyr.Domain.Audit.AuditType, Zephyr, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], FluentNHibernate, Version=1.3.0.717, Culture=neutral, PublicKeyToken=8aa435e3cb308880">
+    <property name="ActionType" type="FluentNHibernate.Mapping.GenericEnumMapper`1[[Zephyr.Domain.Audit.AuditType, Zephyr, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], FluentNHibernate, Version=1.3.0.727, Culture=neutral, PublicKeyToken=8aa435e3cb308880">
       <column name="ActionType" />
     </property>
     <property name="ActionBy" type="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
