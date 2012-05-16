@@ -49,8 +49,7 @@ namespace DemoApp.Web.Controllers
 
         public ActionResult AddBook()
         {
-            SelectList lstPublishers = new SelectList(_repositoryPublisher.GetAll(), "Id", "PublisherName");
-            
+            SelectList lstPublishers = new SelectList(_repositoryPublisher.GetAll(), "Id", "PublisherName");                       
 
             return View("SaveBook", new VmBook() { Book = new Book(), PublisherList = lstPublishers });
         }
@@ -86,6 +85,7 @@ namespace DemoApp.Web.Controllers
                     //audit.OldPropertyValue = "Old val";
                     //audit.NewPropertyValue = "New val";
                     //repoAudit.SaveOrUpdate(audit);
+                    TempData.Add("Message", "New Book added successfully!");
                 }
                 
                 return RedirectToAction("List");
@@ -96,6 +96,6 @@ namespace DemoApp.Web.Controllers
 
                 return View(vmbook);
             }            
-        }        
+        }
     }
 }

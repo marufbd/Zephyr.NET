@@ -19,6 +19,16 @@ namespace Zephyr.Web.Mvc.Html
             return viewResult.View != null;
         }
 
+
+        public static MvcHtmlString Flash(this ZephyrHtmlHelper zephyrHelper, string tagName="div")
+        {
+            var msg = zephyrHelper.HtmlHelper.ViewContext.TempData["Message"];
+
+            return msg==null
+                       ? MvcHtmlString.Empty
+                       : new MvcHtmlString("<div class=\"alert alert-success\">" + msg + "</div>");
+        }
+
         /// <summary>
         /// Html helper for generating drop down list for Enum type model property.
         /// </summary>

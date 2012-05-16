@@ -12,12 +12,7 @@ using Zephyr.Web.Mvc.ViewModels;
 namespace DemoApp.Web.Controllers
 {
     public class PublisherController : ZephyrCRUDController<Publisher>
-    {
-        public PublisherController(IRepository<Publisher> repository) : base(repository)
-        {
-
-        }        
-
+    {        
         [HttpPost]
         public ActionResult Edit(Publisher publisher)
         { 
@@ -29,6 +24,9 @@ namespace DemoApp.Web.Controllers
                     var repo = ServiceLocator.Current.GetInstance<IRepository<Publisher>>(); 
 
                     repo.SaveOrUpdate(publisher);
+
+                    TempData["Message"] = "New Publisher added successfully!";
+
                     return RedirectToAction("List");
                 } 
             }
