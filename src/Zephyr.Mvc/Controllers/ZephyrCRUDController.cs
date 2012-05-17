@@ -13,6 +13,11 @@ namespace Zephyr.Web.Mvc.Controllers
     {
         public readonly IRepository<TEntity> Repository;
 
+        public ZephyrCRUDController()
+        {
+            Repository = ServiceLocator.Current.GetInstance<IRepository<TEntity>>();
+        }
+
         public ZephyrCRUDController(IRepository<TEntity> repository)
         {
             Repository = repository;
