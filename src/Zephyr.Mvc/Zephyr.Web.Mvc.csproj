@@ -66,6 +66,7 @@
     <Compile Include="Controllers\ZephyrCRUDController.cs" />
     <Compile Include="Html\CommonHtmlHelper.cs" />
     <Compile Include="Html\CommonZephyrHelper.cs" />
+    <Compile Include="Html\PagerHtmlHelper.cs" />
     <Compile Include="Initialization\MvcAppBootstrapper.cs" />
     <Compile Include="ViewModels\CreateViewModel.cs" />
     <Compile Include="ViewModels\DetailsViewModel.cs" />
@@ -103,6 +104,11 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Html\DisplayTemplates\EnumCheckBox.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Html\DisplayTemplates\Pager.ascx">
       <SubType>ASPXCodeBehind</SubType>
     </EmbeddedResource>
   </ItemGroup>

@@ -67,14 +67,18 @@ namespace Zephyr.Data.Repository
             return query.ToList();
         }
 
-        public IList<TEntity> GetAllPaged(int pageIndex, int pageItems, SortOptions sortOptions)
+        public IPagedList<TEntity> GetAllPaged(int pageIndex, int pageSize, SortOptions sortOptions=null)
         {
             var query = this.Session.Query<TEntity>();
 
-            //here the paging is done using linq to object applying OrderBy
-            //on the whole list retrieved from database as MsSqlCe does not support variable limit query
-            //on production database use query.Skip() instead
-            return query.ToList().Skip((pageIndex-1)*pageItems).Take(pageItems).ToList();
+            if(sortOptions==null)
+            {
+                return query.ToPagedList(pageIndex, pageSize);
+            }
+            
+            return sortOptions.SortDirection == SortDirection.Descending
+                        ? query.OrderByDescending(sortOptions.SortProperty).ToPagedList(pageIndex, pageSize)
+                        : query.OrderBy(sortOptions.SortProperty).ToPagedList(pageIndex, pageSize); 
         }
 
 

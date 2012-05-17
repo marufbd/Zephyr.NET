@@ -34,7 +34,7 @@ namespace Zephyr.Data.Repository.Contract
     {
         IList<TEntity> GetAll();
 
-        IList<TEntity> GetAllPaged(int pageIndex, int pageItems, SortOptions sortOptions=null);        
+        IPagedList<TEntity> GetAllPaged(int pageIndex, int pageItems, SortOptions sortOptions=null);
 
         TEntity Get(Guid guid);        
         

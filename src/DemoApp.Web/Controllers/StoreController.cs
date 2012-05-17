@@ -1,22 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web.Mvc;
 using DemoApp.Web.DomainModels;
 using DemoApp.Web.ViewModels;
 using Microsoft.Practices.ServiceLocation;
-using Zephyr.Data.Models;
-using Zephyr.Data.Repository;
 using Zephyr.Data.Repository.Contract;
 using Zephyr.Data.UnitOfWork;
-using Zephyr.Domain.Audit;
 using Zephyr.Specification;
 using Zephyr.Web.Mvc.Controllers;
 using Zephyr.Web.Mvc.ViewModels;
 using Zephyr.Extensions;
 
 namespace DemoApp.Web.Controllers
-{    
+{
     public class StoreController : ZephyrCRUDController<Book>
     {
         private readonly IRepository<Book> _repositoryBook;
@@ -40,7 +35,7 @@ namespace DemoApp.Web.Controllers
             //var model = _repositoryBook.GetAllPaged(2, 2);
             //var model = _repositoryBook.Query(m => m.Publisher.PublisherName=="Manning");
             var querySpec=new Spec<Book>(m => m.Publisher.PublisherName == "Manning").And(new Spec<Book>(m => m.BookName.StartsWith("Clojure")));
-            var model = _repositoryBook.Query(querySpec); //using specification
+            var model = _repositoryBook.Query(querySpec).ToPagedList(1, 5); //using specification
             //var model = _repositoryBook.GetAll();
 
 

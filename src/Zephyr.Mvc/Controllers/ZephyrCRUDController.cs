@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Web.Mvc;
 using Microsoft.Practices.ServiceLocation;
+using Zephyr.Data.Models;
 using Zephyr.Data.Repository.Contract;
 using Zephyr.Data.UnitOfWork;
 using Zephyr.Domain;
@@ -17,9 +18,15 @@ namespace Zephyr.Web.Mvc.Controllers
             Repository = repository;
         }
 
-        public virtual ActionResult List(int page=1, int items=10)
-        {
-            var viewModel = new ListViewModel<TEntity>() {Model = Repository.GetAll()};
+        public virtual ActionResult List(SortOptions sortOptions, int page=1, int items=10)
+        {            
+            var viewModel = new ListViewModel<TEntity>()
+                                {
+                                    Model =
+                                        String.IsNullOrEmpty(sortOptions.SortProperty)
+                                            ? Repository.GetAllPaged(page, items)
+                                            : Repository.GetAllPaged(page, items, sortOptions)
+                                };
             
             return View("List", viewModel);
         }

@@ -2,11 +2,25 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using Zephyr.Data.Models;
 
 namespace Zephyr.Extensions
 {
     public static class LinqExtensions
     {
+        /// <summary>
+        /// Generates a paged list from queryable.
+        /// </summary>
+        /// <param name="source">The source.</param>
+        /// <param name="pageIndex">Index of the page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <returns></returns>
+        public static IPagedList<T> ToPagedList<T>(this IQueryable<T> source, int pageIndex, int pageSize)
+        {
+            return new PagedList<T>(source, pageIndex, pageSize, source.Count());
+        } 
+
+
         /// <summary>
         /// Linq query extension for OrderBy using column name as string
         /// </summary>

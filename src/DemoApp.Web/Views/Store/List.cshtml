@@ -1,8 +1,9 @@
 ﻿@using DemoApp.Web.Controllers
+@using Zephyr.Data.Models
 @model ListViewModel<DemoApp.Web.DomainModels.Book>
 
 @{
-    ViewBag.Title = "Store / Book Listing";
+    ViewBag.Title = "Store / Book Listing";        
 }
 
 @section Scripts
@@ -13,8 +14,9 @@
 <h2>Index</h2>
 
 <p>    
-    @(Html.ActionLink<StoreController>(c=>c.AddBook(), "Add new Book", new {@class="btn"}))    
+    @(Html.ActionLink<StoreController>(c=>c.AddBook(), "Add new Book", new {@class="btn"}))
 </p>
+@Html.Zephyr().Pager(Model.Model)
 <table class="table table-condensed">
     <thead>
         <tr>

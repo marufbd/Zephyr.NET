@@ -77,6 +77,9 @@
     <Compile Include="Configuration\PersistenceConfigElement.cs" />
     <Compile Include="Configuration\ZephyrConfig.cs" />
     <Compile Include="Configuration\ZephyrConfiguration.cs" />
+    <Compile Include="Data\Models\IPagedList.cs" />
+    <Compile Include="Data\Models\BasePagedList.cs" />
+    <Compile Include="Data\Models\PagedList.cs" />
     <Compile Include="Data\Models\SortOptions.cs" />
     <Compile Include="Data\NHib\EventListeners\NEnversRevInfoListener.cs" />
     <Compile Include="Data\NHib\ProfiledSql2008ClientDriver.cs" />
