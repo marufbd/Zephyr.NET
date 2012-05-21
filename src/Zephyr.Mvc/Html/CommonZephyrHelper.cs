@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
+using System.Xml.Linq;
+using Zephyr.Web.Mvc.Html.Flash;
 using Zephyr.Web.Mvc.Html.Models;
 
 namespace Zephyr.Web.Mvc.Html
@@ -20,13 +23,17 @@ namespace Zephyr.Web.Mvc.Html
         }
 
 
-        public static MvcHtmlString Flash(this ZephyrHtmlHelper zephyrHelper, string tagName="div")
-        {
-            var msg = zephyrHelper.HtmlHelper.ViewContext.TempData["Message"];
+        public static IHtmlString Flash(this ZephyrHtmlHelper zephyrHelper, string tagName = "div", bool htmlEncoded = true)
+        { 
+            //Func<string, XNode> content = message => encoded ? new XText(message) : XElement.Parse(message) as XNode;
+            Func<string, XNode> content = message => new XText(message);
 
-            return msg==null
-                       ? MvcHtmlString.Empty
-                       : new MvcHtmlString("<div class=\"alert alert-success\">" + msg + "</div>");
+            var messages = new FlashStorage(zephyrHelper.HtmlHelper.ViewContext.TempData).Messages.ToList();
+
+            var elements = messages.Select(pair => new XElement(tagName ?? "div", new XAttribute("class", "alert" + " " + pair.Key), content(pair.Value)));
+            var html = string.Join(Environment.NewLine, elements.Select(e => e.ToString()));
+
+            return zephyrHelper.HtmlHelper.Raw(htmlEncoded ? html : HttpUtility.HtmlDecode(html));
         }
 
         /// <summary>

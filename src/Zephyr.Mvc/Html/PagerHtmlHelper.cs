@@ -9,9 +9,9 @@ namespace Zephyr.Web.Mvc.Html
 {
     public static class PagerHtmlHelper
     {
-        public static MvcHtmlString Pager(this ZephyrHtmlHelper zephyrHelper, IPagedList model)
+        public static MvcHtmlString Pager(this ZephyrHtmlHelper zephyrHelper, IPagedList model, string template="Pager")
         {
-            return zephyrHelper.CreateHtmlHelperForModel(model).DisplayForModel("Pager", model);
-        }
+            return zephyrHelper.CreateHtmlHelperForModel(model).DisplayForModel(template, model);
+        }        
     }
 }

@@ -10,7 +10,7 @@
         <mvcSiteMapNode title="Details" controller="Publisher" action="Details" visibility="!MenuHelper"/>
         <mvcSiteMapNode title="New Publisher" controller="Publisher" action="Create" visibility="!MenuHelper"/>
         <mvcSiteMapNode title="Edit" controller="Publisher" action="Edit" visibility="!MenuHelper"/>
-        <mvcSiteMapNode title="Books" controller="Store" action="Index">
+        <mvcSiteMapNode title="Books" controller="Store" action="List"> 
             <mvcSiteMapNode title="Add new book" controller="Store" action="AddBook"/>
             <mvcSiteMapNode title="Save book" controller="Store" action="SaveBook" visibility="SiteMapPathHelper,!*"/>
             <mvcSiteMapNode title="Details" controller="Store" action="Details"/>

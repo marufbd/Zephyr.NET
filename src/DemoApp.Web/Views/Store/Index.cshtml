@@ -7,7 +7,7 @@
 <h2>Store Home here</h2>
 
 <ul>
-    <li>@Html.ActionLink("List Books", "List", new {page=1, items=10})</li>
+    <li>@Html.ActionLink("List Books", "List", new {page=1, items=4})</li>
     <li>@(Html.ActionLink<StoreController>(c=>c.AddBook(), "Add new Book"))</li> 
     <br/>
     <li>@(Html.ActionLink<StoreController>(c=>c.Filter(), "Filter Book List"))</li>

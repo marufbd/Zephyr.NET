@@ -23,7 +23,7 @@ namespace Zephyr.Web.Mvc.Controllers
             Repository = repository;
         }
 
-        public virtual ActionResult List(SortOptions sortOptions, int page=1, int items=10)
+        public virtual ActionResult List(SortOptions sortOptions, int page, int items)
         {            
             var viewModel = new ListViewModel<TEntity>()
                                 {

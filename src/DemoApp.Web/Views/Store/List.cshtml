@@ -15,9 +15,11 @@
 
 <h2>Index</h2>
 
-<p>    
+<p>
     @(Html.ActionLink<StoreController>(c=>c.AddBook(), "Add new Book", new {@class="btn"}))
 </p>
+
+
 @Html.Zephyr().Pager(Model.Model)
 <table class="table table-condensed">
     <thead>

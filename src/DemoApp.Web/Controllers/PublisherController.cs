@@ -7,6 +7,8 @@ using Zephyr.Data.Repository.Contract;
 using Zephyr.Data.UnitOfWork;
 using Zephyr.Web.Mvc.Controllers;
 using System.Linq;
+using Zephyr.Web.Mvc.Extentions;
+using Zephyr.Web.Mvc.Html.Flash;
 using Zephyr.Web.Mvc.ViewModels;
 
 namespace DemoApp.Web.Controllers
@@ -25,9 +27,7 @@ namespace DemoApp.Web.Controllers
 
                     repo.SaveOrUpdate(publisher);
 
-                    TempData["Message"] = "New Publisher added successfully!";
-
-                    return RedirectToAction("List");
+                    return RedirectToAction("List").WithFlash(new { alert_success = "New <strong>Publisher</strong> added successfully" });
                 } 
             }
 

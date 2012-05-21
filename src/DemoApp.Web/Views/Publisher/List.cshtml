@@ -14,13 +14,14 @@
 }
 
 
-@Html.Zephyr().Flash()
+@Html.Zephyr().Flash("div", false)
 <h2>Index</h2>
 
 <p>
     @(Html.ActionLink<PublisherController>(c=>c.Create(), "Create new publisher", new {@class="btn"}))
 </p>
 
+@Html.Zephyr().Pager(Model.Model)
 <table class="table table-condensed">
     <thead>
         <tr>

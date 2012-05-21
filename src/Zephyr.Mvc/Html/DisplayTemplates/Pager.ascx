@@ -13,21 +13,33 @@
     <%= Html.ActionLink("«", "List", new { page = Model.PageNumber - 1, items = Model.PageSize })%>
     <% } %>     
     </li>
+            
     
+    <% for (int i = 1; i <= Model.PageCount; i++) { %>        
 
-    <% for (int i = 0; i < Model.PageCount; i++) { %>
-    <% if (Model.PageNumber == i + 1)
+    <% if (Model.PageNumber == i)
        { %>  
     <li class="active">
     <% } %>
     <% else
        { %>  
     <li>
+    <% } %>        
+    
+    <% if (i==1 || i==Model.PageCount || (i > (Model.PageNumber - 3) && i < (Model.PageNumber + 3)) )
+       { %>
+    <%= Html.ActionLink(Convert.ToString(i), "List", new {page=i, items=Model.PageSize}) %>
     <% } %>
-    <%= Html.ActionLink(Convert.ToString(i+1), "List", new {page=i+1, items=Model.PageSize}) %>
+    <% else if ((Model.PageNumber > 4 && i == 2) || (Model.PageNumber < (Model.PageCount-3) && i == Model.PageCount - 1) )
+       { %>
+    <a href="#">...</a>
+    <% } %>
+     
     </li>
+    
     <% } %>
     
+
     
     <% if (Model.IsLastPage){ %>  
     <li class="disabled">
