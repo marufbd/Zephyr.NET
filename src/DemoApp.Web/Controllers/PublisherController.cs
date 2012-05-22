@@ -12,8 +12,7 @@ using Zephyr.Web.Mvc.Html.Flash;
 using Zephyr.Web.Mvc.ViewModels;
 
 namespace DemoApp.Web.Controllers
-{
-    [Authorize]
+{    
     public class PublisherController : ZephyrCRUDController<Publisher>
     {        
         [HttpPost]
