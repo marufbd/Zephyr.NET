@@ -25,7 +25,7 @@
     {
         foreach(var book in model.Books){
         <div class="display-field">
-            @Html.ActionLink(book.BookName, "BookDetails", "Store", new { guid = book.Id }, null)
+            @Html.ActionLink(book.BookName, "Details", "Store", new { guid = book.Id }, null)
         </div>
         }
     }

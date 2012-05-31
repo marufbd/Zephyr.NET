@@ -30,7 +30,10 @@ namespace Zephyr.Web.Mvc.Html
 
             var messages = new FlashStorage(zephyrHelper.HtmlHelper.ViewContext.TempData).Messages.ToList();
 
-            var elements = messages.Select(pair => new XElement(tagName ?? "div", new XAttribute("class", "alert" + " " + pair.Key), content(pair.Value)));
+            var elements = messages.Select(pair => new XElement(tagName ?? "div", new XAttribute("class", "alert" + " " + pair.Key), 
+                new XElement("button", new XAttribute("class", "close"), new XAttribute("data-dismiss", "alert"), "×"),
+                content(pair.Value)
+                ));
             var html = string.Join(Environment.NewLine, elements.Select(e => e.ToString()));
 
             return zephyrHelper.HtmlHelper.Raw(htmlEncoded ? html : HttpUtility.HtmlDecode(html));
