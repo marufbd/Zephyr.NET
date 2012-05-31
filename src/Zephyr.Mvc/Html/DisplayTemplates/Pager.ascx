@@ -6,11 +6,11 @@
   <ul>
     <% if (Model.IsFirstPage){ %>  
     <li class="disabled">
-    <a href="#">« </a>
+    <a href="#"> ← Previous </a>
     <% } %>
     <% else{ %>
     <li>
-    <%= Html.ActionLink("«", "List", new { page = Model.PageNumber - 1, items = Model.PageSize })%>
+    <%= Html.ActionLink("← Previous", "List", new { page = Model.PageNumber - 1, items = Model.PageSize })%>
     <% } %>     
     </li>
             
@@ -43,11 +43,11 @@
     
     <% if (Model.IsLastPage){ %>  
     <li class="disabled">
-    <a href="#"> » </a>
+    <a href="#">Newer → </a>
     <% } %>
     <% else{ %>        
     <li>
-    <%= Html.ActionLink("»", "List", new { page = Model.PageNumber + 1, items = Model.PageSize })%>
+    <%= Html.ActionLink("Next →", "List", new { page = Model.PageNumber + 1, items = Model.PageSize })%>
     <% } %>     
     </li>
   </ul>
