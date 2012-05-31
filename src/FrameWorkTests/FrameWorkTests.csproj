@@ -47,14 +47,9 @@
     <Reference Include="NHibernate.Envers, Version=1.1.0.2, Culture=neutral, PublicKeyToken=e2c5b946037fb7f8, processorArchitecture=MSIL">
       <HintPath>..\packages\NHibernate.Envers.1.1.0\lib\Net35\NHibernate.Envers.dll</HintPath>
     </Reference>
-    <Reference Include="nunit.framework">
-      <HintPath>..\packages\NUnit.2.5.10.11092\lib\nunit.framework.dll</HintPath>
-    </Reference>
-    <Reference Include="nunit.mocks">
-      <HintPath>..\packages\NUnit.2.5.10.11092\lib\nunit.mocks.dll</HintPath>
-    </Reference>
-    <Reference Include="pnunit.framework">
-      <HintPath>..\packages\NUnit.2.5.10.11092\lib\pnunit.framework.dll</HintPath>
+    <Reference Include="nunit.framework, Version=2.6.0.12051, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NUnit.2.6.0.12054\lib\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">

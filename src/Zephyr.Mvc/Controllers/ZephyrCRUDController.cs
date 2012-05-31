@@ -5,6 +5,7 @@ using Zephyr.Data.Models;
 using Zephyr.Data.Repository.Contract;
 using Zephyr.Data.UnitOfWork;
 using Zephyr.Domain;
+using Zephyr.Web.Mvc.Extentions;
 using Zephyr.Web.Mvc.ViewModels;
 
 namespace Zephyr.Web.Mvc.Controllers
@@ -78,7 +79,7 @@ namespace Zephyr.Web.Mvc.Controllers
                 repo.Delete(guid);
             }
 
-            return RedirectToAction("List");
+            return RedirectToAction("List").WithFlash(new {alert_success = "Item deleted !"});
         }
     }
 }
