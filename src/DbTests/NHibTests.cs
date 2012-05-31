@@ -1,15 +1,15 @@
 ﻿using System.Collections.Generic;
 using DemoApp.Web.DomainModels;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NHibernate;
+using NUnit.Framework;
 using Zephyr.Data.NHib;
 
 namespace MyTests
 {
-    [TestClass]
+    [TestFixture]
     public class NHibTests
     {
-        [TestMethod]
+        [Test]
         public void LoadData()
         {            
             var pubOrelly = new Publisher();
@@ -73,7 +73,7 @@ namespace MyTests
             } 
         }
 
-        [TestMethod]
+        [Test]
         public void DeleteOrphan()
         {
             var session = NHibernateSession.Initialize(null);
@@ -89,7 +89,7 @@ namespace MyTests
             session.Flush();
         }
 
-        [TestMethod]
+        [Test]
         public void LazyLoad()
         {
             ISession session = NHibernateSession.Initialize(null);
@@ -99,7 +99,7 @@ namespace MyTests
             Assert.IsFalse(NHibernateUtil.IsInitialized(pub.Books));
         }
 
-        [TestMethod]
+        [Test]
         public void IdentityScope()
         {
             ISession session = NHibernateSession.Initialize(null);
@@ -114,7 +114,7 @@ namespace MyTests
         }
 
 
-        [TestMethod]
+        [Test]
         public void NPlus1()
         {
             ISession session = NHibernateSession.Initialize(null);
