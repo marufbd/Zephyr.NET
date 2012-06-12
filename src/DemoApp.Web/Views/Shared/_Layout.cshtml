@@ -51,12 +51,10 @@
                   <span class="icon-bar"></span>
                   <span class="icon-bar"></span>
               </a>
-              <a class="brand" href="#">&raquo Zephyr • NET &reg</a>
+              <a class="brand" href="@Url.Action("Index", "Home")">&raquo Zephyr • NET</a>
               <div class="nav-collapse">
-                  <ul class="nav">
-                      <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                      <li>@Html.ActionLink("About", "About", "Home")</li>
-                    
+                  <ul class="nav">                      
+                      <li>@Html.ActionLink("About", "About", "Home")</li>                    
                       <li>@Html.ActionLink("Publisher", "List", "Publisher")</li>
                       <li>@Html.ActionLink("Store Front", "Index", "Store")</li>
                   </ul>
@@ -89,7 +87,7 @@
                 <p>&copy; Company 2011</p>
             </div> 
             <div class="span3">
-                Powered by <a href="https://github.com/marufbd/DefaultDDDArch" target="_blank">Zephyr</a>
+                Powered by <a href="https://github.com/marufbd/Zephyr.NET" target="_blank">Zephyr</a>
                 <p>@Html.Image("~/Content/images/OSI-logo-70x82.png", "Open Source Initiative")</p>
             </div>                        
         </div>
