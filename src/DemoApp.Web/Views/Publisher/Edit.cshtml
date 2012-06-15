@@ -37,7 +37,8 @@
             @Html.EditorFor(_ => model.CreatedBy)
             @Html.ValidationMessageFor(_ => model.CreatedBy)
         </div>
-        
+    
+    @Html.HiddenFor(_ => model.Id)        
         
     </fieldset>
     

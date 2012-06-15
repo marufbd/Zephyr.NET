@@ -7,6 +7,7 @@ using Zephyr.Data.Repository.Contract;
 using Zephyr.Data.UnitOfWork;
 using Zephyr.Specification;
 using Zephyr.Web.Mvc.Controllers;
+using Zephyr.Web.Mvc.Extentions;
 using Zephyr.Web.Mvc.ViewModels;
 using Zephyr.Extensions;
 
@@ -62,7 +63,8 @@ namespace DemoApp.Web.Controllers
         public ActionResult SaveBook(VmBook vmbook)
         {            
             if (ModelState.IsValid)
-            {
+            {                
+                string flashMsg = vmbook.Book.IsNew ? "New Book added successfully !" : "Book saved successfully !";
                 //always use Unit of work for save/update
                 using (UnitOfWorkScope.Start())
                 {
@@ -80,10 +82,10 @@ namespace DemoApp.Web.Controllers
                     //audit.OldPropertyValue = "Old val";
                     //audit.NewPropertyValue = "New val";
                     //repoAudit.SaveOrUpdate(audit);
-                    TempData.Add("Message", "New Book added successfully!");
+                    //TempData.Add("Message", "New Book added successfully!");
                 }
                 
-                return RedirectToAction("List");
+                return RedirectToAction("List").WithFlash(new {alert_success=flashMsg});
             }
             else
             { 
