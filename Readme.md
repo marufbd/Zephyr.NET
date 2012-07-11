@@ -18,5 +18,5 @@ http://defaultddd.apphb.com
 
 References
 =================
-* As it goes with the same concept, some of the codes(Base Entity, Checkclass for Design by contract) are taken from [sharparchitecture](https://github.com/sharparchitecture/Sharp-Architecture)
+* As it goes with the same concept, some of the codes(Base Entity, Check class for Design by contract) are taken from [sharparchitecture](https://github.com/sharparchitecture/Sharp-Architecture)
 * For NHibernate unit of work implementation see [this nhforge wiki](http://nhforge.org/wikis/patternsandpractices/nhibernate-and-the-unit-of-work-pattern.aspx)
