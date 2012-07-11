@@ -13,7 +13,10 @@ Framework features
 * Twitter bootstrap css for default view templates
 
 
-The demo web app in the repository can be seen running at:
+The demo web app built on the framework can be seen running at:
 http://defaultddd.apphb.com
 
-
+References
+=================
+* As it goes with the same concept, some of the codes(Base Entity, Checkclass for Design by contract) are taken from [sharparchitecture](https://github.com/sharparchitecture/Sharp-Architecture)
+* For NHibernate unit of work implementation see [this nhforge wiki](http://nhforge.org/wikis/patternsandpractices/nhibernate-and-the-unit-of-work-pattern.aspx)

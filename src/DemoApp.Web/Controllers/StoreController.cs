@@ -45,7 +45,7 @@ namespace DemoApp.Web.Controllers
 
         public ActionResult AddBook()
         {
-            SelectList lstPublishers = new SelectList(_repositoryPublisher.GetAll(), "Id", "PublisherName");                       
+            SelectList lstPublishers = new SelectList(_repositoryPublisher.GetAll(), "Id", "PublisherName"); 
 
             return View("SaveBook", new VmBook() { Book = new Book(), PublisherList = lstPublishers });
         }
