@@ -1,3 +1,8 @@
+/*****
+ * Code taken from sharparchitecture
+ * https://github.com/sharparchitecture/Sharp-Architecture
+ * 
+ */
 using System;
 
 namespace Zephyr.Domain

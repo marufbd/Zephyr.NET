@@ -1,4 +1,9 @@
-﻿using System.Collections.Generic;
+﻿/*****
+ * Code taken from sharparchitecture
+ * https://github.com/sharparchitecture/Sharp-Architecture
+ * 
+ */
+using System.Collections.Generic;
 using System.Reflection;
 
 namespace Zephyr.Domain

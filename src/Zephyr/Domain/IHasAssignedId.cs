@@ -1,4 +1,9 @@
-﻿namespace Zephyr.Domain
+﻿/*****
+ * Code taken from sharparchitecture
+ * https://github.com/sharparchitecture/Sharp-Architecture
+ * 
+ */
+namespace Zephyr.Domain
 {
     public interface IHasAssignedId<TId>
     {

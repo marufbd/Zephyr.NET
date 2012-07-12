@@ -1,7 +1,13 @@
-﻿using System;
+﻿/*****
+ * Code taken from sharparchitecture
+ * https://github.com/sharparchitecture/Sharp-Architecture
+ * 
+ */
+using System;
 
 namespace Zephyr.Domain
 {
+    //
     /// <summary>
     ///     Provides a base class for your objects which will be persisted to the database.
     ///     Benefits include the addition of an Id property along with a consistent manner for comparing
