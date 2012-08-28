@@ -3,6 +3,7 @@ using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
 using NHibernate;
+using Zephyr.Configuration;
 using Zephyr.Data.NHib;
 using Zephyr.Data.NHib.UoW;
 using Zephyr.Data.UnitOfWork;
@@ -22,9 +23,12 @@ namespace Zephyr.Web.Mvc.Windsor.Installers
     {
         protected override void Init()
         {
-            NHibernateSession.Initialize();
+            //register framework settings as singleton
+            Kernel.Register(Component.For<ZephyrConfiguration>().UsingFactoryMethod(_ => ZephyrConfiguration.ZephyrSettings).LifestyleSingleton()); 
+
             Kernel.Register(
-                Component.For<ISessionFactory>().UsingFactoryMethod(_ => NHibernateSession.Factory).LifestyleSingleton());
+                Component.For<ISessionFactory>().UsingFactoryMethod(
+                    _ => NHibernateSession.Initialize(null, Kernel.Resolve<ZephyrConfiguration>())).LifestyleSingleton());
 
             if(ZephyrContext.IsTestMode)
             {
@@ -41,7 +45,7 @@ namespace Zephyr.Web.Mvc.Windsor.Installers
 
             Kernel.Register(
                 Component.For<IUnitOfWorkFactory>().ImplementedBy<NhUnitOfWorkFactory>().LifestyleTransient());
-            
+                                   
 
             //Kernel.Register(Component.For<IUnitOfWork>().UsingFactoryMethod(_=>UnitOfWorkScope.Current).LifestyleTransient());
         }

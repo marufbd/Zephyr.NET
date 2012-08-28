@@ -2,26 +2,27 @@
 
 namespace Zephyr.Web.Mvc.Html
 {
-    public class ZephyrHtmlHelper
+    public class ZephyrHtmlHelper<TModel> where TModel : class 
     {
-        public HtmlHelper HtmlHelper { get; protected set; }        
+        public HtmlHelper<TModel> HtmlHelper { get; protected set; }
 
-        public ZephyrHtmlHelper(HtmlHelper helper)
+        public ZephyrHtmlHelper(HtmlHelper<TModel> helper)
         {
             //Zephyr helper initilization
             ZephyrViewEngine.Register();
             this.HtmlHelper = helper;
         }
 
+     
         /// <summary>
         /// Creates the HTML helper for model.
         /// </summary>
-        /// <typeparam name="TModel">The type of the model.</typeparam>
+        /// <typeparam name="T">The type of the model.</typeparam>
         /// <param name="model">The model.</param>
         /// <returns></returns>
-        public HtmlHelper<TModel> CreateHtmlHelperForModel<TModel>(TModel model)
+        public HtmlHelper<T> CreateHtmlHelperForModel<T>(T model)
         {
-            return new HtmlHelper<TModel>(HtmlHelper.ViewContext, new ViewDataContainer<TModel>(model));
+            return new HtmlHelper<T>(HtmlHelper.ViewContext, new ViewDataContainer<T>(model));
         }
     }
 }

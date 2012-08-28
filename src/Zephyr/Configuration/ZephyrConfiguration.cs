@@ -6,7 +6,14 @@ namespace Zephyr.Configuration
     {
         public static ZephyrConfiguration ZephyrSettings
         {
-            get { return ConfigurationManager.GetSection("zephyr/zephyr-config") as ZephyrConfiguration; }
+            get { return ConfigurationManager.GetSection("Zephyr") as ZephyrConfiguration; }
+        }
+
+        [ConfigurationProperty("xmlns")]
+        public string XmlNamespace
+        {
+            get { return (string)this["xmlns"]; }
+            set { this["xmlns"] = value; }
         }
 
         [ConfigurationProperty("appName")]

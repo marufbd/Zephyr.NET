@@ -20,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using FluentNHibernate.Cfg;
+using Microsoft.Practices.ServiceLocation;
 using NHibernate;
 using NHibernate.Cfg;
 using NHibernate.Event;
@@ -38,54 +39,25 @@ namespace Zephyr.Data.NHib
 {
     public static class NHibernateSession
     {
-        private static NHibernate.Cfg.Configuration _configuration;
-
-        /// <summary>
-        /// Gets or sets the factory.
-        /// </summary>
-        /// <value>The factory.</value>
-        public static ISessionFactory Factory { get; private set; }
-
-        /// <summary>
-        /// Gets the configuration.
-        /// </summary>
-        public static NHibernate.Cfg.Configuration Configuration
-        {
-            get {
-                if (_configuration == null)
-                    Initialize(null);
-                
-                return _configuration;
-            }
-        }
-
-        /// <summary>
-        /// Initialize. No Argument
-        /// </summary>
-        /// <returns></returns>
-        public static ISession Initialize()
-        {
-            return Initialize(null);
-        }
+        public static NHibernate.Cfg.Configuration Configuration { get; private set; }
 
         /// <summary>
         /// Initialize.
         /// </summary>
         /// <returns></returns>
-        public static ISession Initialize(IAutoPersistenceModelGenerator modelGenerator)
-        {
-            var zephyrConfig = new ZephyrConfig();
-            var dataConfig = zephyrConfig.DataConfig;
-            var mappingAssemblyNames = dataConfig.MappingAssemblies;
-            var overrideAssemblyFile = dataConfig.OverrideAssembly;
-            
-            var overrideAssembly = Assembly.Load(overrideAssemblyFile);
+        public static ISessionFactory Initialize(IAutoPersistenceModelGenerator modelGenerator, ZephyrConfiguration frameworkSettings)
+        {            
+            //var zephyrConfig = new ZephyrConfig();
+            var persistenceConfig = frameworkSettings.PersistenceConfig;
+            var overrideAssembly = Assembly.Load(persistenceConfig.OverridingAssembly);
 
             var mappingAssemblies = new List<Assembly>();
-            mappingAssemblyNames.ForEach(a => mappingAssemblies.Add(Assembly.Load(a)));
+            persistenceConfig.MappingAssemblies.ForEach(a => mappingAssemblies.Add(Assembly.Load(a)));
+            //add zephyr by default in the mapping assemblies to map RevisionEntity for NhIbernate envers
+            mappingAssemblies.Add(typeof(RevisionEntity).Assembly);
 
             var cfg = new NHibernate.Cfg.Configuration();
-            cfg.Configure(dataConfig.NHibConfigPath);
+            cfg.Configure(persistenceConfig.NHibConfigFile);
 
             FluentConfiguration fConfig = Fluently.Configure(cfg)
                                             .Mappings(m =>
@@ -105,9 +77,9 @@ namespace Zephyr.Data.NHib
                                                                           };
 
 
-                                                                  if(zephyrConfig.ExportHbm)
+                                                                  if(persistenceConfig.HbmExportEnabled)
                                                                   {
-                                                                      var hbmExportPath = dataConfig.HbmExportPath;
+                                                                      var hbmExportPath = persistenceConfig.HbmExportPath;
                                                                       m.AutoMappings.Add(model.Generate).ExportTo(hbmExportPath);
                                                                       m.FluentMappings.Add<TenantFilter>()
                                                                                       .Add<DeletedFilter>()
@@ -127,8 +99,8 @@ namespace Zephyr.Data.NHib
                                                           });
 
             //based on config log diagnostics
-            if (dataConfig.LogDiagnostics)
-                fConfig.Diagnostics(dia =>dia.Enable().OutputToFile(dataConfig.LogPath + "/fluentNHibernate.log"));            
+            if (persistenceConfig.LogDiagnosticsEnabled)
+                fConfig.Diagnostics(dia =>dia.Enable().OutputToFile(persistenceConfig.LogDiagnosticsPath + "/fluentNHibernate.log")); 
             
             //fConfig.ExposeConfiguration(c => c.EventListeners.PreUpdateEventListeners = new[] {new EventListeners.AuditUpdateListener()});
             
@@ -138,7 +110,7 @@ namespace Zephyr.Data.NHib
             //        c => c.SetListener(ListenerType.Delete, new EventListeners.SoftDeleteListener()));
                                                
 
-            _configuration = fConfig.BuildConfiguration();
+            Configuration = fConfig.BuildConfiguration();
 
             //integrate envers
             //Enable auditing using NHibernate.Envers
@@ -146,17 +118,16 @@ namespace Zephyr.Data.NHib
             
             enversConf.SetRevisionEntity<RevisionEntity>(e=>e.RevNo, e=>e.RevisionTimestamp, new NEnversRevInfoListener());
             
-            enversConf.Audit(zephyrConfig.GetDomainModelTypes());
-            _configuration.Properties.Add("nhibernate.envers.store_data_at_delete", "true");
-            _configuration.IntegrateWithEnvers(enversConf);
-
+            enversConf.Audit(persistenceConfig.GetDomainModelTypesForAudit());
+            //config envers to store deleted information
+            Configuration.Properties.Add("nhibernate.envers.store_data_at_delete", "true");
+            Configuration.IntegrateWithEnvers(enversConf);
+            
+            
 
 
             
-            Factory = _configuration.BuildSessionFactory();
-            
-            
-            return Factory.OpenSession();
+            return Configuration.BuildSessionFactory();
         }
     }
 }

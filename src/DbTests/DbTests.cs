@@ -3,6 +3,8 @@ using NHibernate.Tool.hbm2ddl;
 using NUnit.Framework;
 using Zephyr.Configuration;
 using Zephyr.Data.NHib;
+using Zephyr.Initialization;
+using Zephyr.Web.Mvc.Initialization;
 
 namespace MyTests
 {
@@ -11,15 +13,28 @@ namespace MyTests
     /// </summary>
     [TestFixture]
     public class DbTests
-    {                
+    {
+        private readonly IAppBootstrapper _appBootstrapper = new MvcAppBootstrapper();
 
+        [SetUp]
+        public void Init()
+        {
+
+        }
+
+        [TearDown]
+        public void EndCase()
+        {
+            _appBootstrapper.Dispose();
+        }
+
+        
         [Test]
         public void DropAndRecreateSchema()
         {
             //
             // TODO: Add test logic here
-            //
-            NHibernateSession.Initialize(null);
+            //            
 
             var config = NHibernateSession.Configuration;
             var zephyrConfig = new ZephyrConfig();
@@ -39,7 +54,7 @@ namespace MyTests
             //
             // TODO: Add test logic here
             //
-            NHibernateSession.Initialize(null);
+            //NHibernateSession.Initialize(null);
 
             var config = NHibernateSession.Configuration;
             

@@ -15,25 +15,6 @@ namespace DemoApp.Web.Controllers
 {    
     public class PublisherController : ZephyrCRUDController<Publisher>
     {        
-        [HttpPost]
-        public ActionResult Edit(Publisher publisher)
-        { 
-            if(ModelState.IsValid)
-            {
-                bool edit = publisher.IsNew;
-                string flashMsg = publisher.IsNew ? "New <strong>Publisher</strong> added successfully":"<strong>Publisher</strong> saved successfully";
-                //always use Unit of work for save/update
-                using (UnitOfWorkScope.Start())
-                {
-                    var repo = ServiceLocator.Current.GetInstance<IRepository<Publisher>>(); 
-
-                    repo.SaveOrUpdate(publisher);
-                    
-                    return RedirectToAction("List").WithFlash(new { alert_success = flashMsg });                    
-                } 
-            }
-
-            return View("Edit", new EditViewModel<Publisher>(){Model = publisher});
-        }        
+        
     }
 }

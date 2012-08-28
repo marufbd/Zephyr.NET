@@ -8,7 +8,7 @@ namespace Zephyr.Web.Mvc.Html
 {
     public static class CommonHtmlHelper
     {
-        public static MvcHtmlString PageTitle(this ZephyrHtmlHelper titanHelper)
+        public static MvcHtmlString PageTitle<TModel>(this ZephyrHtmlHelper<TModel> titanHelper) where TModel : class
         {
             var appName = Zephyr.Configuration.ZephyrConfiguration.ZephyrSettings.AppName;
             return new MvcHtmlString(appName + " - " + titanHelper.HtmlHelper.ViewData["Title"]);
