@@ -64,7 +64,7 @@ namespace Zephyr.Web.Mvc.Controllers
         [HttpGet]
         public ActionResult Edit(Guid guid)
         {            
-            var viewModel = new EditViewModel<TEntity>() { Model = Repository.Get(guid) }; 
+            var viewModel = new EditViewModel<TEntity>() { Model = Repository.Get(guid) };
 
             return View("Edit", viewModel);
         }

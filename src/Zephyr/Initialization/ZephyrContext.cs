@@ -7,7 +7,7 @@ namespace Zephyr.Initialization
     public static class ZephyrContext
     {
         /// <summary>
-        /// Gets or Sets the current <see also cref="IZephyrPrincipal"/>.
+        /// Gets or Sets the current <see also cref="IPrincipal"/>.
         /// </summary>
         public static IPrincipal User
         {

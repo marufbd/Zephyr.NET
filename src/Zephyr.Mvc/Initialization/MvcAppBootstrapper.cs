@@ -14,11 +14,15 @@ namespace Zephyr.Web.Mvc.Initialization
 
         public void Run()
         {
-            _container = new WindsorContainer().Install(FromAssembly.Containing<WindsorControllerFactory>());
+            _container = new WindsorContainer().Install(FromAssembly.Containing<WindsorControllerFactory>(new InstallerFactory()));
             ServiceLocator.SetLocatorProvider(()=>new WindsorServiceLocator(_container));
 
+            //set windsor controller factory for automatic dependency resolution during controller instantiation
             var controllerFactory = new WindsorControllerFactory(_container.Kernel);
             ControllerBuilder.Current.SetControllerFactory(controllerFactory);
+
+            //controllers register controllers
+
         }
 
         public void Dispose()

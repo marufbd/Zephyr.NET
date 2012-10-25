@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Express 2012 for Web
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2D482E07-82B0-41AC-A8D8-6025F831CAD9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "00 - Framework", "00 - Framework", "{3BDAA20C-548E-4E8B-B9B1-E46F6EAE9E20}"
@@ -8,6 +8,12 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01 - Tests", "01 - Tests", "{22B367AE-6A5A-483C-B2F1-DA65615D4940}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02 - DemoApp", "02 - DemoApp", "{7FF1319F-DAC1-45EC-9C45-4999E61C494E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{1BA43489-D15E-47CF-908D-982023590BEC}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zephyr", "Zephyr\Zephyr.csproj", "{4D6444C0-273D-4B49-85C8-6CBA7E57CE02}"
 EndProject
@@ -17,13 +23,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DbTests", "DbTests\DbTests.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoApp.Web", "DemoApp.Web\DemoApp.Web.csproj", "{60B2CF98-AE23-49EE-911D-789A04709AFF}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{1BA43489-D15E-47CF-908D-982023590BEC}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\NuGet.exe = .nuget\NuGet.exe
-		.nuget\NuGet.targets = .nuget\NuGet.targets
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrameWorkTests", "FrameWorkTests\FrameWorkTests.csproj", "{0BFA13CF-EB81-4720-8311-D5C9F2D1EC8C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zephyr.Web.Api", "Zephyr.Web.Api\Zephyr.Web.Api.csproj", "{303C08A3-4EEB-48BE-B71E-A0F87AAC2E51}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,6 +51,10 @@ Global
 		{0BFA13CF-EB81-4720-8311-D5C9F2D1EC8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0BFA13CF-EB81-4720-8311-D5C9F2D1EC8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0BFA13CF-EB81-4720-8311-D5C9F2D1EC8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{303C08A3-4EEB-48BE-B71E-A0F87AAC2E51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{303C08A3-4EEB-48BE-B71E-A0F87AAC2E51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{303C08A3-4EEB-48BE-B71E-A0F87AAC2E51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{303C08A3-4EEB-48BE-B71E-A0F87AAC2E51}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -56,6 +62,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{4D6444C0-273D-4B49-85C8-6CBA7E57CE02} = {3BDAA20C-548E-4E8B-B9B1-E46F6EAE9E20}
 		{443E0ADB-87D4-4298-96F5-ED4E189DFBDF} = {3BDAA20C-548E-4E8B-B9B1-E46F6EAE9E20}
+		{303C08A3-4EEB-48BE-B71E-A0F87AAC2E51} = {3BDAA20C-548E-4E8B-B9B1-E46F6EAE9E20}
 		{4D3C7FBC-944A-49AF-AC0C-C65EC125D275} = {22B367AE-6A5A-483C-B2F1-DA65615D4940}
 		{0BFA13CF-EB81-4720-8311-D5C9F2D1EC8C} = {22B367AE-6A5A-483C-B2F1-DA65615D4940}
 		{60B2CF98-AE23-49EE-911D-789A04709AFF} = {7FF1319F-DAC1-45EC-9C45-4999E61C494E}

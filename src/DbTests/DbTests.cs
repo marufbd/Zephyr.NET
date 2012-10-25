@@ -1,12 +1,12 @@
 ﻿using System;
+using Microsoft.Practices.ServiceLocation;
 using NHibernate.Tool.hbm2ddl;
 using NUnit.Framework;
 using Zephyr.Configuration;
-using Zephyr.Data.NHib;
 using Zephyr.Initialization;
 using Zephyr.Web.Mvc.Initialization;
 
-namespace MyTests
+namespace DbTests
 {
     /// <summary>
     /// Summary description for UnitTest1
@@ -19,7 +19,7 @@ namespace MyTests
         [SetUp]
         public void Init()
         {
-
+            _appBootstrapper.Run();
         }
 
         [TearDown]
@@ -32,17 +32,14 @@ namespace MyTests
         [Test]
         public void DropAndRecreateSchema()
         {
-            //
-            // TODO: Add test logic here
-            //            
+            var config = ServiceLocator.Current.GetInstance<NHibernate.Cfg.Configuration>();
 
-            var config = NHibernateSession.Configuration;
-            var zephyrConfig = new ZephyrConfig();
+            var zephyrConfig = ServiceLocator.Current.GetInstance<ZephyrConfiguration>();
 
             var schemaExport = new SchemaExport(config);
-            if (zephyrConfig.ExportDbSchema)
+            if (zephyrConfig.PersistenceConfig.DbSchemaExportEnabled)
             {
-                var path = zephyrConfig.DataConfig.DbSchemaExportPath;
+                var path = zephyrConfig.PersistenceConfig.DbSchemaExportPath;
                 schemaExport.SetOutputFile(path + "/schema_" + DateTime.Now.ToString("yyyy-MM-dd_HH mm ss") + ".sql");
             }                
             schemaExport.Execute(true, false, false);
@@ -51,12 +48,7 @@ namespace MyTests
         [Test]
         public void TryAlterDbSchema()
         {
-            //
-            // TODO: Add test logic here
-            //
-            //NHibernateSession.Initialize(null);
-
-            var config = NHibernateSession.Configuration;
+            var config = ServiceLocator.Current.GetInstance<NHibernate.Cfg.Configuration>();            
             
             var schemaUpdate = new SchemaUpdate(config);            
             schemaUpdate.Execute(true, true);

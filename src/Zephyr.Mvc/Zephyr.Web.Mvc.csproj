@@ -79,6 +79,8 @@
     <Compile Include="ViewModels\ListViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Windsor\Installers\ControllersInstaller.cs" />
+    <Compile Include="Windsor\Installers\InstallerFactory.cs" />
+    <Compile Include="Windsor\Installers\InstallerPriorityAttribute.cs" />
     <Compile Include="Windsor\Installers\PersistenceInstaller.cs" />
     <Compile Include="Windsor\Installers\RepositoriesInstaller.cs" />
     <Compile Include="Windsor\WindsorControllerFactory.cs" />

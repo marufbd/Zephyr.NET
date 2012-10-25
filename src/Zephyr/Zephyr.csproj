@@ -80,7 +80,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\PersistenceConfigElement.cs" />
-    <Compile Include="Configuration\ZephyrConfig.cs" />
     <Compile Include="Configuration\ZephyrConfiguration.cs" />
     <Compile Include="Data\Models\IPagedList.cs" />
     <Compile Include="Data\Models\BasePagedList.cs" />

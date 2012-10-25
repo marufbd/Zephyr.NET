@@ -15,39 +15,36 @@ namespace Zephyr.Web.Mvc.Windsor.Installers
     {
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
-            container.AddFacility<Persistencefacility>();
-        }
-    }
-
-    public class Persistencefacility : AbstractFacility
-    {
-        protected override void Init()
-        {
-            //register framework settings as singleton
-            Kernel.Register(Component.For<ZephyrConfiguration>().UsingFactoryMethod(_ => ZephyrConfiguration.ZephyrSettings).LifestyleSingleton()); 
-
-            Kernel.Register(
+            var windsorContainer = container;
+            
+            //NHibernate Configuration
+            windsorContainer.Register(
+                Component.For<NHibernate.Cfg.Configuration>().UsingFactoryMethod(
+                    _ => NHibernateSession.Configure(null, windsorContainer.Resolve<ZephyrConfiguration>())).LifestyleSingleton());
+            
+            //Nhibernate session factory
+            windsorContainer.Register(
                 Component.For<ISessionFactory>().UsingFactoryMethod(
-                    _ => NHibernateSession.Initialize(null, Kernel.Resolve<ZephyrConfiguration>())).LifestyleSingleton());
+                    k => k.Resolve<NHibernate.Cfg.Configuration>().BuildSessionFactory()).LifestyleSingleton());            
 
-            if(ZephyrContext.IsTestMode)
+            if (ZephyrContext.IsWebApplication)
             {
-                Kernel.Register(
+                windsorContainer.Register(
                 Component.For<ISession>().UsingFactoryMethod(k => k.Resolve<ISessionFactory>().OpenSession())
-                    .LifestyleTransient());
+                    .LifestylePerWebRequest());                
             }
             else
             {
-                Kernel.Register(
+                windsorContainer.Register(
                 Component.For<ISession>().UsingFactoryMethod(k => k.Resolve<ISessionFactory>().OpenSession())
-                    .LifestylePerWebRequest());
+                    .LifestyleTransient());
             }
 
-            Kernel.Register(
-                Component.For<IUnitOfWorkFactory>().ImplementedBy<NhUnitOfWorkFactory>().LifestyleTransient());
-                                   
+            
 
-            //Kernel.Register(Component.For<IUnitOfWork>().UsingFactoryMethod(_=>UnitOfWorkScope.Current).LifestyleTransient());
+
+            windsorContainer.Register(
+                Component.For<IUnitOfWorkFactory>().ImplementedBy<NhUnitOfWorkFactory>().LifestyleTransient());
         }
-    }
+    }    
 }
