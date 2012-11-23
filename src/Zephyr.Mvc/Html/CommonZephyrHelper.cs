@@ -13,7 +13,7 @@ namespace Zephyr.Web.Mvc.Html
 {
     public static class CommonZephyrlHelper
     {
-        public static bool ExistsView(this ZephyrHtmlHelper zephyrHelper, string viewName)
+        public static bool ExistsView<TModel>(this ZephyrHtmlHelper<TModel> zephyrHelper, string viewName) where TModel : class
         {
             ViewEngineResult viewResult =
                 ViewEngines.Engines.FindView(zephyrHelper.HtmlHelper.ViewContext.Controller.ControllerContext, viewName,
@@ -23,7 +23,7 @@ namespace Zephyr.Web.Mvc.Html
         }
 
 
-        public static IHtmlString Flash(this ZephyrHtmlHelper zephyrHelper, string tagName = "div", bool htmlEncoded = true)
+        public static IHtmlString Flash<TModel>(this ZephyrHtmlHelper<TModel> zephyrHelper, string tagName = "div", bool htmlEncoded = true) where TModel : class
         { 
             //Func<string, XNode> content = message => encoded ? new XText(message) : XElement.Parse(message) as XNode;
             Func<string, XNode> content = message => new XText(message);
@@ -43,15 +43,15 @@ namespace Zephyr.Web.Mvc.Html
         /// Html helper for generating drop down list for Enum type model property.
         /// </summary>
         /// <typeparam name="TModel">The type of the model.</typeparam>
-        /// <typeparam name="TEnum">The type of the enum.</typeparam>
-        /// <param name="htmlHelper">The HTML helper.</param>
+        /// <typeparam name="TEnum">The type of the enum.</typeparam>        
+        /// <param name="zephyrHtmlHelper">The Zephyr framework html helper accessible through Html.Zephyr() </param>
         /// <param name="expression">The expression.</param>
         /// <param name="defaultText">Default text for empty item on nullable enum type property </param>
         /// <param name="htmlAttributes">The HTML attributes.</param>
         /// <returns></returns>
-        public static MvcHtmlString EnumDropDownListFor<TModel, TEnum>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TEnum>> expression, string defaultText="", object htmlAttributes=null)
+        public static MvcHtmlString EnumDropDownListFor<TModel, TEnum>(this ZephyrHtmlHelper<TModel> zephyrHtmlHelper, Expression<Func<TModel, TEnum>> expression, string defaultText="", object htmlAttributes=null) where TModel : class
         {
-            ModelMetadata metadata = ModelMetadata.FromLambdaExpression(expression, htmlHelper.ViewData);
+            ModelMetadata metadata = ModelMetadata.FromLambdaExpression(expression, zephyrHtmlHelper.HtmlHelper.ViewData);
             
             Type enumType = Nullable.GetUnderlyingType(metadata.ModelType) ?? metadata.ModelType;
             
@@ -78,7 +78,7 @@ namespace Zephyr.Web.Mvc.Html
             }
 
 
-            return htmlHelper.DropDownListFor(expression, items, htmlAttributes);
+            return zephyrHtmlHelper.HtmlHelper.DropDownListFor(expression, items, htmlAttributes);
         }
     }
 }

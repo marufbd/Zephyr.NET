@@ -34,7 +34,8 @@
                 @Html.LabelFor(model => model.Book.Category)
         
             <div class="controls">
-                @Html.EnumDropDownListFor(model => model.Book.Category, "Select category..")
+                @Html.Zephyr().EnumDropDownListFor(model => model.Book.Category, "Select category..")
+
                 @Html.ValidationMessageFor(model => model.Book.Category)
             </div>
 

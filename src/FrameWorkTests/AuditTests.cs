@@ -93,7 +93,7 @@ namespace FrameWorkTests {
         [Test]
         public void NEnversQuery()
         {
-            using (ISession session=NHibernateSession.Initialize())
+            using (var session=ServiceLocator.Current.GetInstance<ISession>())
             { 
                 IAuditReader auditReader = session.Auditer();
                 //var revEntity = auditReader.FindRevisions<Publisher>(auditReader.GetRevisions<Publisher>());

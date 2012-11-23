@@ -1,14 +1,29 @@
-﻿using System.Collections.Generic;
-using DemoApp.Web.DomainModels;
+﻿using DemoApp.Web.DomainModels;
+using Microsoft.Practices.ServiceLocation;
 using NHibernate;
 using NUnit.Framework;
-using Zephyr.Data.NHib;
+using Zephyr.Initialization;
+using Zephyr.Web.Mvc.Initialization;
 
-namespace MyTests
+namespace DbTests
 {
     [TestFixture]
     public class NHibTests
     {
+        private readonly IAppBootstrapper _appBootstrapper = new MvcAppBootstrapper();        
+
+        [SetUp]
+        public void Init()
+        {
+            _appBootstrapper.Run();
+        }
+
+        [TearDown]
+        public void EndCase()
+        {
+            _appBootstrapper.Dispose();
+        }
+
         [Test]
         public void LoadData()
         {            
@@ -56,7 +71,7 @@ namespace MyTests
             //change tenantid for manning
             //pubManning.TenantId = 1;
 
-            ISession session = NHibernateSession.Initialize(); 
+            var session = ServiceLocator.Current.GetInstance<ISession>();
             using (var tx=session.BeginTransaction())
             {
                 session.SaveOrUpdate(pubOrelly);
@@ -76,7 +91,7 @@ namespace MyTests
         [Test]
         public void DeleteOrphan()
         {
-            var session = NHibernateSession.Initialize(null);
+            var session = ServiceLocator.Current.GetInstance<ISession>();
 
             var pub = session.Get<Publisher>(3L);
             var book = session.Get<Book>(4L);
@@ -92,7 +107,7 @@ namespace MyTests
         [Test]
         public void LazyLoad()
         {
-            ISession session = NHibernateSession.Initialize(null);
+            var session = ServiceLocator.Current.GetInstance<ISession>();
 
             var pub = session.Get<Publisher>(3L);
 
@@ -102,11 +117,11 @@ namespace MyTests
         [Test]
         public void IdentityScope()
         {
-            ISession session = NHibernateSession.Initialize(null);
+            var session = ServiceLocator.Current.GetInstance<ISession>();
             
             var pub1 = session.Get<Publisher>(3L);
             session.Clear();
-            session = NHibernateSession.Initialize(null);
+            session = ServiceLocator.Current.GetInstance<ISession>();
             var pub2 = session.Get<Publisher>(3L);
 
             Assert.IsTrue(pub1==pub2);
@@ -117,7 +132,7 @@ namespace MyTests
         [Test]
         public void NPlus1()
         {
-            ISession session = NHibernateSession.Initialize(null);
+            var session = ServiceLocator.Current.GetInstance<ISession>(); 
 
             var pubs = session.CreateCriteria<Publisher>().List<Publisher>();
             int totalBooks = 0;

@@ -64,11 +64,35 @@ namespace Zephyr.Web.Mvc.Controllers
         [HttpGet]
         public ActionResult Edit(Guid guid)
         {            
-            var viewModel = new EditViewModel<TEntity>() { Model = Repository.Get(guid) }; 
+            var viewModel = new EditViewModel<TEntity>() { Model = Repository.Get(guid) };
 
             return View("Edit", viewModel);
         }
 
+        [HttpPost]
+        public ActionResult Edit(TEntity entity)
+        {
+            if (ModelState.IsValid)
+            {
+                bool edit = entity.IsNew;
+                string flashMsg = entity.IsNew
+                                      ? "New <strong>" + entity.GetType().Name + "</strong> added successfully"
+                                      : "<strong>" + entity.GetType().Name + "</strong> saved successfully";
+                //always use Unit of work for save/update
+                using (UnitOfWorkScope.Start())
+                {
+                    var repo = ServiceLocator.Current.GetInstance<IRepository<TEntity>>();
+
+                    repo.SaveOrUpdate(entity);
+
+                    return RedirectToAction("List").WithFlash(new { alert_success = flashMsg });
+                }
+            }
+
+            return View("Edit", new EditViewModel<TEntity>() { Model = entity });
+        }        
+
+        
         [HttpPost]
         public ActionResult Delete(Guid guid)
         {

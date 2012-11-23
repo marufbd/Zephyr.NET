@@ -20,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using FluentNHibernate.Cfg;
+using Microsoft.Practices.ServiceLocation;
 using NHibernate;
 using NHibernate.Cfg;
 using NHibernate.Event;
@@ -38,125 +39,83 @@ namespace Zephyr.Data.NHib
 {
     public static class NHibernateSession
     {
-        private static NHibernate.Cfg.Configuration _configuration;
-
-        /// <summary>
-        /// Gets or sets the factory.
-        /// </summary>
-        /// <value>The factory.</value>
-        public static ISessionFactory Factory { get; private set; }
-
-        /// <summary>
-        /// Gets the configuration.
-        /// </summary>
-        public static NHibernate.Cfg.Configuration Configuration
+        public static NHibernate.Cfg.Configuration Configure(IAutoPersistenceModelGenerator modelGenerator, ZephyrConfiguration frameworkSettings)
         {
-            get {
-                if (_configuration == null)
-                    Initialize(null);
-                
-                return _configuration;
-            }
-        }
-
-        /// <summary>
-        /// Initialize. No Argument
-        /// </summary>
-        /// <returns></returns>
-        public static ISession Initialize()
-        {
-            return Initialize(null);
-        }
-
-        /// <summary>
-        /// Initialize.
-        /// </summary>
-        /// <returns></returns>
-        public static ISession Initialize(IAutoPersistenceModelGenerator modelGenerator)
-        {
-            var zephyrConfig = new ZephyrConfig();
-            var dataConfig = zephyrConfig.DataConfig;
-            var mappingAssemblyNames = dataConfig.MappingAssemblies;
-            var overrideAssemblyFile = dataConfig.OverrideAssembly;
-            
-            var overrideAssembly = Assembly.Load(overrideAssemblyFile);
+            var persistenceConfig = frameworkSettings.PersistenceConfig;
+            var overrideAssembly = Assembly.Load(persistenceConfig.OverridingAssembly);
 
             var mappingAssemblies = new List<Assembly>();
-            mappingAssemblyNames.ForEach(a => mappingAssemblies.Add(Assembly.Load(a)));
+            persistenceConfig.MappingAssemblies.ForEach(a => mappingAssemblies.Add(Assembly.Load(a)));
+            //add zephyr by default in the mapping assemblies to map RevisionEntity for NhIbernate envers
+            mappingAssemblies.Add(typeof(RevisionEntity).Assembly);
 
             var cfg = new NHibernate.Cfg.Configuration();
-            cfg.Configure(dataConfig.NHibConfigPath);
+            cfg.Configure(persistenceConfig.NHibConfigFile);
 
             FluentConfiguration fConfig = Fluently.Configure(cfg)
                                             .Mappings(m =>
-                                                          {
-                                                              //add hbm files from mapping assemblies
-                                                              mappingAssemblies.ForEach(asm=>m.HbmMappings.AddFromAssembly(asm));
+                                            {
+                                                //add hbm files from mapping assemblies
+                                                mappingAssemblies.ForEach(asm => m.HbmMappings.AddFromAssembly(asm));
 
-                                                              if (modelGenerator == null)
-                                                              {
-                                                                  //get default persistent model generator
-                                                                  var model =
-                                                                      new AutoPersistenceModelGenerator(overrideAssembly)
-                                                                          {
-                                                                              AutoMappingAssemblies = mappingAssemblies,
-                                                                              CoreFrameworkAssembly =
-                                                                                  typeof (ZephyrConfiguration).Assembly
-                                                                          };
+                                                if (modelGenerator == null)
+                                                {
+                                                    //get default persistent model generator
+                                                    var model =
+                                                        new AutoPersistenceModelGenerator(overrideAssembly)
+                                                        {
+                                                            AutoMappingAssemblies = mappingAssemblies,
+                                                            CoreFrameworkAssembly =
+                                                                typeof(ZephyrConfiguration).Assembly
+                                                        };
 
 
-                                                                  if(zephyrConfig.ExportHbm)
-                                                                  {
-                                                                      var hbmExportPath = dataConfig.HbmExportPath;
-                                                                      m.AutoMappings.Add(model.Generate).ExportTo(hbmExportPath);
-                                                                      m.FluentMappings.Add<TenantFilter>()
-                                                                                      .Add<DeletedFilter>()
-                                                                                      .ExportTo(hbmExportPath);
-                                                                  }
-                                                                  else
-                                                                  {
-                                                                      m.AutoMappings.Add(model.Generate);
-                                                                      m.FluentMappings.Add<TenantFilter>()
-                                                                                      .Add<DeletedFilter>();
-                                                                  }
-                                                              }
-                                                              else
-                                                              {
-                                                                  m.AutoMappings.Add(modelGenerator.Generate);
-                                                              }
-                                                          });
+                                                    if (persistenceConfig.HbmExportEnabled)
+                                                    {
+                                                        var hbmExportPath = persistenceConfig.HbmExportPath;
+                                                        m.AutoMappings.Add(model.Generate).ExportTo(hbmExportPath);
+                                                        m.FluentMappings.Add<TenantFilter>()
+                                                                        .Add<DeletedFilter>()
+                                                                        .ExportTo(hbmExportPath);
+                                                    }
+                                                    else
+                                                    {
+                                                        m.AutoMappings.Add(model.Generate);
+                                                        m.FluentMappings.Add<TenantFilter>()
+                                                                        .Add<DeletedFilter>();
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    m.AutoMappings.Add(modelGenerator.Generate);
+                                                }
+                                            });
 
             //based on config log diagnostics
-            if (dataConfig.LogDiagnostics)
-                fConfig.Diagnostics(dia =>dia.Enable().OutputToFile(dataConfig.LogPath + "/fluentNHibernate.log"));            
-            
+            if (persistenceConfig.LogDiagnosticsEnabled)
+                fConfig.Diagnostics(dia => dia.Enable().OutputToFile(persistenceConfig.LogDiagnosticsPath + "/fluentNHibernate.log"));
+
             //fConfig.ExposeConfiguration(c => c.EventListeners.PreUpdateEventListeners = new[] {new EventListeners.AuditUpdateListener()});
-            
+
             //Set delete listener for soft delete
             //if (zephyrConfig.SoftDeleteEnabled)
             //    fConfig.ExposeConfiguration(
             //        c => c.SetListener(ListenerType.Delete, new EventListeners.SoftDeleteListener()));
-                                               
 
-            _configuration = fConfig.BuildConfiguration();
+
+            NHibernate.Cfg.Configuration nhibConfig = fConfig.BuildConfiguration();
 
             //integrate envers
             //Enable auditing using NHibernate.Envers
-            var enversConf = new NHibernate.Envers.Configuration.Fluent.FluentConfiguration();
-            
-            enversConf.SetRevisionEntity<RevisionEntity>(e=>e.RevNo, e=>e.RevisionTimestamp, new NEnversRevInfoListener());
-            
-            enversConf.Audit(zephyrConfig.GetDomainModelTypes());
-            _configuration.Properties.Add("nhibernate.envers.store_data_at_delete", "true");
-            _configuration.IntegrateWithEnvers(enversConf);
+            //var enversConf = new NHibernate.Envers.Configuration.Fluent.FluentConfiguration();
+            //enversConf.SetRevisionEntity<RevisionEntity>(e => e.RevNo, e => e.RevisionTimestamp, new NEnversRevInfoListener());
+            //enversConf.Audit(persistenceConfig.GetDomainModelTypesForAudit());
+            ////config envers to store deleted information
+            //nhibConfig.Properties.Add("nhibernate.envers.store_data_at_delete", "true");
+            //nhibConfig.IntegrateWithEnvers(enversConf);
 
 
-
-            
-            Factory = _configuration.BuildSessionFactory();
-            
-            
-            return Factory.OpenSession();
-        }
+            return nhibConfig;
+        }        
     }
 }

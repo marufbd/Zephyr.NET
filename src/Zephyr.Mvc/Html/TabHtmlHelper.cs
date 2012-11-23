@@ -8,7 +8,7 @@ namespace Zephyr.Web.Mvc.Html
 {
     public static class TabHtmlHelper
     {
-        public static MvcHtmlString Tabs(this ZephyrHtmlHelper titanHelper, TabItemModel[] items)
+        public static MvcHtmlString Tabs<TModel>(this ZephyrHtmlHelper<TModel> titanHelper, TabItemModel[] items) where TModel : class
         {
             var model = new TabHelperModel(items);
             foreach (var tabItemModel in model)
