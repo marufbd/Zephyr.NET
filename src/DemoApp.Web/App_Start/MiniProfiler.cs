@@ -79,13 +79,26 @@ namespace DemoApp.Web.App_Start
     {
         public void Init(HttpApplication context)
         {
-            context.BeginRequest += (sender, e) =>
+            //cannot get request.authenticated on begin request
+            context.AuthenticateRequest += (sender, e) =>
             {
                 var request = ((HttpApplication)sender).Request;
                 //TODO: By default only local requests are profiled, optionally you can set it up
                 //  so authenticated users are always profiled
-                if (request.IsLocal) { MiniProfiler.Start(); }
+                //if (request.IsLocal) { MiniProfiler.Start(); }
+                if (request.IsAuthenticated) { MiniProfiler.Start(); }
+                //MiniProfiler.Start();
             };
+
+            //context.BeginRequest += (sender, e) =>
+            //{
+            //    var request = ((HttpApplication)sender).Request;
+            //    //TODO: By default only local requests are profiled, optionally you can set it up
+            //    //  so authenticated users are always profiled
+            //    //if (request.IsLocal) { MiniProfiler.Start(); }
+            //    if (request.IsLocal) { MiniProfiler.Start(); }
+            //    //MiniProfiler.Start();
+            //};
 
 
             // TODO: You can control who sees the profiling information

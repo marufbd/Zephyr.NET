@@ -1,4 +1,5 @@
-﻿@using Zephyr.Web.Mvc.Html.Models
+﻿@using DemoApp.Web.Controllers
+@using Zephyr.Web.Mvc.Html.Models
 @{
     ViewBag.Title = "Home Page";
 }
@@ -6,13 +7,26 @@
 <h3>@ViewBag.Message</h3>
 <br/>
 <p>
-    This is an ASP.NET MVC application powered by <a href="https://github.com/marufbd/Zephyr.NET" target="_blank">Zephyr</a> framework.    
+    This is an ASP.NET MVC application powered by <a href="https://github.com/marufbd/Zephyr.NET" target="_blank">Zephyr</a> framework.
+
 </p>
 
 <p>
     The framework provides an infrastructure for domain driven design based projects.<br/>
-    To learn more about ASP.NET MVC visit <a href="http://asp.net/mvc" target="_blank" title="ASP.NET MVC Website">http://asp.net/mvc</a>.
+
+    @(Html.ActionLink<AccountController>(c=>c.LogOn(), "Log on")) to see profiling info (sql/action) with miniprofiler
 </p>
+
+    <h3>Framework features</h3>
+    <ul>
+        <li>Convention-based auto mapping for domain models (currently supporting nHibernate only)</li> 
+        <li>Extension points for overriding default conventions for mapping(primary key, property type, table strategy)</li>        
+        <li>Generic repository for domain model CRUD operations and query with Specification(Spec) and Linq</li>        
+        <li>Unit of Work scope for business transactions</li>        
+        <li>ASP.NET MVC Html helpers (dropdown for enum, pager, flash message etc)</li>        
+        <li>Generic 360 views(List, Create, Update) for models</li>        
+        <li>Twitter bootstrap css for default view templates</li>        
+    </ul>
 
 @*@Html.Zephyr().Tabs(new[]{
                             new TabItemModel(){ Title = "About", HtmlContent = Html.Partial("_LogOnPartial"), Active = true },
