@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Web.Hosting;
@@ -61,9 +62,9 @@ namespace Zephyr.Configuration
             set { this["logDiagnosticsPath"] = value; }
         }
 
-        public bool HbmExportEnabled { get { return !string.IsNullOrEmpty(HbmExportPath); } }
-        public bool DbSchemaExportEnabled { get { return !string.IsNullOrEmpty(DbSchemaExportPath); } }
-        public bool LogDiagnosticsEnabled { get { return !string.IsNullOrEmpty(LogDiagnosticsPath); } }
+        public bool HbmExportEnabled { get { return !string.IsNullOrEmpty(HbmExportPath) && Directory.Exists(HbmExportPath); } }
+        public bool DbSchemaExportEnabled { get { return !string.IsNullOrEmpty(DbSchemaExportPath) && Directory.Exists(DbSchemaExportPath); } }
+        public bool LogDiagnosticsEnabled { get { return !string.IsNullOrEmpty(LogDiagnosticsPath) && Directory.Exists(LogDiagnosticsPath); } }
 
 
         public IEnumerable<Type> GetDomainModelTypesForAudit()

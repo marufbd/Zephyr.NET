@@ -107,14 +107,12 @@ namespace Zephyr.Data.NHib
 
             //integrate envers
             //Enable auditing using NHibernate.Envers
-            var enversConf = new NHibernate.Envers.Configuration.Fluent.FluentConfiguration();
-
-            enversConf.SetRevisionEntity<RevisionEntity>(e => e.RevNo, e => e.RevisionTimestamp, new NEnversRevInfoListener());
-
-            enversConf.Audit(persistenceConfig.GetDomainModelTypesForAudit());
-            //config envers to store deleted information
-            nhibConfig.Properties.Add("nhibernate.envers.store_data_at_delete", "true");
-            nhibConfig.IntegrateWithEnvers(enversConf);
+            //var enversConf = new NHibernate.Envers.Configuration.Fluent.FluentConfiguration();
+            //enversConf.SetRevisionEntity<RevisionEntity>(e => e.RevNo, e => e.RevisionTimestamp, new NEnversRevInfoListener());
+            //enversConf.Audit(persistenceConfig.GetDomainModelTypesForAudit());
+            ////config envers to store deleted information
+            //nhibConfig.Properties.Add("nhibernate.envers.store_data_at_delete", "true");
+            //nhibConfig.IntegrateWithEnvers(enversConf);
 
 
             return nhibConfig;
