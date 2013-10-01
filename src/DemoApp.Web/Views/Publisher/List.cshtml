@@ -57,14 +57,17 @@
                     @Html.DisplayFor(modelItem => item.LastUpdatedAt)
                 </td>
                 <td colspan="2">
-                    @(Html.ActionLink<PublisherController>(c => c.Edit(item.Id), "Edit")) |
-                    @(Html.ActionLink<PublisherController>(c => c.Details(item.Id), "Details"))  
+                    <div class="btn-group">
+                        @(Html.ActionLink<PublisherController>(c => c.Edit(item.Id), "Edit", new {@class="btn btn-mini"}))
+                        @(Html.ActionLink<PublisherController>(c => c.Details(item.Id), "Details", new {@class="btn btn-mini"}))
+                    </div>
+                    
                 </td>
                 <td>
                     @using (Html.BeginForm<PublisherController>(c => c.Delete(item.Id)))
                     {
                         @Html.AntiForgeryToken()
-                        <input class="btn" type="submit" value="delete" onclick="return confirm('Are you sure?')"/>
+                        <input class="btn btn-mini btn-danger" type="submit" value="delete" onclick="return confirm('Are you sure?')"/>
                     }
                 </td>
             </tr>

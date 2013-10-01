@@ -28,7 +28,7 @@ namespace DemoApp.Web.DomainModels.MapOverrides
     {
         public void Override(AutoMapping<Book> mapping)
         {
-            mapping.Map(x => x.BookDescription).Length(5000);
+            mapping.Map(x => x.BookDescription).Length(5000);            
         }
     }
 }

@@ -36,7 +36,7 @@
             <th>
                 Created At:
             </th>
-            <th></th>
+            <th colspan="2"></th>
             <th></th>
         </tr>
     </thead>
@@ -55,15 +55,17 @@
         <td>
             @Html.DisplayFor(modelItem => item.CreatedAt)
         </td>      
-        <td>
-            @(Html.ActionLink<StoreController>(c => c.SaveBook(item.Id), "Edit")) |
-            @(Html.ActionLink<StoreController>(c => c.Details(item.Id), "Details"))
+        <td colspan="2">
+            <div class="btn-group">
+                @(Html.ActionLink<StoreController>(c => c.SaveBook(item.Id), "Edit", new {@class="btn btn-mini"}))
+                @(Html.ActionLink<StoreController>(c => c.Details(item.Id), "Details", new {@class="btn btn-mini"}))    
+            </div>            
         </td>
         <td>
             @using (Html.BeginForm<StoreController>(c => c.Delete(item.Id)))
             {
                 @Html.AntiForgeryToken()
-                <input class="btn" type="submit" value="delete" onclick="return confirm('Are you sure?')"/>
+                <input class="btn btn-mini btn-danger" type="submit" value="delete" onclick="return confirm('Are you sure?')"/>
             }
         </td>
     </tr>

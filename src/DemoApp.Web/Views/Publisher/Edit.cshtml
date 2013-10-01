@@ -22,23 +22,15 @@
     <fieldset>
         <legend>Publisher</legend>
 
-        <div class="clearfix"/>
-        @Html.LabelFor(_ => model.PublisherName)
+        <div class="well">                    
+            @Html.LabelFor(_ => model.PublisherName)
         
-        <div class="controls">
+        
             @Html.EditorFor(_ => model.PublisherName)
             @Html.ValidationMessageFor(_ => model.PublisherName)
+                               
         </div>
-
-        <div class="clearfix"/>
-        @Html.LabelFor(_ => model.CreatedBy)
-        
-        <div class="controls">
-            @Html.EditorFor(_ => model.CreatedBy)
-            @Html.ValidationMessageFor(_ => model.CreatedBy)
-        </div>
-    
-    @Html.HiddenFor(_ => model.Id)        
+        @Html.HiddenFor(_ => model.Id) 
         
     </fieldset>
     

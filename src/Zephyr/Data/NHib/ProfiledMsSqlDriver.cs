@@ -27,7 +27,7 @@ using StackExchange.Profiling.Data;
 
 namespace Zephyr.Data.NHib
 {
-    public class ProfiledMSSqlDriver : NHibernate.Driver.SqlServerCeDriver
+    public class ProfiledMsSqlDriver : NHibernate.Driver.SqlServerCeDriver
     {
         public override IDbCommand CreateCommand()
         {

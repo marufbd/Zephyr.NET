@@ -16,19 +16,7 @@ namespace Zephyr.Initialization
                 return IsWebApplication
                     ? HttpContext.Current.User ?? Thread.CurrentPrincipal
                             : Thread.CurrentPrincipal;
-            }
-            set
-            {
-                if (IsWebApplication)
-                {
-                    //Thread.CurrentPrincipal = value;
-                    HttpContext.Current.User = value;
-                }
-                else
-                {
-                    Thread.CurrentPrincipal = value;
-                }
-            }
+            }            
         }
 
         /// <summary>

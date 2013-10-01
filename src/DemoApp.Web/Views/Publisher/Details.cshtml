@@ -6,50 +6,58 @@
     var model = Model.Model;
 }
 
-<h2>Details</h2>
+<h2>Publisher Details</h2>
 
 <fieldset>
-    <legend>Publisher</legend>       
-
-    <div class="clearfix">PublisherName</div>
-    <div class="clearfix">
-        @Html.DisplayFor(_ => model.PublisherName)
-    </div>
+    <legend>@Html.DisplayFor(_ => model.PublisherName)</legend>       
     
-    <div class="display-label">Books from this Publisher:</div>
-    @if (model.Books.Count==0)
-    {
-        <div class="display-field">No books</div>
-    }
-    else
-    {
-        foreach(var book in model.Books){
-        <div class="display-field">
-            @Html.ActionLink(book.BookName, "Details", "Store", new { guid = book.Id }, null)
-        </div>
-        }
-    }
+    <dl>
+        <dt>Books from this Publisher:</dt>
+        <dd>
+            @if (model.Books.Count==0)
+            {
+                <p class="alert-danger">No books</p>
+            }
+            else
+            {
+                foreach (var book in model.Books)
+                {
+                    <div class="alert-info">
+                        @Html.ActionLink(book.BookName, "Details", "Store", new {guid = book.Id}, null)
+                    </div>
+                }
+                <p></p>
+            }
+        </dd>
+        
+        
     
+        <hr/>
+        <h4>Audit Info</h4>
+        <dt>Created By</dt>
+        <dd>
+            @Html.DisplayFor(_ => model.CreatedBy)
+            <span class="help-block">
+                This field is updated by Framework. Edit this entity and see how this changes based on current logged in user.
+            </span>
+        </dd>
+        <dt>Created At</dt>
+        <dd>@Html.DisplayFor(_ => model.CreatedAt)</dd> 
+        
+        <dt>Last Updated by</dt>
+        <dd>
+            @Html.DisplayFor(_ => model.LastUpdatedBy)
+            <span class="help-block">
+                This field is updated by Framework. Edit this entity and see how this changes based on current logged in user.
+            </span>
+        </dd>
+        <dt>Last Updated At</dt>
+        <dd>@Html.DisplayFor(_ => model.LastUpdatedAt)</dd>
+    </dl>
 
-    <div class="display-label">CreatedBy</div>
-    <div class="display-field">
-        @Html.DisplayFor(_ => model.CreatedBy)
-    </div>
-
-    <div class="display-label">CreatedAt</div>
-    <div class="display-field">
-        @Html.DisplayFor(_ => model.CreatedAt)
-    </div>
-
-    <div class="display-label">LastUpdatedBy</div>
-    <div class="display-field">
-        @Html.DisplayFor(_ => model.LastUpdatedBy)
-    </div>
-
-    <div class="display-label">LastUpdatedAt</div>
-    <div class="display-field">
-        @Html.DisplayFor(_ => model.LastUpdatedAt)
-    </div>
+    
+    
+    
 </fieldset>
 <p>
     @Html.ActionLink("Edit", "Edit", new { guid = model.Id }) |

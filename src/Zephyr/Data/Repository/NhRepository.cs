@@ -32,6 +32,7 @@ using System.Linq;
 using Zephyr.Data.NHib;
 using Zephyr.Data.Repository.Contract;
 using Zephyr.Domain;
+using Zephyr.Initialization;
 using Zephyr.Specification;
 
 #endregion REFERENCES
@@ -88,9 +89,25 @@ namespace Zephyr.Data.Repository
         }
 
         public TEntity SaveOrUpdate(TEntity entity)
-        {
-            Session.SaveOrUpdate(entity);            
+        {            
+            if(entity.IsNew)
+            {
+                entity.CreatedBy = ZephyrContext.User.Identity.Name;
+                entity.CreatedAt = DateTime.Now;
+            }
+            else
+            {
+                var updObj = Session.Load<TEntity>(entity.Id);
+                entity.CreatedBy = updObj.CreatedBy;
+                entity.CreatedAt = updObj.CreatedAt;
+                Session.Evict(updObj);
+            }
+            entity.LastUpdatedBy = ZephyrContext.User.Identity.Name;
+            entity.LastUpdatedAt = DateTime.Now;  
 
+
+            Session.SaveOrUpdate(entity);
+            
             return entity;
         }
 
