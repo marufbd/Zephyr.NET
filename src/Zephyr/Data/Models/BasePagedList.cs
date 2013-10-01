@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using Remotion.Linq.Utilities;
 using Zephyr.DesignByContract;
 
 namespace Zephyr.Data.Models

@@ -35,7 +35,9 @@ namespace DemoApp.Web.Controllers
         {
             //var model = _repositoryBook.GetAllPaged(2, 2);
             //var model = _repositoryBook.Query(m => m.Publisher.PublisherName=="Manning");
-            var querySpec=new Spec<Book>(m => m.Publisher.PublisherName == "Manning").And(new Spec<Book>(m => m.BookName.StartsWith("Clojure")));
+            ISpecification<Book> querySpec=new Spec<Book>(m => m.Publisher.PublisherName == "Manning");
+            //add conditions in spec based on some logic
+            querySpec = querySpec.And(new Spec<Book>(m => m.BookName.StartsWith("Clojure")));
             var model = _repositoryBook.Query(querySpec).ToPagedList(1, 5); //using specification
             //var model = _repositoryBook.GetAll();
 
@@ -69,20 +71,10 @@ namespace DemoApp.Web.Controllers
                 using (UnitOfWorkScope.Start())
                 {
                     var repoBook = ServiceLocator.Current.GetInstance<IRepository<Book>>();
-                    var repoPub = ServiceLocator.Current.GetInstance<IRepository<Publisher>>();
-                    //vmbook.Book = repo.Get(vmbook.Book.Id);
+                    var repoPub = ServiceLocator.Current.GetInstance<IRepository<Publisher>>();                    
                     vmbook.Book.Publisher = repoPub.Get(vmbook.SelectPublisherId);
 
-                    repoBook.SaveOrUpdate(vmbook.Book);
-                    ////testing a business transaction
-                    //var repoAudit = ServiceLocator.Current.GetInstance<IRepository<AuditChangeLog>>();
-                    //var audit = new AuditChangeLog();
-                    //audit.ActionBy = "maruf";
-                    //audit.ActionType=AuditType.Update;
-                    //audit.OldPropertyValue = "Old val";
-                    //audit.NewPropertyValue = "New val";
-                    //repoAudit.SaveOrUpdate(audit);
-                    //TempData.Add("Message", "New Book added successfully!");
+                    repoBook.SaveOrUpdate(vmbook.Book);                    
                 }
                 
                 return RedirectToAction("List").WithFlash(new {alert_success=flashMsg});

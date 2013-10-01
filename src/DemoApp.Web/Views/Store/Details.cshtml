@@ -22,12 +22,22 @@
         <hr/>
         <h4>Audit Info</h4>
         <dt>Created By</dt>
-        <dd>@Html.DisplayFor(_ => model.CreatedBy)</dd>
+        <dd>
+            @Html.DisplayFor(_ => model.CreatedBy)
+            <span class="help-block">
+                This field is updated by Framework. Edit this entity and see how this changes based on current logged in user.
+            </span>
+        </dd>
         <dt>Created At</dt>
         <dd>@Html.DisplayFor(_ => model.CreatedAt)</dd> 
         
         <dt>Last Updated by</dt>
-        <dd>@Html.DisplayFor(_ => model.LastUpdatedBy)</dd>
+        <dd>
+            @Html.DisplayFor(_ => model.LastUpdatedBy)
+            <span class="help-block">
+                This field is updated by Framework. Edit this entity and see how this changes based on current logged in user.
+            </span>
+        </dd>
         <dt>Last Updated At</dt>
         <dd>@Html.DisplayFor(_ => model.LastUpdatedAt)</dd>
     </dl>    

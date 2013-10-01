@@ -9,7 +9,7 @@ namespace Zephyr.Data.NHib.Mapping.Conventions
         public void Apply(IClassInstance instance)
         {            
             instance.ApplyFilter<TenantFilter>();
-            instance.ApplyFilter<DeletedFilter>();
+            instance.ApplyFilter<DeletedFilter>();            
         }
     }
 }

@@ -7,14 +7,11 @@ namespace Zephyr.Domain
     public class DomainEntity : EntityWithTypedId<Guid>, IAuditable
     {
         protected DomainEntity()
-        {
-            this.CreatedAt = DateTime.UtcNow;
-            this.CreatedBy = ZephyrContext.User.Identity.Name;
+        {            
             
-            this.LastUpdatedAt = DateTime.UtcNow;
         }        
 
-        public virtual bool IsNew { get { return this.Id == Guid.Empty; } }
+        public virtual bool IsNew { get { return this.Id == Guid.Empty; } }        
 
         #region Implementation of IAuditable
 
@@ -33,5 +30,5 @@ namespace Zephyr.Domain
         public virtual bool IsDeleted { get; set; }
 
         #endregion
-    }
+    }    
 }
